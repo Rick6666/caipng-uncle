@@ -103,7 +103,7 @@
 ## §3 中危 — 铁律违规与重复实现（C 组，机械搬迁，要求行为逐字节等价）
 
 ### C-1. 魔法数字成片散落逻辑代码（违反「数值只能在 data.js」）
-- [ ] 状态
+- [x] 状态 — 已完成（commit 980cc31）
 - **清单**（均已验证不在 CONST 中）：
   - `src/core/economy.js:22-24`：报价系数 `0.8`、`1.5`、`cost + 1`（02 §4.2 核心公式）
   - `src/core/day.js:10`：`SUB_ACCEPT = 0.6`（02 §4.3 替代接受率）
@@ -114,20 +114,20 @@
 - **验收**：`npm test` 全绿且 sim 结果逐字节等价（纯搬迁不许改值）。
 
 ### C-2. `rep / 8` 客流公式重复实现两处
-- [ ] 状态
+- [x] 状态 — 已完成（commit 980cc31）
 - **位置**：`src/core/day.js:102` 与 `src/core/state.js:56`
 - **修复建议**：收敛为单一函数（如 economy 或 state 导出），除数 8 进 data.js。
 - **验收**：同 C-1。
 
 ### C-3. sim.js 手抄 finalScore 公式
-- [ ] 状态
+- [x] 状态 — 已完成（commit 980cc31）
 - **位置**：`src/core/sim.js:113`（`s.money + s.rep * 5`，未 import `state.js:92-94` 的 finalScore）
 - **后果**：将来调评分公式，sim 回归静默用旧公式。
 - **修复建议**：改为 import finalScore。
 - **验收**：同 C-1。
 
 ### C-4. 硬编码文案（违反「文案只能在 data.js」）
-- [ ] 状态
+- [x] 状态 — 已完成（commit 980cc31）
 - **位置**：`src/core/day.js:182`（'客人摇摇头走了，声望 −1。'）、`day.js:189`（'你婉言道歉送客，这单没做成。'）
 - **修复建议**：迁入 data.js 的 LINES。
 - **验收**：同 C-1。注意 B-2 修复后 182 行路径仅在真缺菜时可达。
@@ -214,7 +214,7 @@
 ### E-7. 死代码/死样式清理
 - [ ] **E-7a** `data.js:34` `WORKER_UNLOCK` 占位常量无引用——删除或启用。
 - [ ] **E-7b** `data.js:91` influencer `slash.repWalk: -6` 不可达（pay 1.0 永不走人）——确认后删除或留注释说明。
-- [ ] **E-7c** `day.js:9` `unlockedIngredients(9999)` 哨兵——改为直接 import INGREDIENTS。
+- [x] **E-7c**（已完成，commit 980cc31，随 C 组顺手修） `day.js:9` `unlockedIngredients(9999)` 哨兵——改为直接 import INGREDIENTS。
 - [ ] **E-7d** `style.css:114-118` `h1.title` 与 `style.css:352` `.cover .btn + .btn` 永不命中——删除。
 - [x] **E-7e**（已完成，commit 2c2a7ad，PM 决定维持现状） 统计口径：sub-reject（`day.js:181`）与 apologize 走人不计 `walkoutCount`——已在 02-game-design.md §9.1 补充口径说明，两种走人是不同失败模式，故意不合并统计，不改代码。
 
