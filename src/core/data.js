@@ -31,7 +31,6 @@ export const CONST = {
   FOODIE_MIN_VARIETY_SPAWN: 6, // 美食家出现需当日菜品种类≥6
   HELPER_AUTO_SELL: 2,         // 帮手阿明每日自动卖出份数
   KOPI_BONUS: 1,               // 咖啡机每单额外
-  WORKER_UNLOCK: 0,            // 占位（worker 无门槛）
 
   // —— C-1：以下为原先散落在逻辑代码里的魔法数字，迁入单一真源（纯搬迁，数值不变）——
   QUOTE_KIND_MUL: 0.8,         // 良心价 = round(base × 此值)，见 economy.js quotePrices（02 §4.2）
@@ -115,6 +114,8 @@ export const REACTION = {
                 haggle: { accept: { rep: 1 }, gamble: { payChance: 0.5, repPaid: -1, repWalk: -3 } } },
   uncle2:     { kind: { pay: 1.0, rep: 2 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 0.5, repPaid: -2, repWalk: -2 } },
   labourer:   { kind: { pay: 1.0, rep: 3 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 0.75, repPaid: -1, repWalk: -2 } },
+  // influencer.slash.repWalk 在当前 pay:1.0（100% 付款）下不可达——保留是为了防御性完整（若以后
+  // 调低 pay 让网红也可能走人，repWalk 数值已就位，不必另外补），并非死数据（E-7b）。
   influencer: { kind: { pay: 1.0, rep: 6 }, normal: { pay: 1.0, rep: 2 }, slash: { pay: 1.0, repPaid: -6, repWalk: -6 } },
   foodie:     { kind: { pay: 1.0, rep: 4 }, normal: { pay: 1.0, rep: 2 }, slash: { pay: 0.6, repPaid: -5, repWalk: -4 } }
 };

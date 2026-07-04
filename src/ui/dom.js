@@ -22,6 +22,11 @@ export function pic(emoji, cls) {
   return h('span', { class: cls }, emoji);
 }
 
+// 用高精度时间做种子（app.js 的 ?seed= 会覆盖）；E-4b：唯一实现，避免 app.js/screens.js 各写一份
+export function freshSeed() {
+  return (Date.now() ^ Math.floor(performance.now() * 1000)) >>> 0;
+}
+
 let toastLayer;
 export function toast(msg) {
   toastLayer = toastLayer || document.getElementById('toast-layer');

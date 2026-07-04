@@ -111,11 +111,6 @@ body {
   letter-spacing: 1px;
 }
 
-h1.title {
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
 p.subtitle {
   color: var(--ink-soft);
   font-size: 14px;
@@ -157,12 +152,12 @@ p.subtitle {
 .stepper {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   flex-shrink: 0;
 }
 .stepper button {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 10px;
   background: var(--green);
@@ -349,7 +344,6 @@ p.subtitle {
 .cover .en { font-size: 14px; letter-spacing: 5px; color: var(--yellow); font-weight: 700; margin-bottom: 20px; }
 .cover p { font-size: 15px; line-height: 1.9; color: #d9e8dd; margin-bottom: 26px; }
 .cover .btn { max-width: 300px; }
-.cover .btn + .btn { margin-top: 10px; }
 .cover .ver { margin-top: 26px; font-size: 11px; color: rgba(255,255,255,.4); }
 
 /* 结局人设卡：人设名做主角，战绩降为小 chip（P1，为截图设计） */

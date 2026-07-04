@@ -1,4 +1,4 @@
-import { h, pic, btn, setScreen, setActions } from './dom.js';
+import { h, pic, btn, setScreen, setActions, freshSeed } from './dom.js';
 import {
   unlockedIngredients, unlockedDishes, prepCap, ingredientPrice,
   dailyCustomerCount, uncleTitle, epitaph, finalScore, grade, dailyVerdict, repLevel
@@ -26,21 +26,21 @@ function stepperRow(emojiNode, name, desc, count, onMinus, onPlus, minusOff, plu
       h('button', { onClick: onPlus, disabled: plusOff }, '+')));
 }
 
-export function render(state, dispatch) {
+export function render(state, dispatch, highscore) {
   switch (state.phase) {
-    case 'title': return renderTitle(state, dispatch);
+    case 'title': return renderTitle(state, dispatch, highscore);
     case 'morning': return renderMorning(state, dispatch);
     case 'prep': return renderPrep(state, dispatch);
     case 'service': return renderService(state, dispatch);
     case 'settle': return renderSettle(state, dispatch);
     case 'shop': return renderShop(state, dispatch);
-    case 'ending': return renderEnding(state, dispatch);
-    case 'gameover': return renderGameover(state, dispatch);
+    case 'ending': return renderEnding(state, dispatch, highscore);
+    case 'gameover': return renderGameover(state, dispatch, highscore);
   }
 }
 
-function renderTitle(state, dispatch) {
-  const hs = state._highscore;
+function renderTitle(state, dispatch, highscore) {
+  const hs = highscore;
   const cover = h('div', { class: 'cover' },
     h('div', { class: 'cover-emoji' }, '🍛'),
     h('h1', {}, '杂菜饭 Uncle'),
@@ -235,12 +235,12 @@ function statChips(...pairs) {
   return h('div', { class: 'stat-chips' }, ...pairs.map(t => h('span', {}, t)));
 }
 
-function renderEnding(state, dispatch) {
+function renderEnding(state, dispatch, highscore) {
   const score = finalScore(state);
   const g = grade(score);
   const persona = uncleTitle(state.stats, state.rep, state.money);
   const { emoji, name } = personaName(persona.title);
-  const hs = state._highscore;
+  const hs = highscore; // 进入结局前的历史最佳快照（app.js 传入），不写回 state
   const legend = state.rep >= 120 ? h('p', { class: 'narrative' }, h('em', {}, LINES.legend)) : null;
   setScreen(
     h('div', { class: 'cover persona-card' },
@@ -250,15 +250,15 @@ function renderEnding(state, dispatch) {
       h('p', {}, persona.flavor, h('br'), h('br'), LINES.gradeFlavor[g]),
       statChips(`总接客 ${state.stats.totalServed}`, `总营收 $${state.stats.totalRevenue}`, `最旺一天 $${state.stats.bestDayRevenue}`),
       legend,
-      hs && h('div', { class: 'ver' }, score >= hs.score ? '🎉 刷新了你的历史最佳！' : `历史最佳 ${hs.score} 分`)
+      hs && h('div', { class: 'ver' }, score > hs.score ? '🎉 刷新了你的历史最佳！' : `历史最佳 ${hs.score} 分`) // E-4a：与 highscore.js 的严格 > 判定口径一致
     ));
   setActions(btn('再来一局', 'btn-gold', () => dispatch({ type: 'NEW_GAME', seed: freshSeed() }), '换个手气'));
 }
 
-function renderGameover(state, dispatch) {
+function renderGameover(state, dispatch, highscore) {
   const ep = epitaph(state.day, state.stats);
   const { emoji, name } = personaName(ep.title);
-  const hs = state._highscore;
+  const hs = highscore;
   setScreen(
     h('div', { class: 'cover persona-card' },
       h('div', { class: 'cover-emoji' }, emoji),
@@ -286,8 +286,4 @@ function subAvailable(state) {
     const cat = DISH_BY_ID[m].cat;
     return DISHES.some(d => d.id !== m && d.cat === cat && (state.cooked[d.id] || 0) > 0);
   });
-}
-function freshSeed() {
-  // 用高精度时间做种子（app.js 也接受 ?seed= 覆盖）
-  return (Date.now() ^ (performance.now() * 1000)) >>> 0;
 }

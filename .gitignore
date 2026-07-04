@@ -3,4 +3,6 @@ coverage/
 test-results/
 e2e/screenshots/
 playwright-report/
+.playwright-mcp/
+/*.png
 .DS_Store
