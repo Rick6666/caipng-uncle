@@ -45,7 +45,7 @@
 - **验收**：`npm run e2e` 在手机视口全绿。
 
 ### A-3. 无 CI
-- [x] 状态 — 已完成（commit a6658fc）。远程仓库/Pages 部署部分需用户授权后另行执行，见 05-implementation-plan.md Task 12 Step 2-5
+- [x] 状态 — 已完成（commit a6658fc）。远程仓库/Pages 部署已在用户授权后完成：https://rick6666.github.io/caipng-uncle/（2026-07-05）
 - **位置**：`.github/` 不存在；`docs/04-test-plan.md` §5、`docs/05-implementation-plan.md` Task 12 均有要求
 - **问题**：唯一门禁是本地 pre-commit（`core.hooksPath` 是 clone 级配置，新 clone 失效，可 `--no-verify` 绕过）。无强制绿灯、无覆盖率核查（目标 core ≥85%）、无自动部署。
 - **修复建议**：按 05-plan Task 12 建 `.github/workflows/ci.yml`（npm test + coverage 阈值 + Playwright E2E + Pages 部署）。Vitest/Playwright/Actions API 用法不确定时用 context7 核实（CLAUDE.md 铁律）。

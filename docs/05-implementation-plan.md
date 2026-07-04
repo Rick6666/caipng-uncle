@@ -645,15 +645,10 @@ UI 不写单测（04-test-plan §1 的刻意取舍），验收靠 Task 11 E2E。
 - Create: `.github/workflows/ci.yml`
 
 - [x] **Step 1: workflow**（push/PR → `npm ci && npm test`；main 绿 → 上传 Pages artifact 并部署，用官方 `actions/deploy-pages`，部署内容 = 仓库根目录静态文件）。
-- [ ] **Step 2: 建远程仓库并推送**（**需用户显式授权**——建仓库/推送是对外可见的操作，AI 不得自行执行）
-
-```bash
-gh repo create caipng-uncle --public --source . --push
-```
-
-- [ ] **Step 3: 启用 Pages（workflow 方式）**：repo Settings→Pages source 设为 GitHub Actions（`gh api repos/{owner}/caipng-uncle/pages -X POST -f build_type=workflow` 或首次 workflow 自动创建）。（依赖 Step 2 完成）
-- [ ] **Step 4: 验证线上**：`curl -sI https://<owner>.github.io/caipng-uncle/ | head -1` → `HTTP/2 200`；真机打开可玩。（依赖 Step 2/3）
-- [ ] **Step 5: 打 tag** `git tag v1.0.0 && git push --tags`（依赖 Step 2）
+- [x] **Step 2: 建远程仓库并推送**（用户已显式授权，2026-07-05 执行）：`https://github.com/Rick6666/caipng-uncle`
+- [x] **Step 3: 启用 Pages（workflow 方式）**：`gh api repos/Rick6666/caipng-uncle/pages -X POST -f build_type=workflow` 已执行。
+- [x] **Step 4: 验证线上**：`curl -sI https://rick6666.github.io/caipng-uncle/` → `HTTP/2 200`（真机验证见 Task 13，尚未做）。
+- [x] **Step 5: 打 tag** `v1.0.0`，并发布 GitHub Release：`https://github.com/Rick6666/caipng-uncle/releases/tag/v1.0.0`
 
 ---
 
@@ -661,9 +656,9 @@ gh repo create caipng-uncle --public --source . --push
 
 - [ ] 执行 04-test-plan §6 手工验收清单（真机，需要真实设备，本地/CI 环境无法代劳）；
 - [ ] 文案通读打磨一轮（只改 data.js 的 LINES，改后 `npm test` 回归）；
-- [x] README.md：游戏简介 + 开发命令 + **克隆后执行
-  `git config core.hooksPath .githooks` 才能启用本地 pre-commit 门禁**（Task 0 Step 6）；线上链接与截图待 Task 12 Step 2-4 完成后补充；
-- [ ] 向用户汇报线上 URL 与验收证据（测试输出、截图、curl 结果）——依赖 Task 12 Step 2-4。
+- [x] README.md：游戏简介 + 线上链接 + 开发命令 + **克隆后执行
+  `git config core.hooksPath .githooks` 才能启用本地 pre-commit 门禁**（Task 0 Step 6）；
+- [x] 向用户汇报线上 URL 与验收证据：`https://rick6666.github.io/caipng-uncle/`，`curl` 返回 `HTTP/2 200`，CI 三个 job（单测/E2E/部署）全绿，`npm test` 83/83、`npm run e2e` 16/16。
 
 ---
 

@@ -37,5 +37,5 @@ npm run serve     # 本地 http://localhost:8000
 
 - Task 0~10（工具链、rng/data/state/economy/customers/events/day/highscore/sim、UI 层）均已完成；`index.html` 入口已是 `<script type="module" src="src/ui/app.js">`，`game.js` 从未存在过。
 - 视觉方案：**全 emoji，不使用外部美术资产**（`docs/08-change-requests.md` CR-02 定案，像素画方案已废弃）。`docs/05-implementation-plan.md` Task 9b（原像素风美术资产生成计划）已标记废弃，不得执行；不存在 `assets/` 目录，`FAL_KEY`/fal.ai MCP 与本项目视觉方案无关。
-- Task 11（E2E，`e2e/playthrough.spec.js` 8 场景）与 Task 12 Step 1（`.github/workflows/ci.yml`）已完成；Task 12 Step 2~5（建远程仓库、推送、启用 Pages、验证线上、打 tag）需要用户显式授权后再执行，AI 不得自行操作；Task 13 仅 README 完成，真机验收/线上验证待部署后进行——详见 `docs/09-project-audit.md`。
+- Task 11（E2E，8 场景）、Task 12（CI + 上线：`https://rick6666.github.io/caipng-uncle/`）均已完成；Task 13 仅剩「真机手工验收」「文案通读打磨」两项未做（需要真实设备/人工阅读，非本地/CI 可代劳）——详见 `docs/09-project-audit.md`。
 - 已知问题清单与修复优先级见 `docs/09-project-audit.md`（三路审查报告，含高/中/低危分级与验收标准），修复任务应从该文档领取。

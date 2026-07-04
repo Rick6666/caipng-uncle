@@ -1,8 +1,12 @@
 # 杂菜饭 Uncle（Cai Png Tycoon）
 
+**在线试玩：https://rick6666.github.io/caipng-uncle/**
+
 手机浏览器经营模拟游戏：邻居 Uncle 把摊子托你看 7 天，每天买菜、备菜、看人喊价，撑到最后交出成绩单——大概率会破产，这是设计如此。
 
 运行时零依赖（原生 ES Modules），开发依赖仅 Vitest + Playwright。视觉方案为全 emoji，不加载外部美术资产。
+
+Bug 反馈请开 [GitHub Issue](https://github.com/Rick6666/caipng-uncle/issues)。
 
 ## 开发命令
 
