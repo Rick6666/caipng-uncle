@@ -1,0 +1,11 @@
+- generic [ref=f4e2]:
+  - main [ref=f4e3]:
+    - generic [ref=f4e4]:
+      - generic [ref=f4e5]: 🍛
+      - heading "杂菜饭 Uncle" [level=1] [ref=f4e6]
+      - generic [ref=f4e7]: CAI PNG TYCOON
+      - paragraph [ref=f4e8]: 邻居 Uncle 把摊子托你看 7 天。每天买菜、备菜、看人喊价，撑到最后交出成绩单。
+      - button "开始经营 闯一闯这七天" [ref=f4e9] [cursor=pointer]:
+        - text: 开始经营
+        - generic [ref=f4e10]: 闯一闯这七天
+  - contentinfo [ref=f4e11]

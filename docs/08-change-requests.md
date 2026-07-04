@@ -23,5 +23,29 @@
 | CR-14 | 菜品正名 / 配方 | P3 | docs/02 → data.js | 青龙菜→Sambal Kangkong（含辣椒）、芙蓉蛋配方修正 |
 | CR-15 | 文档存活率注释过期(37%↛26.8%) | P3 | data.js / docs/02 | 注释与实测一致 |
 | CR-16 | 代码异味清理 | P3 | day.js / data.js | applyRep 冗余参、死常量、输入防御按需处理 |
+| CR-17 | 备菜软锁：没钱没料时无法开档也回不去采购，卡死 | P1 | screens.js | 彻底炒不出菜时放行开档→进注定亏本的一天→破产，绝不卡死；有引擎级回归 |
 
-修复顺序：CR-01(done) → 纯正确性 CR-03~07 → CR-02 → CR-12 → CR-13/14/15 → 重平衡 CR-08/09/10/11 → 回归。
+修复顺序：CR-01 → 纯正确性 CR-03~07 → CR-02 → CR-12 → CR-13/14/15 → 重平衡 CR-08/09/10/11 → 回归中发现并修 CR-17。
+
+---
+
+## 完成情况（2026-07-05）
+
+**全部 CR 已落地，`npm test` 72 项全绿，手机实机完整跑通。** 提交序列：
+1. `chore: tooling setup` — CR-01
+2. `fix: reducer correctness bugs` — CR-03/04/05/06/07/12 + CR-11(借贷可见)
+3. `refactor: drop art assets, emoji only` — CR-02
+4. `fix: localize copy` — CR-13/14
+5. `balance: revive reputation progression` — CR-08/09 + 评级/人设重标定
+6. `docs: sync 02-game-design` — CR-15 + §2/§5/§6/§11 全面对齐
+7. `fix: prevent prep soft-lock` — CR-17
+
+**平衡实测（sim 2000 局/策略）**：reasonable 存活 ~26%（22–38% 区间内）、存活局均 rep ~29
+（重平衡前 ~0.3）、67% 的局摸到 rep15、11% 到 rep30；slasher 声望仍趴 0（斩客掉口碑）；
+良心价路线存活低但存活即冲 rep 80+。声望进阶从"死内容"复活为健康曲线。
+
+**实机验证**：全流程 title→采购→备菜→接客(三档报价/砍价/替代)→结算(借贷提示+声望台账一致)→
+升级→结局；0 个 console 错误（404 全灭）；存活 S 级评分页与破产墓志铭页均正常渲染；软锁已消除。
+
+**未做（PM 判定，非缺陷）**：CR-10 升级在"高难生存"设定（sim.test 锁 22–38% 存活）下定位为
+战略赌注而非白送——放松会破坏核心张力；美术资产按决策保持 emoji。
