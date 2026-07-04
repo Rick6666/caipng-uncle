@@ -352,6 +352,18 @@ p.subtitle {
 .cover .btn + .btn { margin-top: 10px; }
 .cover .ver { margin-top: 26px; font-size: 11px; color: rgba(255,255,255,.4); }
 
+/* 结局人设卡：人设名做主角，战绩降为小 chip（P1，为截图设计） */
+.persona-card h1 { font-size: 34px; letter-spacing: 1px; }
+.persona-card .en { margin-bottom: 18px; }
+.stat-chips {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 4px 0 24px;
+}
+.stat-chips span {
+  font-size: 12px; padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+  color: #d9e8dd; font-variant-numeric: tabular-nums;
+}
+
 /* 小屏适配 */
 @media (max-height: 640px) {
   .cover-emoji { font-size: 60px; }

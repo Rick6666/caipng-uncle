@@ -211,20 +211,29 @@ function renderShop(state, dispatch) {
   setActions(btn('开始新的一天 →', 'btn-primary', () => dispatch({ type: 'END_SHOP' })));
 }
 
+// 结局「Uncle 人设卡」：人设身份为视觉主角，评级/战绩降为副标签与小 chip（P1，为截图设计）
+function personaName(fullTitle) {
+  const emoji = fullTitle.split(' ')[0];
+  return { emoji, name: fullTitle.slice(emoji.length).trim() };
+}
+function statChips(...pairs) {
+  return h('div', { class: 'stat-chips' }, ...pairs.map(t => h('span', {}, t)));
+}
+
 function renderEnding(state, dispatch) {
   const score = finalScore(state);
   const g = grade(score);
-  const title = uncleTitle(state.stats, state.rep, state.money);
+  const persona = uncleTitle(state.stats, state.rep, state.money);
+  const { emoji, name } = personaName(persona.title);
   const hs = state._highscore;
   const legend = state.rep >= 120 ? h('p', { class: 'narrative' }, h('em', {}, LINES.legend)) : null;
   setScreen(
-    h('div', { class: 'cover' },
-      h('div', { class: 'cover-emoji' }, title.title.split(' ')[0]),
-      h('h1', {}, `${g} 级`),
-      h('div', { class: 'en' }, `${score} 分`),
-      h('p', {}, `${title.title}`, h('br'), title.flavor,
-        h('br'), h('br'), LINES.gradeFlavor[g],
-        h('br'), h('br'), `总接客 ${state.stats.totalServed} · 总营收 $${state.stats.totalRevenue} · 最旺一天 $${state.stats.bestDayRevenue}`),
+    h('div', { class: 'cover persona-card' },
+      h('div', { class: 'cover-emoji' }, emoji),
+      h('h1', {}, name),
+      h('div', { class: 'en' }, `${g} 级 · ${score} 分 · 撑满 7 天`),
+      h('p', {}, persona.flavor, h('br'), h('br'), LINES.gradeFlavor[g]),
+      statChips(`总接客 ${state.stats.totalServed}`, `总营收 $${state.stats.totalRevenue}`, `最旺一天 $${state.stats.bestDayRevenue}`),
       legend,
       hs && h('div', { class: 'ver' }, score >= hs.score ? '🎉 刷新了你的历史最佳！' : `历史最佳 ${hs.score} 分`)
     ));
@@ -233,13 +242,16 @@ function renderEnding(state, dispatch) {
 
 function renderGameover(state, dispatch) {
   const ep = epitaph(state.day, state.stats);
+  const { emoji, name } = personaName(ep.title);
+  const hs = state._highscore;
   setScreen(
-    h('div', { class: 'cover' },
-      h('div', { class: 'cover-emoji' }, ep.title.split(' ')[0]),
-      h('h1', {}, '摊子倒了'),
-      h('div', { class: 'en' }, `撑到第 ${state.day} 天`),
-      h('p', {}, ep.title, h('br'), ep.line,
-        h('br'), h('br'), `总接客 ${state.stats.totalServed} · 总营收 $${state.stats.totalRevenue}`)
+    h('div', { class: 'cover persona-card' },
+      h('div', { class: 'cover-emoji' }, emoji),
+      h('h1', {}, name),
+      h('div', { class: 'en' }, `摊子倒了 · 撑到第 ${state.day} 天`),
+      h('p', {}, ep.line),
+      statChips(`总接客 ${state.stats.totalServed}`, `总营收 $${state.stats.totalRevenue}`),
+      hs && h('div', { class: 'ver' }, `历史最佳 ${hs.score} 分`)
     ));
   setActions(btn('再来一局', 'btn-gold', () => dispatch({ type: 'NEW_GAME', seed: freshSeed() }), '这次一定行'));
 }
