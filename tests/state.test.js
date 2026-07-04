@@ -8,7 +8,7 @@ import {
 describe('state', () => {
   it('newGame 初始值与 schema 一致', () => {
     const s = newGame(42);
-    expect(s).toMatchObject({ seed: 42, day: 1, phase: 'title', money: 120, rep: 0, upgrades: [], loan: null, usedLoan: false, priceMul: 1 });
+    expect(s).toMatchObject({ seed: 42, day: 1, phase: 'title', money: 82, rep: 0, upgrades: [], loan: null, usedLoan: false, priceMul: 1 });
     expect(s.rng).toHaveProperty('s');
     expect(JSON.parse(JSON.stringify(s))).toEqual(s); // 可序列化
   });

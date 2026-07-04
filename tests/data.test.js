@@ -3,10 +3,10 @@ import { INGREDIENTS, DISHES, CUSTOMER_TYPES, UPGRADES, EVENTS, REP_LEVELS, REAC
 
 describe('data integrity', () => {
   it('常量与设计文档一致', () => {
-    expect(CONST.START_MONEY).toBe(120);
-    expect(CONST.RENT_PER_DAY).toBe(25);
+    expect(CONST.START_MONEY).toBe(82);
+    expect(CONST.RENT_PER_DAY).toBe(32);
     expect(CONST.GAME_DAYS).toBe(7);
-    expect(CONST.LOAN_REPAY).toBe(150);
+    expect(CONST.LOAN_REPAY).toBe(90);
     expect(CONST.RICE_COST).toBe(1);
     expect(CONST.RICE_PRICE).toBe(1);
   });

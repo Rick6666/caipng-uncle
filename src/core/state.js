@@ -83,6 +83,17 @@ export function epitaph(day, stats) {
   return { id, ...LINES.epitaphs[id] };
 }
 
+// §9 存活结局评分与评级（阈值经 sim.js 校准，见 docs/02-game-design §9/§11）
+export function finalScore(state) {
+  return state.money + state.rep * 5;
+}
+export function grade(score) {
+  if (score >= 140) return 'S';
+  if (score >= 85) return 'A';
+  if (score >= 40) return 'B';
+  return 'C';
+}
+
 // §9.3 当日手感评价三档
 export function dailyVerdict(today) {
   const profit = today.revenue - today.spend;

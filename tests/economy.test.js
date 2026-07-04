@@ -7,14 +7,14 @@ const svc = () => ({ queue: [], index: 0, current: null, step: 'meet', canServe:
 describe('economy pricing', () => {
   it('成本与基准价', () => {
     expect(dishCost('curryChicken')).toBe(4); // chicken3 + curry1
-    expect(orderBase(['stirVeg', 'friedWing'])).toBe(7); // 1(米) + 2 + 4
-    expect(orderCost(['stirVeg', 'friedWing'])).toBe(5); // 1(米) + 1 + 3
+    expect(orderBase(['stirVeg', 'friedWing'])).toBe(10); // 1(米) + 3 + 6
+    expect(orderCost(['stirVeg', 'friedWing'])).toBe(5);  // 1(米) + 1 + 3
   });
   it('三档报价（cost 含米）', () => {
-    // base 7, cost 5 → kind=max(6,round(5.6)=6)=6, normal=7, slash=round(10.5)=11
-    expect(quotePrices(['stirVeg', 'friedWing'])).toEqual({ kind: 6, normal: 7, slash: 11 });
-    // base 3, cost 2 → kind=max(3,round(2.4)=2)=3, normal=3, slash=round(4.5)=5
-    expect(quotePrices(['stirVeg'])).toEqual({ kind: 3, normal: 3, slash: 5 });
+    // base 10, cost 5 → kind=max(6,round(8)=8)=8, normal=10, slash=round(15)=15
+    expect(quotePrices(['stirVeg', 'friedWing'])).toEqual({ kind: 8, normal: 10, slash: 15 });
+    // base 4, cost 2 → kind=max(3,round(3.2)=3)=3, normal=4, slash=round(6)=6
+    expect(quotePrices(['stirVeg'])).toEqual({ kind: 3, normal: 4, slash: 6 });
   });
 });
 
@@ -28,15 +28,15 @@ describe('economy settlement (§8 七步)', () => {
   it('首次破产触发阿财叔贷款续命', () => {
     let s = { ...newGame(1), phase: 'service', money: 10, cooked: {}, service: svc() };
     s = settleDay(s);
-    expect(s.money).toBe(10 - 25 + 100); // 85
+    expect(s.money).toBe(10 - 32 + 60); // 38：房租32、贷款额60
     expect(s.usedLoan).toBe(true);
     expect(s.loan).toEqual({ repaid: 0 });
     expect(s.phase).toBe('settle');
   });
-  it('贷款利息累计到 150 自动结清', () => {
-    let s = { ...newGame(1), phase: 'service', money: 200, cooked: {}, loan: { repaid: 140 }, usedLoan: true, service: svc() };
+  it('贷款利息累计到 LOAN_REPAY 自动结清', () => {
+    let s = { ...newGame(1), phase: 'service', money: 200, cooked: {}, loan: { repaid: 80 }, usedLoan: true, service: svc() };
     s = settleDay(s);
-    expect(s.loan).toBe(null); // 140+10=150 结清
+    expect(s.loan).toBe(null); // 80+10=90 ≥ LOAN_REPAY 结清
   });
   it('冰箱保留 floor(60%)', () => {
     let s = { ...newGame(1), phase: 'service', money: 100, upgrades: ['fridge'], cooked: { stirVeg: 5, friedWing: 1 }, service: svc() };
@@ -47,10 +47,10 @@ describe('economy settlement (§8 七步)', () => {
   it('helper 收档卖 2 份最贵剩菜、按正常价入账', () => {
     let s = { ...newGame(1), phase: 'service', money: 100, upgrades: ['helper'], cooked: { friedWing: 2, stirVeg: 3 }, service: svc() };
     s = settleDay(s);
-    // 卖 2 份 friedWing（贵），每份 orderBase([friedWing])=1+4=5 → +10
-    expect(s.today.revenue).toBe(10);
+    // 卖 2 份 friedWing（贵），每份 orderBase([friedWing])=1+6=7 → +14
+    expect(s.today.revenue).toBe(14);
     expect(s.today.served).toBe(2);
-    expect(s.stats.totalRevenue).toBe(10);
+    expect(s.stats.totalRevenue).toBe(14);
     // 卖后剩 stirVeg:3 无冰箱作废
     expect(s.today.lost).toBe(3);
   });
