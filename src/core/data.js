@@ -1,7 +1,7 @@
 // 全游戏数值与文案的单一真源，与 docs/02-game-design.md 逐项对齐。
 // 逻辑代码禁止出现魔法数字/散落文案，一律从这里 import。
 
-// 数值经 sim.js 千局校准（reasonable 存活 ~37%、lazy ~0%），详见 docs/02-game-design §11
+// 数值经 sim.js 千局校准（reasonable 存活 ~26%、lazy ~11%、slasher ~15%；存活局均 rep ~29），详见 docs/02-game-design §11
 export const CONST = {
   START_MONEY: 50,
   START_REP: 0,
