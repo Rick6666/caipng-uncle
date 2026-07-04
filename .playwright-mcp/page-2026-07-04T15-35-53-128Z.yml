@@ -1,0 +1,53 @@
+- generic [ref=e2]:
+  - banner [ref=e12]:
+    - generic [ref=e13]: ☀️ 第 1/7 天
+    - generic [ref=e14]: 💰 $35
+    - generic [ref=e15]: ⭐ 0
+  - generic [ref=e18]: 路边小摊
+  - main [ref=e3]:
+    - generic [ref=e382]: 第 1/7 天 · 打烊 · 升级摊子
+    - paragraph [ref=e383]: 手头 $35。明智投资能让后面几天轻松些。
+    - generic [ref=e384]:
+      - generic [ref=e385]: ⛱️
+      - generic [ref=e386]:
+        - generic [ref=e387]: 遮阳棚 $18
+        - generic [ref=e388]: 雨天客流不减
+      - button "购买" [ref=e389] [cursor=pointer]
+    - generic [ref=e390]:
+      - generic [ref=e391]: 📻
+      - generic [ref=e392]:
+        - generic [ref=e393]: 老歌音响 $28
+        - generic [ref=e394]: 每天开档声望 +1
+      - button "购买" [ref=e395] [cursor=pointer]
+    - generic [ref=e396]:
+      - generic [ref=e397]: 🧊
+      - generic [ref=e398]:
+        - generic [ref=e399]: 二手冰箱 $24
+        - generic [ref=e400]: 剩菜保留六成到明天
+      - button "购买" [ref=e401] [cursor=pointer]
+    - generic [ref=e402]:
+      - generic [ref=e403]: 🍳
+      - generic [ref=e404]:
+        - generic [ref=e405]: 大炒锅 $34
+        - generic [ref=e406]: 备菜上限 +8
+      - button "购买" [ref=e407] [cursor=pointer]
+    - generic [ref=e408]:
+      - generic [ref=e409]: 🪧
+      - generic [ref=e410]:
+        - generic [ref=e411]: 霓虹招牌 $40
+        - generic [ref=e412]: 每天客人 +2
+      - button "钱不够" [disabled] [ref=e413] [cursor=pointer]
+    - generic [ref=e414]:
+      - generic [ref=e415]: ☕
+      - generic [ref=e416]:
+        - generic [ref=e417]: 咖啡机 $46
+        - generic [ref=e418]: 每位付款客人多给 $1 kopi 钱
+      - button "钱不够" [disabled] [ref=e419] [cursor=pointer]
+    - generic [ref=e420]:
+      - generic [ref=e421]: 🧑‍🍳
+      - generic [ref=e422]:
+        - generic [ref=e423]: 帮手阿明 $60
+        - generic [ref=e424]: 客流上限 +4；收档时阿明再卖 2 份剩菜
+      - button "钱不够" [disabled] [ref=e425] [cursor=pointer]
+  - contentinfo [ref=e11]:
+    - button "开始新的一天 →" [ref=e426] [cursor=pointer]

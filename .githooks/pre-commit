@@ -1,0 +1,2 @@
+#!/bin/sh
+npm test || { echo "测试未通过，提交已阻止"; exit 1; }
