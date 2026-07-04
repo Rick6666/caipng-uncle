@@ -57,7 +57,7 @@ export const INGREDIENTS = [
 export const DISHES = [
   { id: 'friedCabbage',   name: '炒包菜',     emoji: '🥗', recipe: ['cabbage'],          price: 2, weight: 10, cat: 'veg' },
   { id: 'longBean',       name: '长豆角',     emoji: '🫛', recipe: ['longbean'],         price: 2, weight: 8,  cat: 'veg' },
-  { id: 'kangkong',       name: '青龙菜',     emoji: '🥬', recipe: ['greens'],           price: 2, weight: 9,  cat: 'veg' },
+  { id: 'kangkong',       name: '炒蕹菜',     emoji: '🥬', recipe: ['greens'],           price: 2, weight: 9,  cat: 'veg' },
   { id: 'radishOmelette', name: '菜脯煎蛋',   emoji: '🍳', recipe: ['egg', 'radish'],    price: 3, weight: 10, cat: 'egg' },
   { id: 'furongEgg',      name: '芙蓉煎蛋',   emoji: '🍳', recipe: ['egg', 'greens'],    price: 3, weight: 8,  cat: 'egg' },
   { id: 'steamedEgg',     name: '肉碎蒸水蛋', emoji: '🥚', recipe: ['egg', 'pork'],      price: 4, weight: 7,  cat: 'egg' },
@@ -98,7 +98,7 @@ export const REP_LEVELS = [
   { threshold: 30,  title: '街坊招牌' },
   { threshold: 55,  title: '排队名摊' },
   { threshold: 85,  title: '本地传奇' },
-  { threshold: 120, title: '全城最强杂菜饭' }
+  { threshold: 120, title: '全岛最强杂菜饭' }
 ];
 
 // 升级价贴合当前经济体量（起始 $55、日结余几十块），让升级成为够得着的策略选择而非死内容
@@ -117,9 +117,9 @@ export const EVENTS = {
   open: [
     { id: 'rain',     name: '落大雨',       weight: 10 },
     { id: 'holiday',  name: '学校放假',     weight: 6 },
-    { id: 'rival',    name: '隔壁摊大促销', weight: 7 },
+    { id: 'rival',    name: '隔壁摊大减价', weight: 7 },
     { id: 'marketUp', name: '巴刹涨价',     weight: 6 },
-    { id: 'payday',   name: '发薪日',       weight: 6 },
+    { id: 'payday',   name: '出粮日',       weight: 6 },
     { id: 'tv',       name: '电视台采访',   weight: 3, minRep: 55 }
   ],
   close: [
@@ -164,11 +164,11 @@ export const LINES = {
       'Uncle 饭要多，做工肚子饿得快！',
       '给我三个菜，要够力的那种 lah',
       'Uncle 加多一勺，兄弟今天出了大力',
-      '肉多一点 leh，光吃菜没力气搬砖',
+      '肉多一点 leh，光吃菜没力气做工',
       'Uncle 我们工地一整天了，要吃饱饱'
     ],
     influencer: [
-      'Uncle 这个可以拍照吗？我发小红书 📸',
+      'Uncle 这个可以拍照吗？我 post 上 IG 📸',
       '哇你这个摆盘我要拍一下先',
       'Uncle 出名的就是你家对吗？粉丝叫我来的',
       '等下我 tag 你哦，生意会爆的 lah',
@@ -211,9 +211,9 @@ export const LINES = {
       slash: ['有点贵…但饿了忍了', '这价钱…下次换一家 lah', '被斩了，但要吃饱先算了']
     },
     influencer: {
-      kind: ['Uncle 我要帮你发帖！这么划算 🔥', '哇好评好评，粉丝会冲的', '这波我一定 po，Uncle 加油'],
+      kind: ['Uncle 我要帮你 post 一个！这么划算 🔥', '哇好评好评，粉丝会冲的', '这波我一定 po，Uncle 加油'],
       normal: ['嗯 OK，还行啦', '正常价，拍个照先', '可以可以，付钱'],
-      slash: ['这么贵我要发避雷帖了 😤', 'Walao 斩客，粉丝我劝退了', '这个价钱…我要 po 出来 lor']
+      slash: ['这么贵我要 post 出来劝退大家了 😤', 'Walao 斩客，粉丝我劝退了', '这个价钱…我要 post 出来 lor']
     },
     foodie: {
       kind: ['有诚意！手艺配得上这个价 👍', '良心价还这么用心，难得', 'Uncle 你这个值得推荐'],
@@ -235,7 +235,7 @@ export const LINES = {
     holiday: '🎒 学校放假，学生仔特别多，今天热闹！',
     rival: '🏷️ 隔壁摊大promotion，抢走了你一些客人。',
     marketUp: '📈 今天巴刹涨价，食材成本高了些。',
-    payday: '💵 发薪日！打工人手头松，舍得吃好一点。',
+    payday: '💵 出粮咯！大家手头松，舍得吃好一点。',
     tv: '📺 电视台来采访你的摊子！明天怕是要排长龙了。',
     inspectionPass: '✅ 卫生检查——你的摊子干干净净，检查员点头表扬，声望 +2。',
     inspectionFail: '⚠️ 卫生检查——剩菜没收好又没冰箱，被罚 $30、声望 −2。',
@@ -258,13 +258,13 @@ export const LINES = {
   },
 
   // rep≥120 特殊附言
-  legend: '🏆 这一局，你干到了「全城最强杂菜饭」！',
+  legend: '🏆 这一局，你干到了「全岛最强杂菜饭」！',
 
   // 破产墓志铭（§9.2，与 epitaph 的 id 对应）
   epitaphs: {
     early:   { title: '💀 早夭 Uncle', line: '接手摊子没两天就撑不住，邻居 Uncle 看了直摇头。' },
     karma:   { title: '🦈 现世报 Uncle', line: '一路斩客斩上瘾，资金链没扛住，也是活该。' },
-    soClose: { title: '😭 一步之遥 Uncle', line: '就差一两天就能全须全尾交摊子了，天不助我。' },
+    soClose: { title: '😭 一步之遥 Uncle', line: '就差一两天就能好好把摊子交回去了，天不助我。' },
     honest:  { title: '😮‍💨 苦撑 Uncle', line: '老老实实做生意，还是没扛过这个坎。' }
   },
 

@@ -16,7 +16,7 @@ describe('state', () => {
     expect(repLevel(0).title).toBe('路边小摊');
     expect(repLevel(14).title).toBe('路边小摊');
     expect(repLevel(15).title).toBe('巷口熟客');
-    expect(repLevel(120).title).toBe('全城最强杂菜饭');
+    expect(repLevel(120).title).toBe('全岛最强杂菜饭');
   });
   it('prepCap 无锅 16 有锅 24', () => {
     const s = newGame(1);
