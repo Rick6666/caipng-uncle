@@ -631,11 +631,11 @@ UI 不写单测（04-test-plan §1 的刻意取舍），验收靠 Task 11 E2E。
 **Files:**
 - Create: `e2e/playthrough.spec.js`
 
-- [ ] **Step 1: 按 04-test-plan §4 写全部 8 个场景**（固定 seed 走 `?seed=42`；场景 4 缺菜路径、
+- [x] **Step 1: 按 04-test-plan §4 写全部 8 个场景**（固定 seed 走 `?seed=1`/`?seed=7`/`?seed=42`；场景 4 缺菜路径、
   场景 6 存活结局、场景 7 破产结局的 seed 都需要实际跑出后固化并注释原因；场景 6/7 需要快进
   跑完 7 天/跑到 gameover，可直接在测试里连续 dispatch/点击而非手工模拟每一步）。
-- [ ] **Step 2: `npm run e2e` 全绿**，screenshots 产出 7 张（含 ending 与 gameover 两个结局页）。
-- [ ] **Step 3: 提交** `test: e2e mobile playthrough incl. death path`
+- [x] **Step 2: `npm run e2e` 全绿**，screenshots 产出 7 张（含 ending 与 gameover 两个结局页）。
+- [x] **Step 3: 提交** `test: e2e mobile playthrough incl. death path`
 
 ---
 
@@ -644,26 +644,26 @@ UI 不写单测（04-test-plan §1 的刻意取舍），验收靠 Task 11 E2E。
 **Files:**
 - Create: `.github/workflows/ci.yml`
 
-- [ ] **Step 1: workflow**（push/PR → `npm ci && npm test`；main 绿 → 上传 Pages artifact 并部署，用官方 `actions/deploy-pages`，部署内容 = 仓库根目录静态文件）。
-- [ ] **Step 2: 建远程仓库并推送**
+- [x] **Step 1: workflow**（push/PR → `npm ci && npm test`；main 绿 → 上传 Pages artifact 并部署，用官方 `actions/deploy-pages`，部署内容 = 仓库根目录静态文件）。
+- [ ] **Step 2: 建远程仓库并推送**（**需用户显式授权**——建仓库/推送是对外可见的操作，AI 不得自行执行）
 
 ```bash
 gh repo create caipng-uncle --public --source . --push
 ```
 
-- [ ] **Step 3: 启用 Pages（workflow 方式）**：repo Settings→Pages source 设为 GitHub Actions（`gh api repos/{owner}/caipng-uncle/pages -X POST -f build_type=workflow` 或首次 workflow 自动创建）。
-- [ ] **Step 4: 验证线上**：`curl -sI https://<owner>.github.io/caipng-uncle/ | head -1` → `HTTP/2 200`；真机打开可玩。
-- [ ] **Step 5: 打 tag** `git tag v1.0.0 && git push --tags`
+- [ ] **Step 3: 启用 Pages（workflow 方式）**：repo Settings→Pages source 设为 GitHub Actions（`gh api repos/{owner}/caipng-uncle/pages -X POST -f build_type=workflow` 或首次 workflow 自动创建）。（依赖 Step 2 完成）
+- [ ] **Step 4: 验证线上**：`curl -sI https://<owner>.github.io/caipng-uncle/ | head -1` → `HTTP/2 200`；真机打开可玩。（依赖 Step 2/3）
+- [ ] **Step 5: 打 tag** `git tag v1.0.0 && git push --tags`（依赖 Step 2）
 
 ---
 
 ### Task 13: 上线验收与收尾
 
-- [ ] 执行 04-test-plan §6 手工验收清单（真机）；
+- [ ] 执行 04-test-plan §6 手工验收清单（真机，需要真实设备，本地/CI 环境无法代劳）；
 - [ ] 文案通读打磨一轮（只改 data.js 的 LINES，改后 `npm test` 回归）；
-- [ ] README.md：游戏简介 + 线上链接 + 截图 + 开发命令 + **克隆后执行
-  `git config core.hooksPath .githooks` 才能启用本地 pre-commit 门禁**（Task 0 Step 6）；commit `docs: readme`；
-- [ ] 向用户汇报线上 URL 与验收证据（测试输出、截图、curl 结果）。
+- [x] README.md：游戏简介 + 开发命令 + **克隆后执行
+  `git config core.hooksPath .githooks` 才能启用本地 pre-commit 门禁**（Task 0 Step 6）；线上链接与截图待 Task 12 Step 2-4 完成后补充；
+- [ ] 向用户汇报线上 URL 与验收证据（测试输出、截图、curl 结果）——依赖 Task 12 Step 2-4。
 
 ---
 
