@@ -41,6 +41,49 @@ describe('day state machine', () => {
     expect(d(s, 'BUY', { id: 'chicken', qty: 999 })).toBe(s); // 钱不够
   });
 
+  // —— 缺货服务态构造器 —— //
+  const svcState = (over = {}) => ({
+    ...newGame(1), phase: 'service',
+    today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0 },
+    service: {
+      queue: [{ type: 'worker', name: 'a', dishes: ['friedCabbage'], greeting: '' },
+              { type: 'worker', name: 'b', dishes: ['friedCabbage'], greeting: '' }],
+      index: 0, step: 'meet', offer: null, lastOutcome: null,
+      current: { type: 'worker', name: 'a', dishes: ['friedCabbage'], greeting: '' },
+      canServe: false
+    }, ...over
+  });
+
+  it('CR-04 缺货 SERVE 返回原 state 引用（reducer 自守，不打负库存）', () => {
+    const s = svcState({ cooked: { friedCabbage: 0 } });
+    expect(d(s, 'SERVE')).toBe(s);
+  });
+
+  it('CR-03 两道同类缺菜只剩一份替代货 → OFFER_SUB 无法满足，返回原 state', () => {
+    const s = svcState({
+      cooked: { curryChicken: 1 }, // meat 只有 1 份
+      service: {
+        queue: [{ type: 'labourer', name: 'a', dishes: ['sweetSourPork', 'braisedBelly'], greeting: '' }],
+        index: 0, step: 'meet', offer: null, lastOutcome: null,
+        current: { type: 'labourer', name: 'a', dishes: ['sweetSourPork', 'braisedBelly'], greeting: '' },
+        canServe: false
+      }
+    });
+    expect(d(s, 'OFFER_SUB')).toBe(s); // 无法双扣，宁可拒绝
+  });
+
+  it('CR-06 START_DAY 在 shop 阶段非法（仅 title 可开新的一天，防无限刷当天）', () => {
+    const s = { ...newGame(1), phase: 'shop', day: 3 };
+    expect(d(s, 'START_DAY')).toBe(s);
+  });
+
+  it('CR-12 rep 已在 0 时道歉，台账声望变化不显示虚假 -1', () => {
+    const s = svcState({ rep: 0, cooked: { friedCabbage: 0 } });
+    const out = d(s, 'APOLOGIZE');
+    expect(out.rep).toBe(0);
+    expect(out.today.repDelta).toBe(0); // 实际没跌，不记 -1
+  });
+
   it('COOK 超容量拒绝；wok 提升到 24', () => {
     let s = d(newGame(1), 'START_DAY');
     s = d(s, 'BUY', { id: 'cabbage', qty: 20 });

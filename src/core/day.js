@@ -13,7 +13,7 @@ const SUB_ACCEPT = 0.6;
 export function reduce(state, action) {
   switch (action.type) {
     case 'NEW_GAME':      return newGame(action.seed != null ? action.seed : state.seed + 1);
-    case 'START_DAY':     return guard(state, ['title', 'shop'], () => enterMorning(state));
+    case 'START_DAY':     return guard(state, ['title'], () => enterMorning(state));
     case 'BUY':           return guard(state, ['morning'], () => doBuy(state, action));
     case 'FINISH_MORNING':return guard(state, ['morning'], () => ({ ...state, phase: 'prep' }));
     case 'COOK':          return guard(state, ['prep'], () => doCook(state, action));
@@ -49,6 +49,7 @@ function enterMorning(state) {
     inventory: { ...state.inventory },
     upgrades: [...state.upgrades],
     priceMul: 1,
+    loanTaken: false,
     today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0 },
     stats: { ...state.stats }
   };
@@ -123,6 +124,7 @@ function canServe(cooked, dishes) {
 // 出餐：扣 cooked，进入报价
 function doServe(state) {
   const cur = state.service.current;
+  if (!canServe(state.cooked, cur.dishes)) return state; // CR-04：缺货不得出餐，reducer 自守
   const cooked = { ...state.cooked };
   for (const d of cur.dishes) cooked[d] = (cooked[d] || 0) - 1;
   return { ...state, cooked, service: { ...state.service, step: 'pricing' } };
@@ -133,7 +135,13 @@ function doOfferSub(state) {
   const rng = createRng(state.rng);
   const cur = state.service.current;
   const missing = cur.dishes.filter(d => (state.cooked[d] || 0) <= 0);
-  const subs = missing.map(m => findSubstitute(m, state.cooked));
+  // CR-03：逐个缺菜找替代，用 claimed 记账，防止同一份替代货被两道缺菜重复占用
+  const claimed = {};
+  const subs = missing.map(m => {
+    const sub = findSubstitute(m, state.cooked, claimed);
+    if (sub) claimed[sub] = (claimed[sub] || 0) + 1;
+    return sub;
+  });
   if (subs.some(x => x == null)) return state; // 无可替代 → UI 不该给此选项
   if (rng.chance(SUB_ACCEPT)) {
     // 接受：替换缺菜为替代菜，出餐
@@ -185,7 +193,7 @@ function applyOutcome(state, out) {
     let repDelta = out.repDelta;
     // 美食家：当日菜品种类≥8 追加声望
     if (cur.type === 'foodie') {
-      const variety = Object.keys(s.cooked).length;
+      const variety = Object.keys(s.cooked).filter(id => s.cooked[id] > 0).length; // CR-07：只计仍有货的种类
       if (variety >= CONST.FOODIE_VARIETY_MIN) repDelta += CONST.FOODIE_VARIETY_BONUS;
     }
     s = {
@@ -193,7 +201,7 @@ function applyOutcome(state, out) {
       money: s.money + gain,
       today: { ...s.today, revenue: s.today.revenue + gain, served: s.today.served + 1 }
     };
-    s = applyRep(s, repDelta, false);
+    s = applyRep(s, repDelta);
   } else {
     // 走人：已出的菜计损耗
     s = {
@@ -201,14 +209,15 @@ function applyOutcome(state, out) {
       today: { ...s.today, lost: s.today.lost + cur.dishes.length },
       stats: { ...s.stats, walkoutCount: s.stats.walkoutCount + 1 }
     };
-    s = applyRep(s, out.repDelta, false);
+    s = applyRep(s, out.repDelta);
   }
   return finishCustomer(s, { kind: out.paid ? 'paid' : 'walkout', price: out.price, line: out.line });
 }
 
 function applyRep(state, delta) {
   const rep = Math.max(0, state.rep + delta);
-  return { ...state, rep, today: { ...state.today, repDelta: state.today.repDelta + delta } };
+  const applied = rep - state.rep; // CR-12：台账记录实际生效（钳零后）的声望变化，与 HUD 一致
+  return { ...state, rep, today: { ...state.today, repDelta: state.today.repDelta + applied } };
 }
 function bumpStat(state, key, n) {
   return { ...state, stats: { ...state.stats, [key]: state.stats[key] + n } };
@@ -240,15 +249,17 @@ function closeAndSettle(state) {
   const eff = rollCloseEvents(state, rng);
   const cooked = { ...state.cooked };
   if (eff.removeDish) cooked[eff.removeDish] = Math.max(0, (cooked[eff.removeDish] || 0) - 1);
+  const newRep = Math.max(0, state.rep + eff.repDelta);
+  const appliedRep = newRep - state.rep; // CR-12：收档事件声望同样按钳零后实际变化计入台账
   let s = {
     ...state,
     cooked,
     money: state.money + eff.moneyDelta,
-    rep: Math.max(0, state.rep + eff.repDelta),
+    rep: newRep,
     today: {
       ...state.today,
       spend: state.today.spend + (eff.moneyDelta < 0 ? -eff.moneyDelta : 0),
-      repDelta: state.today.repDelta + eff.repDelta
+      repDelta: state.today.repDelta + appliedRep
     },
     service: null,
     closeLines: eff.lines,

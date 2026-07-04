@@ -60,4 +60,11 @@ describe('customers', () => {
     expect(findSubstitute('sweetSourPork', { friedCabbage: 2 })).toBe(null);              // veg 非同类
     expect(findSubstitute('sweetSourPork', { sweetSourPork: 0, braisedBelly: 0 })).toBe(null); // 无货
   });
+  it('CR-03 claimed 记账：一份替代货不被同单两道缺菜重复占用', () => {
+    // 只剩 1 份 curryChicken(meat)，第一道缺菜占用后，第二道再找就没了
+    expect(findSubstitute('sweetSourPork', { curryChicken: 1 })).toBe('curryChicken');
+    expect(findSubstitute('braisedBelly', { curryChicken: 1 }, { curryChicken: 1 })).toBe(null);
+    // 有 2 份则两道都能配
+    expect(findSubstitute('braisedBelly', { curryChicken: 2 }, { curryChicken: 1 })).toBe('curryChicken');
+  });
 });

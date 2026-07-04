@@ -35,9 +35,23 @@ describe('economy settlement (§8 七步)', () => {
     expect(s.phase).toBe('settle');
   });
   it('贷款利息累计到 LOAN_REPAY 自动结清', () => {
-    let s = { ...newGame(1), day: 1, phase: 'service', money: 200, cooked: {}, loan: { repaid: 40 }, usedLoan: true, service: svc() };
+    let s = { ...newGame(1), day: 1, phase: 'service', money: 200, cooked: {}, loan: { repaid: 30 }, usedLoan: true, service: svc() };
     s = settleDay(s);
-    expect(s.loan).toBe(null); // 40+10=50 ≥ LOAN_REPAY(45) 结清
+    expect(s.loan).toBe(null); // 30+10=40 ≥ LOAN_REPAY(40) 结清
+  });
+  it('CR-05 首贷 $30 仍兜不住 → 直接 gameover，不白送一天', () => {
+    // money -100，day1 房租 9，+贷款 30 = -79 仍 <0 → 立即倒闭
+    let s = { ...newGame(1), day: 1, phase: 'service', money: -100, cooked: {}, service: svc() };
+    s = settleDay(s);
+    expect(s.phase).toBe('gameover');
+    expect(s.usedLoan).toBe(true);
+  });
+  it('CR-05/11 首贷能兜住 → 续命 settle 且打上 loanTaken 标记', () => {
+    let s = { ...newGame(1), day: 1, phase: 'service', money: -5, cooked: {}, service: svc() };
+    s = settleDay(s);
+    expect(s.money).toBe(-5 - 9 + 30); // 16
+    expect(s.phase).toBe('settle');
+    expect(s.loanTaken).toBe(true);
   });
   it('冰箱保留 floor(60%)', () => {
     let s = { ...newGame(1), phase: 'service', money: 100, upgrades: ['fridge'], cooked: { friedCabbage: 5, sweetSourPork: 1 }, service: svc() };

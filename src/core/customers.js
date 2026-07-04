@@ -86,10 +86,11 @@ function pickLine(type, tier, rng) {
 }
 
 // 缺菜替代：同类别、有货，返回一个 dishId，否则 null
-export function findSubstitute(missingId, cooked) {
+// claimed = 同一单内已被其它缺菜占用的替代货计数，避免一份货被重复占用（CR-03）
+export function findSubstitute(missingId, cooked, claimed = {}) {
   const cat = DISH_BY_ID[missingId].cat;
   for (const d of DISHES) {
-    if (d.id !== missingId && d.cat === cat && (cooked[d.id] || 0) > 0) return d.id;
+    if (d.id !== missingId && d.cat === cat && (cooked[d.id] || 0) - (claimed[d.id] || 0) > 0) return d.id;
   }
   return null;
 }

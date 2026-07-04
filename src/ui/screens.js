@@ -170,9 +170,15 @@ function renderSettle(state, dispatch) {
     h('tr', { class: 'total' }, h('td', {}, '今日结余'), h('td', {}, `$${state.money}`)));
   const verdict = LINES.verdicts[dailyVerdict(t)];
   const evLines = (state.closeLines || []).map(l => h('p', { class: 'subtitle' }, l));
+  // CR-11：续命贷对玩家可见——说明钱从哪来、往后怎么还
+  const loanLine = state.loanTaken
+    ? h('p', { class: 'narrative' }, h('em', {},
+        `🆘 手头周转不灵，向相熟的摊贩借了 $${CONST.LOAN_AMOUNT} 续命，往后每天从结余自动还 $${CONST.LOAN_INTEREST}，还满 $${CONST.LOAN_REPAY} 为止。`))
+    : null;
   setScreen(
     tag(`第 ${state.day}/7 天 · 收档`),
     ...evLines,
+    loanLine,
     h('div', { class: 'card' }, ledger),
     h('p', { class: 'narrative' }, h('em', {}, verdict[state.day % verdict.length] || verdict[0])));
   const last = state.day >= CONST.GAME_DAYS;

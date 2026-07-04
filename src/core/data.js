@@ -14,9 +14,9 @@ export const CONST = {
   SIGN_CUSTOMER_BONUS: 2,
   GAME_DAYS: 7,
   RENT_ESCALATION: 3,          // 房租逐日递增：第 N 天租金 = RENT_PER_DAY + (N-1)×此值（越往后越紧张）
-  LOAN_AMOUNT: 30,
-  LOAN_REPAY: 45,
-  LOAN_INTEREST: 10,
+  LOAN_AMOUNT: 30,             // 首次资不抵债自动借入的续命金
+  LOAN_REPAY: 40,              // 累计还清额（= 4×LOAN_INTEREST，借 30 净付 10 利息，取整可整除）
+  LOAN_INTEREST: 10,           // 每日自动扣的还款分期
   RICE_COST: 1,
   RICE_PRICE: 1,
   EVENT_CHANCE: 0.55,          // 开档事件触发概率

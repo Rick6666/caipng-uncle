@@ -92,7 +92,9 @@ export function settleDay(state) {
       s.money += CONST.LOAN_AMOUNT;
       s.loan = { repaid: 0 };
       s.usedLoan = true;
-      s.phase = 'settle';
+      s.loanTaken = true;                     // CR-11：供结算页明示「续命贷」
+      // CR-05：$30 续命仍兜不住（依旧负余额）→ 直接倒闭，不再白送一天
+      s.phase = s.money < 0 ? 'gameover' : 'settle';
     } else {
       s.phase = 'gameover';
       return s;

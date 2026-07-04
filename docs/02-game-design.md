@@ -15,9 +15,9 @@
 | BASE_CUSTOMERS | 9 | 每日基础客数（sim 校准）|
 | MAX_CUSTOMERS | 22 | 每日客数硬上限（帮手 +4，sim 校准） |
 | GAME_DAYS | 7 | **一局游戏的总天数**，撑到第 7 天收档即结局，没有赛季/无尽/续玩这些概念（见 §9） |
-| LOAN_AMOUNT | 60 | 阿财叔贷款额（sim 校准）|
-| LOAN_REPAY | 90 | 需偿还总额（sim 校准）|
-| LOAN_INTEREST | 10 | 未还清期间每日额外扣款（计入还款额） |
+| LOAN_AMOUNT | 30 | 首次资不抵债自动借入的续命金 |
+| LOAN_REPAY | 40 | 需偿还总额（= 4×LOAN_INTEREST，可整除，借 30 净付 10 利息）|
+| LOAN_INTEREST | 10 | 未还清期间每日自动扣的还款分期（计入还款额） |
 | RICE_COST | 1 | 每单必含一份米饭的成本 |
 | RICE_PRICE | 1 | 米饭计入基准价 |
 

@@ -7,7 +7,7 @@ describe('data integrity', () => {
     expect(CONST.RENT_PER_DAY).toBe(9);
     expect(CONST.RENT_ESCALATION).toBe(3);
     expect(CONST.GAME_DAYS).toBe(7);
-    expect(CONST.LOAN_REPAY).toBe(45);
+    expect(CONST.LOAN_REPAY).toBe(40);
     expect(CONST.RICE_COST).toBe(1);
     expect(CONST.RICE_PRICE).toBe(1);
   });
