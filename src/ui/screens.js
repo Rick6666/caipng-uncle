@@ -42,8 +42,7 @@ function renderTitle(state, dispatch) {
     h('div', { class: 'cover-emoji' }, '🍛'),
     h('h1', {}, '杂菜饭 Uncle'),
     h('div', { class: 'en' }, 'CAI PNG TYCOON'),
-    h('p', {}, '邻居 Uncle 把摊子托你看 7 天。每天买菜、备菜、看人喊价，撑到最后交出成绩单。',
-      h('br'), h('br'), '⚠️ 大概率会破产——这就是挑战。一局约 15 分钟，中途不能存档。'),
+    h('p', {}, '邻居 Uncle 把摊子托你看 7 天。每天买菜、备菜、看人喊价，撑到最后交出成绩单。'),
     btn('开始经营', 'btn-gold', () => dispatch({ type: 'START_DAY' }), '闯一闯这七天'),
     hs && h('div', { class: 'ver' }, `历史最佳：${hs.score} 分（${hs.grade}）· ${LINES.titles[hs.uncleTitleId]?.title || ''}`)
   );

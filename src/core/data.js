@@ -54,7 +54,7 @@ export const DISHES = [
   { id: 'cabbageStew',   name: '焖高丽菜', emoji: '🥗', recipe: ['cabbage'],        price: 3, weight: 8,  cat: 'veg',     img: 'assets/dishes/cabbageStew.webp' },
   { id: 'braisedEgg',    name: '卤蛋',     emoji: '🥚', recipe: ['egg', 'braise'],  price: 4, weight: 10, cat: 'egg',     img: 'assets/dishes/braisedEgg.webp' },
   { id: 'bitterEgg',     name: '苦瓜炒蛋', emoji: '🍳', recipe: ['veg', 'egg'],     price: 4, weight: 6,  cat: 'egg',     img: 'assets/dishes/bitterEgg.webp' },
-  { id: 'mapoTofu',      name: '麻婆豆腐', emoji: '🧈', recipe: ['tofu'],           price: 4, weight: 7,  cat: 'veg',     img: 'assets/dishes/mapoTofu.webp' },
+  { id: 'mapoTofu',      name: '麻婆豆腐', emoji: '🥘', recipe: ['tofu'],           price: 4, weight: 7,  cat: 'veg',     img: 'assets/dishes/mapoTofu.webp' },
   { id: 'friedWing',     name: '炸鸡翅',   emoji: '🍗', recipe: ['chicken'],        price: 6, weight: 10, cat: 'meat',    img: 'assets/dishes/friedWing.webp' },
   { id: 'curryChicken',  name: '咖喱鸡',   emoji: '🍛', recipe: ['chicken', 'curry'], price: 7, weight: 9, cat: 'meat',   img: 'assets/dishes/curryChicken.webp' },
   { id: 'braisedPork',   name: '卤肉',     emoji: '🥩', recipe: ['pork', 'braise'], price: 7, weight: 8,  cat: 'meat',    img: 'assets/dishes/braisedPork.webp' },
