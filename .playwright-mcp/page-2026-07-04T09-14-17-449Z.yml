@@ -1,0 +1,781 @@
+- generic [ref=f1e1]:
+  - link "欢迎进入 30 个进阶技巧彻底榨干Claude Code价值：工作流、上下文交互、拓展与自动化、架构与重构、性能与协作... - 知乎,盲人用户使用操作智能引导，请按快捷键Ctrl+Alt+R；阅读详细操作说明请按快捷键Ctrl+Alt+问号键。":
+    - /url: javascript:void(0)
+    - img [ref=f1e2] [cursor=pointer]
+  - generic [ref=f1e4]:
+    - banner [ref=f1e6]:
+      - generic [ref=f1e7]:
+        - link "知乎" [ref=f1e8] [cursor=pointer]:
+          - /url: https://www.zhihu.com
+          - img [ref=f1e9]
+        - generic [ref=f1e13]:
+          - generic [ref=f1e14]:
+            - navigation [ref=f1e15]:
+              - link "关注" [ref=f1e16] [cursor=pointer]:
+                - /url: https://www.zhihu.com/signin?next=%2Ffollow
+                - generic [ref=f1e17]: 关注
+              - link "推荐" [ref=f1e18] [cursor=pointer]:
+                - /url: https://www.zhihu.com/signin?next=%2F
+                - generic [ref=f1e19]: 推荐
+              - link "热榜" [ref=f1e20] [cursor=pointer]:
+                - /url: https://www.zhihu.com/signin?next=%2Fhot
+                - generic [ref=f1e21]: 热榜
+              - link "专栏" [ref=f1e22] [cursor=pointer]:
+                - /url: https://www.zhihu.com/signin?next=%2Fcolumn-square
+                - generic [ref=f1e23]: 专栏
+              - link "圈子" [ref=f1e24] [cursor=pointer]:
+                - /url: https://www.zhihu.com/signin?next=%2Fring-feeds
+                - generic [ref=f1e25]: 圈子
+              - link "AI Works Beta" [ref=f1e27] [cursor=pointer]:
+                - /url: https://www.zhihu.com/project/square
+                - generic [ref=f1e28]:
+                  - text: AI Works
+                  - generic [ref=f1e29]: Beta
+              - link "故事" [ref=f1e30] [cursor=pointer]:
+                - /url: https://www.zhihu.com/fiore/h5/vip-web
+                - generic [ref=f1e31]: 故事
+            - generic [ref=f1e32]:
+              - search [ref=f1e33]:
+                - generic [ref=f1e37]:
+                  - combobox "搜索" [ref=f1e38]
+                  - button "搜索" [ref=f1e39] [cursor=pointer]:
+                    - img [ref=f1e41]
+                - link "直答" [ref=f1e43] [cursor=pointer]:
+                  - /url: https://zhida.zhihu.com/
+                  - img [ref=f1e44]
+                  - text: 直答
+              - generic [ref=f1e47]:
+                - generic [ref=f1e49] [cursor=pointer]: 切换模式
+                - button "登录/注册" [ref=f1e51] [cursor=pointer]
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: 30 个进阶技巧彻底榨干Claude Code价值：工作流、上下文交互、拓展与自动化、架构与重构、性能与协作...
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: 切换模式
+                            - generic:
+                              - button:
+                                - img
+    - main [ref=f1e53]:
+      - generic [ref=f1e54]:
+        - generic [ref=f1e55]:
+          - generic [ref=f1e57]:
+            - article [ref=f1e58]:
+              - generic [ref=f1e59]:
+                - heading "30 个进阶技巧彻底榨干Claude Code价值：工作流、上下文交互、拓展与自动化、架构与重构、性能与协作..." [level=1] [ref=f1e60]
+                - generic [ref=f1e63]:
+                  - link "饼干哥哥AGI" [ref=f1e66] [cursor=pointer]:
+                    - /url: //www.zhihu.com/people/sonnyles
+                    - img "饼干哥哥AGI" [ref=f1e67]
+                  - generic [ref=f1e68]:
+                    - link "饼干哥哥AGI" [ref=f1e72] [cursor=pointer]:
+                      - /url: //www.zhihu.com/people/sonnyles
+                    - generic [ref=f1e75]: 公众号「饼干哥哥AGI」分享ai在实际业务中落地的应用经验
+              - generic [ref=f1e80]:
+                - paragraph [ref=f1e81]:
+                  - text: 现在，还有人用不好
+                  - link "Claude Code" [ref=f1e83] [cursor=pointer]:
+                    - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=Claude+Code&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJDbGF1ZGUgQ29kZSIsInpoaWRhX3NvdXJjZSI6ImVudGl0eSIsImNvbnRlbnRfaWQiOjI2MDk0NTgxNiwiY29udGVudF90eXBlIjoiQXJ0aWNsZSIsIm1hdGNoX29yZGVyIjoxLCJ6ZF90b2tlbiI6bnVsbH0.wDkWEbHJOXvw29yOBbndU3NKFldwEyFcFNNo4A1ZWoQ&zhida_source=entity
+                    - text: Claude Code
+                    - img [ref=f1e84]
+                  - text: 吗？
+                - paragraph [ref=f1e86]: 有没有人需求一提，它计划做得天花乱坠，一执行就代码翻车，好不容易修好一个bug，又带出仨新的？
+                - paragraph [ref=f1e87]:
+                  - text: 经过数月的实战和“被教育”，我总结出了一套
+                  - generic [ref=f1e88]: 能真正“榨干”Claude Code潜能的工作流。
+                - paragraph [ref=f1e89]: 这一切，要从我决定手搓一个解决自己出海痛点的AI Reddit浏览器插件 开始。
+                - paragraph [ref=f1e90]: 这个插件的核心目标很简单，但实现起来，每一步都考验着我和AI协作的默契。
+                - paragraph [ref=f1e91]: 好了，废话不多说，咱们直接上干货！
+                - paragraph [ref=f1e92]:
+                  - text: 以下是我在开发这个Reddit插件过程中，总结出的
+                  - generic [ref=f1e93]: 30个让Claude Code从“玩具”变“武器”的实战技巧。
+                - paragraph [ref=f1e94]
+                - figure [ref=f1e95]:
+                  - img [ref=f1e97]
+                - paragraph [ref=f1e98]
+                - heading "第一章：环境与心法——打好地基，事半功倍" [level=3] [ref=f1e99]
+                - heading "1. 技术栈选型：只用AI最擅长的" [level=3] [ref=f1e100]
+                - paragraph [ref=f1e101]: 因为AI擅长，意味着社区里相关的高质量代码多，AI训练得更充分，犯错率更低。
+                - paragraph [ref=f1e102]:
+                  - text: 例如，
+                  - generic [ref=f1e103]: 前端框架中，AI 改 Vue 很不好用，但改 React 就很不错，后者在 AI 编程更通用。
+                - paragraph [ref=f1e104]: 参考示例：
+                - list [ref=f1e105]:
+                  - listitem [ref=f1e106]: • 网站/插件前端：Next.js + TypeScript
+                  - listitem [ref=f1e107]: • 后端服务：Python
+                  - listitem [ref=f1e108]:
+                    - text: • 样式：
+                    - link "Tailwind CSS" [ref=f1e110] [cursor=pointer]:
+                      - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=Tailwind+CSS&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJUYWlsd2luZCBDU1MiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNjA5NDU4MTYsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.emNluyNj6Oe7YlPSNNrppscvw9DcIQlD4j35Kxpx-0E&zhida_source=entity
+                      - text: Tailwind CSS
+                      - img [ref=f1e111]
+                  - listitem [ref=f1e113]:
+                    - text: • 数据库：
+                    - link "Supabase" [ref=f1e115] [cursor=pointer]:
+                      - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=Supabase&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJTdXBhYmFzZSIsInpoaWRhX3NvdXJjZSI6ImVudGl0eSIsImNvbnRlbnRfaWQiOjI2MDk0NTgxNiwiY29udGVudF90eXBlIjoiQXJ0aWNsZSIsIm1hdGNoX29yZGVyIjoxLCJ6ZF90b2tlbiI6bnVsbH0.oRx0fafiDxhNDnaUBeB9xVJ4bbFnSB5-chaKJuI5-XE&zhida_source=entity
+                      - text: Supabase
+                      - img [ref=f1e116]
+                    - text: (或Postgres)
+                  - listitem [ref=f1e118]:
+                    - text: • 部署：
+                    - link "Vercel" [ref=f1e120] [cursor=pointer]:
+                      - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=Vercel&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJWZXJjZWwiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNjA5NDU4MTYsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.jd66CnteCD7Z2Qg50Ybe2YQeB3KBB7lN1vpTFi2e4dc&zhida_source=entity
+                      - text: Vercel
+                      - img [ref=f1e121]
+                - heading "2. CLAUDE.md：给AI注入项目“灵魂”" [level=3] [ref=f1e123]:
+                  - text: "2."
+                  - code [ref=f1e124]: CLAUDE.md
+                  - text: ：给AI注入项目“灵魂”
+                - paragraph [ref=f1e125]:
+                  - text: 这是启动任何项目前的必做项 。我在项目根目录创建了
+                  - code [ref=f1e126]: CLAUDE.md
+                  - text: ，把插件的核心信息都写了进去。
+                - code [ref=f1e129]: "# 项目基础信息：AiReddit 浏览器插件 - 技术栈：Next.js, TypeScript, Tailwind CSS, Chrome Extension Manifest V3 - 核心功能：AI内容本地化、AI回复建议、社区规则解读 - 目标平台：Reddit # 代码规范 - 组件使用 PascalCase 命名 - API请求函数必须使用 try-catch 包裹 # 注意事项 - 所有与Chrome API交互的代码，必须在 content-script.js 或 background.js 中处理。"
+                - heading "3. 全局提示词 (/memory)：为AI装上“审视之眼”" [level=3] [ref=f1e130]:
+                  - text: 3. 全局提示词 (
+                  - code [ref=f1e131]: /memory
+                  - text: )：为AI装上“审视之眼”
+                - paragraph [ref=f1e132]:
+                  - text: 有时候，
+                  - generic [ref=f1e133]: 不是 AI 不行，是需求方没想好自己要干嘛导致效率低。
+                - paragraph [ref=f1e134]: 解决方案就是这“自虐式”提示词：
+                - code [ref=f1e137]: 用中文回答。每次都用审视的目光，仔细看我输入的潜在问题，你要指出我的问题，并给出明显在我思考框架之外的建议。如果你觉得我说的太离谱了，你就骂回来，帮我瞬间清醒。
+                - paragraph [ref=f1e138]:
+                  - text: 它能
+                  - generic [ref=f1e139]: 有效防止我提出模糊或不切实际的需求
+                  - text: ，让AI从一个被动的执行者，变成一个主动的、有批判性思维的协作伙伴。
+                - heading "4. Git版本控制：唯一“后悔药”" [level=3] [ref=f1e140]
+                - paragraph [ref=f1e141]: Claude Code没有内置版本管理。
+                - list [ref=f1e142]:
+                  - listitem [ref=f1e143]: • 开箱即用实践：
+                  - list [ref=f1e144]:
+                    - listitem [ref=f1e145]:
+                      - text: •
+                      - code [ref=f1e146]: git init
+                      - text: ：项目开始时立刻初始化。
+                    - listitem [ref=f1e147]:
+                      - text: •
+                      - code [ref=f1e148]:
+                        - text: "git commit -m \"feat: implement"
+                        - link "RedNote2Reddit" [ref=f1e150] [cursor=pointer]:
+                          - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=RedNote2Reddit&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJSZWROb3RlMlJlZGRpdCIsInpoaWRhX3NvdXJjZSI6ImVudGl0eSIsImNvbnRlbnRfaWQiOjI2MDk0NTgxNiwiY29udGVudF90eXBlIjoiQXJ0aWNsZSIsIm1hdGNoX29yZGVyIjoxLCJ6ZF90b2tlbiI6bnVsbH0.G2f1aSx8meBlB5kXh8GncK1z4_wOVTTuxSgw0v8FzGI&zhida_source=entity
+                          - text: RedNote2Reddit
+                          - img [ref=f1e151]
+                        - text: capture button"
+                      - text: ：每完成一个最小可用功能点 ，立刻提交。
+                    - listitem [ref=f1e153]:
+                      - text: •
+                      - code [ref=f1e154]: git checkout -b feature/ai-reply-suggestion
+                      - text: ：开发新功能（如“AI回复建议”）时，创建新分支。
+                - paragraph [ref=f1e155]:
+                  - text: 当AI把代码改崩时，
+                  - code [ref=f1e156]: git reset --hard
+                  - text: 能让你一秒回到解放前。
+                - heading "第二章：核心工作流——从需求到代码的丝滑闭环" [level=3] [ref=f1e157]
+                - heading "5. 交互模式切换 (Shift + Tab)：三板斧应对不同场景" [level=3] [ref=f1e158]:
+                  - text: 5. 交互模式切换 (
+                  - code [ref=f1e159]: Shift + Tab
+                  - text: )：三板斧应对不同场景
+                - paragraph [ref=f1e160]: 这是我用得最高频的快捷键。
+                - list [ref=f1e161]:
+                  - listitem [ref=f1e162]: • 开箱即用实践：
+                  - list [ref=f1e163]:
+                    - listitem [ref=f1e164]: • 规划阶段：切换到计划模式 (Plan Mode)，让AI先为“社区规则解读”功能出具详细的实现步骤。
+                    - listitem [ref=f1e165]: • 执行阶段：确认计划后，切换到自动接受编辑 (Auto-Accept Edits)，让它批量生成代码。
+                    - listitem [ref=f1e166]: • 调试阶段：切换回一般模式，进行精细的手动确认和修改。
+                - paragraph [ref=f1e167]: 根据任务阶段选择合适的模式，能极大提升效率，避免在规划时陷入代码细节，或在执行时被反复确认打断。
+                - heading "6. 探索-计划 (think 模式)：先谋后动，谋定后动" [level=3] [ref=f1e168]:
+                  - text: 6. 探索-计划 (
+                  - code [ref=f1e169]: think
+                  - text: 模式)：先谋后动，谋定后动
+                - paragraph [ref=f1e170]: 对于插件的复杂功能，比如“发帖建议分析”，我不会直接让它写代码。
+                - paragraph [ref=f1e171]: 而是：
+                - code [ref=f1e174]: "ultrathink hard: 为“发帖建议分析”功能制定一个详细计划。需要分析当前subreddit的热门帖子，提炼主题和标题模式，并结合用户输入的产品名，生成3个不同的发帖角度。将计划保存到 planning/post-suggestion.md。"
+                - paragraph [ref=f1e175]:
+                  - generic [ref=f1e176]: 使用
+                  - code [ref=f1e177]: "**<u>think</u>**"
+                  - generic [ref=f1e178]: ","
+                  - code [ref=f1e179]: "**<u>think hard</u>**"
+                  - generic [ref=f1e180]: ","
+                  - code [ref=f1e181]: "**<u>ultrathink</u>**"
+                  - generic [ref=f1e182]: 等关键词，可以控制AI的“思考预算”。强制AI先输出详细计划，可以确保它的实现路径是正确的，避免一开始就走偏，浪费大量时间和Token。
+                - heading "7. 测试驱动开发 (TDD)" [level=3] [ref=f1e183]
+                - paragraph [ref=f1e184]:
+                  - text: 这是
+                  - generic [ref=f1e185]: 防止AI“自由发挥”的最强手段。
+                - paragraph [ref=f1e186]: 在开发“RedNote2Reddit”中的文本提取函数时，我先写了测试：
+                - code [ref=f1e189]: "// utils/parser.test.js test('should extract title and content from RedNote HTML', () => { ... }); 我们正在进行TDD。请在 utils/parser.js 中实现 parseRedNoteHTML 函数，让它能通过这个测试。不要修改测试文件。"
+                - paragraph [ref=f1e190]:
+                  - generic [ref=f1e191]: 测试用例为AI提供了一个清晰、客观、唯一的完成标准。
+                  - text: 它的所有代码修改都必须为了“让测试变绿”，极大地约束了其行为，保证了代码质量。
+                - heading "8. 自定义Slash命令：封装你的重复工作" [level=3] [ref=f1e192]
+                - paragraph [ref=f1e193]: 我把“创建新功能组件”这个流程封装成了一个命令。
+                - paragraph [ref=f1e194]:
+                  - code [ref=f1e195]: .claude/commands/create-component.md
+                  - text: )
+                - code [ref=f1e198]: "--- description: \"为AiReddit插件创建一个新的React组件\" --- 请在 src/components/ 目录下，创建一个名为 $ARGUMENTS.tsx 的新文件。组件需要使用Tailwind CSS，并导出一个基础的React函数组件。"
+                - paragraph [ref=f1e199]:
+                  - text: 使用：
+                  - code [ref=f1e200]: /create-component ReplySuggestionPanel
+                - paragraph [ref=f1e201]:
+                  - generic [ref=f1e202]: 将高频、重复的任务流封装成自定义命令，能将多步操作简化为一行指令
+                  - text: ，极大提升开发效率。
+                - heading "9. Meta-Slash-Commands：让AI帮你写命令" [level=3] [ref=f1e203]
+                - paragraph [ref=f1e204]: 当我需要一个带版本管理的命令时，我直接让AI帮我生成。
+                - list [ref=f1e205]:
+                  - listitem [ref=f1e206]: • 开箱即用实践：
+                - code [ref=f1e209]: /create-versioned-command 'gh:review-pr "审查并评论GitHub PR" project'
+                - paragraph [ref=f1e210]:
+                  - text: 升华“自动化”思想：
+                  - generic [ref=f1e211]: 不仅工作流本身可以自动化，连创建自动化的过程也可以自动化。
+                - heading "10. **v0.dev** + Claude Code：搞定UI" [level=3] [ref=f1e212]:
+                  - text: "10."
+                  - code [ref=f1e213]: "**v0.dev**"
+                  - text: + Claude Code：搞定UI
+                - paragraph [ref=f1e214]: 插件的设置面板UI比较复杂，我没有让Claude Code硬着头皮写。
+                - list [ref=f1e215]:
+                  - listitem [ref=f1e216]: • 开箱即用实践：
+                  - list [ref=f1e217]:
+                    - listitem [ref=f1e218]:
+                      - text: • 在
+                      - code [ref=f1e219]: v0.dev
+                      - text: 中用自然语言描述：“一个侧边栏设置面板，包含一个API Key输入框，和一个模型选择下拉菜单。”
+                    - listitem [ref=f1e220]: • 将v0生成的React+Tailwind代码复制出来。
+                    - listitem [ref=f1e221]:
+                      - text: • 交给Claude Code：“这是设置面板的UI代码，请为它接入状态管理，并实现保存设置到
+                      - code [ref=f1e222]: chrome.storage
+                      - text: 的逻辑。”
+                - paragraph [ref=f1e223]:
+                  - code [ref=f1e224]: "**<u>v0.dev</u>**"
+                  - generic [ref=f1e225]: 擅长UI生成，Claude Code 擅长逻辑实现。
+                - paragraph [ref=f1e226]: 两者结合，能以最高效率产出高质量的前端组件。
+                - heading "第三章：上下文与交互——精准投喂，高效沟通" [level=3] [ref=f1e227]
+                - heading "11. 精准指令：不说废话，只给有效信息" [level=3] [ref=f1e228]
+                - paragraph [ref=f1e229]: "❌ 模糊指令 : “修复一下回复建议的bug”"
+                - paragraph [ref=f1e230]:
+                  - text: "✅ 详细指令 : “修复"
+                  - code [ref=f1e231]: ReplySuggestionPanel
+                  - text: 组件的bug：当点击‘获取回复建议’按钮时，如果API请求失败，现在界面会卡住。请在
+                  - code [ref=f1e232]: catch
+                  - text: 块中添加逻辑，将
+                  - code [ref=f1e233]: isLoading
+                  - text: 状态设为
+                  - code [ref=f1e234]: "false"
+                  - text: ，并显示一条错误提示。”
+                - heading "12. 刨根问底：别怕问“白痴”问题" [level=3] [ref=f1e235]
+                - paragraph [ref=f1e236]:
+                  - text: 当我搞不懂
+                  - code [ref=f1e237]: chrome.runtime.sendMessage
+                  - text: 的异步回调时。
+                - list [ref=f1e238]:
+                  - listitem [ref=f1e239]: • 开箱即用实践：
+                - code [ref=f1e242]: 我是一个完全不懂Chrome插件开发的后端程序员。请用一个寄快递的例子，解释 background.js 和 content-script.js 之间为什么要用 sendMessage 通信，以及回调函数扮演了什么角色。
+                - paragraph [ref=f1e243]: 不要假装你看懂了。把AI当成一个耐心的老师，反复追问，直到你真正理解为止。很多深层次的bug，都源于对基础概念的模糊理解。
+                - heading "13. 上下文管理 (/clear, /compact)：保持对话“干净”" [level=3] [ref=f1e244]:
+                  - text: 13. 上下文管理 (
+                  - code [ref=f1e245]: /clear
+                  - text: ","
+                  - code [ref=f1e246]: /compact
+                  - text: )：保持对话“干净”
+                - paragraph [ref=f1e247]:
+                  - text: 在完成了“AI回复建议”功能后，准备开始做“社区规则解读”前，我会先用
+                  - code [ref=f1e248]: /clear
+                  - text: 。
+                - paragraph [ref=f1e249]: 可以有效防止旧的、不相关的上下文信息干扰AI对新任务的理解。
+                - heading "14. 多种数据输入方式：灵活投喂" [level=3] [ref=f1e250]
+                - list [ref=f1e251]:
+                  - listitem [ref=f1e252]:
+                    - text: •
+                    - code [ref=f1e253]: "**cat error.log | claude \"分析错误\"**"
+                    - text: ": 管道输入，处理日志。"
+                  - listitem [ref=f1e254]:
+                    - text: •
+                    - code [ref=f1e255]: "**@/src/utils/api.js**"
+                    - text: ": @文件，让AI阅读特定文件。"
+                  - listitem [ref=f1e256]:
+                    - text: •
+                    - code [ref=f1e257]: "**/path/to/design.png**"
+                    - text: ": 输入图片路径，让AI看UI设计稿。"
+                - heading "15. 回滚 (回滚, 撤销)：一键撤销AI的“骚操作”" [level=3] [ref=f1e258]:
+                  - text: 15. 回滚 (
+                  - code [ref=f1e259]: 回滚
+                  - text: ","
+                  - code [ref=f1e260]: 撤销
+                  - text: )：一键撤销AI的“骚操作”
+                - paragraph [ref=f1e261]: 当AI自作主张删掉了一个关键函数时，直接输入“回滚”。
+                - paragraph [ref=f1e262]:
+                  - text: 这是比
+                  - code [ref=f1e263]: git reset
+                  - text: 更轻量级的撤销方式，专门用于回退AI在当前会话中 的文件修改。
+                - heading "16. 历史消息 (ESC x 2)：快速复用指令" [level=3] [ref=f1e264]:
+                  - text: 16. 历史消息 (
+                  - code [ref=f1e265]: ESC
+                  - text: x 2)：快速复用指令
+                - paragraph [ref=f1e266]:
+                  - text: 连续按两次
+                  - code [ref=f1e267]: ESC
+                  - text: ，可以快速调出并重新编辑之前的指令。
+                - heading "第四章：扩展与自动化——突破边界，解放双手" [level=3] [ref=f1e268]
+                - heading "17. MCP集成：扩展能力" [level=3] [ref=f1e269]:
+                  - generic [ref=f1e270]:
+                    - text: "17."
+                    - link "MCP集成" [ref=f1e272] [cursor=pointer]:
+                      - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=MCP%E9%9B%86%E6%88%90&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJNQ1Dpm4bmiJAiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNjA5NDU4MTYsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.9W505wR3KD35po9cOLHazuu0JomVLC7B46mpl2fLTZg&zhida_source=entity
+                      - text: MCP集成
+                      - img [ref=f1e273]
+                    - text: ：扩展能力
+                - paragraph [ref=f1e275]: 开发插件时，我集成了两个核心MCP。
+                - list [ref=f1e276]:
+                  - listitem [ref=f1e277]: • 开箱即用实践：
+                  - list [ref=f1e278]:
+                    - listitem [ref=f1e279]:
+                      - text: •
+                      - code [ref=f1e280]: "**context7**"
+                      - text: ": “请使用"
+                      - code [ref=f1e281]: context7
+                      - text: ，告诉我最新版
+                      - code [ref=f1e282]: react-query
+                      - text: 中
+                      - code [ref=f1e283]: useQuery
+                      - text: 的
+                      - code [ref=f1e284]: staleTime
+                      - text: 和
+                      - code [ref=f1e285]: cacheTime
+                      - text: 选项有什么区别。”
+                    - listitem [ref=f1e286]:
+                      - text: •
+                      - code [ref=f1e287]: "**puppeteer**"
+                      - text: ": “使用"
+                      - code [ref=f1e288]: puppeteer
+                      - text: 打开这个Reddit帖子，截图整个评论区，分析评论的情绪倾向。”
+                - paragraph [ref=f1e289]: MCP让Claude Code突破了自身知识库的限制，可以调用外部工具获取实时信息、执行浏览器操作，能力边界极大扩展。
+                - heading "18. Bash模式 (!)：简单命令，无需动脑" [level=3] [ref=f1e290]:
+                  - text: 18. Bash模式 (
+                  - code [ref=f1e291]: "!"
+                  - text: )：简单命令，无需动脑
+                - paragraph [ref=f1e292]:
+                  - text: 需要查看当前目录文件列表时，我直接用
+                  - code [ref=f1e293]: "!ls -l"
+                  - text: 。
+                - list [ref=f1e294]:
+                  - listitem [ref=f1e295]:
+                    - text: • 为什么更好用：对于简单的shell命令，使用
+                    - code [ref=f1e296]: "!"
+                    - text: 前缀可以直接在bash中执行，无需经过大模型思考，速度快，不花钱。
+                - paragraph [ref=f1e297]
+                - figure [ref=f1e298]:
+                  - img [ref=f1e300]
+                - paragraph [ref=f1e301]
+                - heading "19. 无头模式 (claude -p \"...\")：CI/CD集成" [level=3] [ref=f1e302]:
+                  - text: 19. 无头模式 (
+                  - code [ref=f1e303]: claude -p "..."
+                  - text: )：CI/CD集成
+                - paragraph [ref=f1e304]: 我将代码格式化检查加入了CI流程。
+                - list [ref=f1e305]:
+                  - listitem [ref=f1e306]: • 开箱即用实践 (package.json)：
+                - code [ref=f1e309]: "\"scripts\": { \"lint:claude\": \"claude -p '检查所有暂存文件，报告不符合ESLint规范的地方。'\" }"
+                - paragraph [ref=f1e310]: 无头模式让Claude Code可以作为自动化脚本的一部分被调用，实现代码的自动检查、修复和部署。
+                - heading "20. Pre-Commit Hooks：提交前的最后一道防线" [level=3] [ref=f1e311]
+                - paragraph [ref=f1e312]:
+                  - text: 在
+                  - code [ref=f1e313]: .git/hooks/pre-commit
+                  - text: 中加入脚本，让Claude Code在每次提交前自动检查代码，保证入库代码质量。
+                - heading "21. Claude Code Hooks：生命周期内的精细控制" [level=3] [ref=f1e314]
+                - paragraph [ref=f1e315]:
+                  - text: 我配置了一个
+                  - code [ref=f1e316]: PostToolUse
+                  - text: 钩子，在每次编辑完
+                  - code [ref=f1e317]: .tsx
+                  - text: 文件后自动运行Prettier。
+                - list [ref=f1e318]:
+                  - listitem [ref=f1e319]:
+                    - text: • 开箱即用实践 (
+                    - code [ref=f1e320]: .claude/settings.json
+                    - text: )：
+                - code [ref=f1e323]: "[[hooks]] event = \"PostToolUse\" [hooks.matcher] tool_name = \"edit_file\" file_paths = [\"src/**/*.tsx\"] command = \"prettier --write $CLAUDE_FILE_PATHS\""
+                - paragraph [ref=f1e324]:
+                  - text: Hooks提供了
+                  - generic [ref=f1e325]: 在Claude Code执行流程中注入自定义逻辑的能力
+                  - text: ，实现了更深层次的自动化。
+                - heading "第五章：架构与重构——写出能维护的好代码" [level=3] [ref=f1e326]
+                - heading "22. Roo Code + Claude Code：架构先行" [level=3] [ref=f1e327]:
+                  - generic [ref=f1e328]:
+                    - text: "22."
+                    - link "Roo Code" [ref=f1e330] [cursor=pointer]:
+                      - /url: https://zhida.zhihu.com/search?content_id=260945816&content_type=Article&match_order=1&q=Roo+Code&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3ODMzMjkyNTUsInEiOiJSb28gQ29kZSIsInpoaWRhX3NvdXJjZSI6ImVudGl0eSIsImNvbnRlbnRfaWQiOjI2MDk0NTgxNiwiY29udGVudF90eXBlIjoiQXJ0aWNsZSIsIm1hdGNoX29yZGVyIjoxLCJ6ZF90b2tlbiI6bnVsbH0.P0ZY5PbXXCsx5p6FXP3bTLnDwNgU9EJ9DjdF1RMDFjQ&zhida_source=entity
+                      - text: Roo Code
+                      - img [ref=f1e331]
+                    - text: + Claude Code：架构先行
+                - paragraph [ref=f1e333]: 在设计插件的整体架构时，我先用了Roo Code。
+                - paragraph [ref=f1e334]
+                - figure [ref=f1e335]:
+                  - img [ref=f1e337]
+                - paragraph [ref=f1e338]
+                - list [ref=f1e339]:
+                  - listitem [ref=f1e340]: • 开箱即用实践：
+                  - list [ref=f1e341]:
+                    - listitem [ref=f1e342]:
+                      - text: • 在VSCode中安装Roo Code插件，选择
+                      - code [ref=f1e343]: Architect
+                      - text: 模式。
+                    - listitem [ref=f1e344]: • 与Roo Code对话，明确插件的模块划分（UI、内容脚本、背景服务、API通信）。
+                    - listitem [ref=f1e345]: • 将Roo Code生成的架构图和Markdown文档，发给Claude Code，让它据此进行编码。
+                - paragraph [ref=f1e346]:
+                  - generic [ref=f1e347]: Roo Code擅长架构设计和可视化，Claude Code擅长代码实现。
+                  - text: 分工合作，能确保项目从一开始就有清晰、合理的结构。
+                - heading "23. 持续重构：别让AI的“代码屎山”埋了你" [level=3] [ref=f1e348]
+                - paragraph [ref=f1e349]:
+                  - text: 当发现
+                  - code [ref=f1e350]: content-script.js
+                  - text: 里的逻辑越来越臃肿时：
+                - code [ref=f1e353]: 请分析 content-script.js 文件。它现在同时处理了DOM操作、API请求和状态缓存，逻辑混乱。请提出一个重构方案，将其拆分为三个独立的模块：dom-controller.js, api-handler.js, state-manager.js。先给我重构计划，不要直接动手。
+                - paragraph [ref=f1e354]:
+                  - text: AI在反复修改后容易产生“
+                  - generic [ref=f1e355]: 代码熵增
+                  - text: ”。定期、主动地让AI进行重构，是保持代码库健康、可维护的必要操作。
+                - heading "24. 复杂逻辑拆分为微服务" [level=3] [ref=f1e356]
+                - paragraph [ref=f1e357]: 如果“发帖建议分析”这个功能变得异常复杂，包含了多源数据采集、NLP处理、模型调用等，我会将其剥离。
+                - paragraph [ref=f1e358]:
+                  - generic [ref=f1e359]: 当单个文件或模块的逻辑复杂度超出AI能稳定处理的范畴时，将其拆分为独立的、通过HTTP通信的服务，是解决“AI幻觉”的根本手段。
+                - heading "25. 学习设计模式和代码简洁之道" [level=3] [ref=f1e360]
+                - paragraph [ref=f1e361]: 这是对使用者 的要求。你需要懂一些基本的设计原则。
+                - code [ref=f1e364]: 你刚才为我生成了api-handler.js。请分析一下，这个实现符合哪些设计模式（如工厂模式、单例模式）？是否遵循了《代码简洁之道》中的单一职责原则？
+                - paragraph [ref=f1e365]: 你对软件工程的理解深度，决定了AI 编程效果的上限。
+                - heading "第六章：性能与协作——榨干最后一滴价值" [level=3] [ref=f1e366]
+                - heading "26. Code Review模式：双Claude协作" [level=3] [ref=f1e367]
+                - paragraph [ref=f1e368]: 我经常开两个终端窗口，一个用于编码，一个用于审查。
+                - list [ref=f1e369]:
+                  - listitem [ref=f1e370]: • 开箱即用实践：
+                  - list [ref=f1e371]:
+                    - listitem [ref=f1e372]:
+                      - text: "• 终端1:"
+                      - code [ref=f1e373]: claude "实现AI回复建议的UI界面"
+                    - listitem [ref=f1e374]:
+                      - text: "• 终端2:"
+                      - code [ref=f1e375]: claude "请审查刚才实现的ReplySuggestionPanel.tsx组件，检查其代码风格和可复用性。"
+                - paragraph [ref=f1e376]:
+                  - generic [ref=f1e377]: 利用AI的“左右互搏”，能从不同角度发现代码中的潜在问题。
+                - heading "27. 并行开发 (git worktree)：多个AI同时干活" [level=3] [ref=f1e378]:
+                  - text: 27. 并行开发 (
+                  - code [ref=f1e379]: git worktree
+                  - text: )：多个AI同时干活
+                - paragraph [ref=f1e380]: 当我要同时开发“UI美化”和“性能优化”两个功能时。
+                - list [ref=f1e381]:
+                  - listitem [ref=f1e382]: • 开箱即用实践：
+                - code [ref=f1e385]: "git worktree add -b feature/ui-polish ../aireddit-ui git worktree add -b feature/performance ../aireddit-perf # 分别在两个新目录中启动Claude Code"
+                - paragraph [ref=f1e386]:
+                  - code [ref=f1e387]: git worktree
+                  - text: 为并行开发提供了完美的、相互隔离的环境，让你能同时驱动多个Claude Code实例处理不同任务，极大提升开发吞吐量。
+                - heading "28. IDE集成：在熟悉的环境中实践" [level=3] [ref=f1e388]
+                - paragraph [ref=f1e389]: 我把Claude Code集成在了Cursor或VS Code的终端里，可以继续使用IDE原生的文件管理、代码高亮、调试等功能，取长补短。
+                - heading "29. CLI快捷键（Emacs模式）" [level=3] [ref=f1e390]
+                - list [ref=f1e391]:
+                  - listitem [ref=f1e392]: • 开箱即用实践：
+                  - list [ref=f1e393]:
+                    - listitem [ref=f1e394]:
+                      - text: •
+                      - code [ref=f1e395]: Ctrl + A
+                      - text: /
+                      - code [ref=f1e396]: Ctrl + E
+                      - text: ": 跳转行首/行尾。"
+                    - listitem [ref=f1e397]:
+                      - text: •
+                      - code [ref=f1e398]: Ctrl + U
+                      - text: /
+                      - code [ref=f1e399]: Ctrl + K
+                      - text: ": 删除整行/行尾内容。"
+                - heading "30. 版本升级 (npm install -g ...)：永远使用最新版" [level=3] [ref=f1e400]:
+                  - text: 30. 版本升级 (
+                  - code [ref=f1e401]: npm install -g ...
+                  - text: )：永远使用最新版
+                - paragraph [ref=f1e402]: 定期运行升级命令，确保你用的是最新版的Claude Code。
+                - separator [ref=f1e403]
+                - paragraph [ref=f1e404]: 好了，以上就是我在开发AiReddit插件过程中，总结提炼出的30个榨干Claude Code的实战技巧。
+                - paragraph [ref=f1e405]: 核心就一句话：你必须成为一个优秀的架构师和项目经理，才能把Claude Code这个能力超群但毫无经验的“实习生”，调教成你最得力的编程伙伴。
+                - paragraph [ref=f1e406]: 你还有什么独家的“驯服”AI技巧吗？或者在使用中踩过什么大坑？欢迎在评论区留言交流，我们一起探索AI编程的更多可能！
+                - paragraph [ref=f1e407]: 本文由知乎作者【饼干哥哥AGI】，微信公众号：【饼干哥哥AGI】，原创/授权 发布于知乎，未经许可，禁止转载。
+                - paragraph
+              - button "发布于 2025-07-28 23:21・浙江" [ref=f1e408]
+              - generic [ref=f1e410]:
+                - link "交互设计" [ref=f1e413] [cursor=pointer]:
+                  - /url: //www.zhihu.com/topic/19556231
+                  - generic [ref=f1e414]: 交互设计
+                - link "工作流" [ref=f1e417] [cursor=pointer]:
+                  - /url: //www.zhihu.com/topic/19596841
+                  - generic [ref=f1e418]: 工作流
+                - link "claude" [ref=f1e421] [cursor=pointer]:
+                  - /url: //www.zhihu.com/topic/27244636
+                  - generic [ref=f1e422]: claude
+              - generic [ref=f1e426]:
+                - generic [ref=f1e427]:
+                  - button "赞同 42" [ref=f1e429] [cursor=pointer]:
+                    - img [ref=f1e431]
+                    - text: 赞同 42
+                  - button "反对" [ref=f1e433] [cursor=pointer]:
+                    - img [ref=f1e435]
+                - button "2 条评论" [ref=f1e437] [cursor=pointer]:
+                  - img [ref=f1e439]
+                  - text: 2 条评论
+                - button "收藏" [ref=f1e441] [cursor=pointer]:
+                  - img [ref=f1e443]
+                  - text: "121"
+                - button "喜欢" [ref=f1e445] [cursor=pointer]:
+                  - img [ref=f1e447]
+                  - text: "6"
+                - button "分享" [ref=f1e451] [cursor=pointer]:
+                  - img [ref=f1e453]
+                  - text: 分享
+                - button "申请转载" [ref=f1e455] [cursor=pointer]:
+                  - img [ref=f1e457]
+                  - text: 申请转载
+                - button [ref=f1e461] [cursor=pointer]:
+                  - img [ref=f1e463]
+                - button [ref=f1e469] [cursor=pointer]:
+                  - img [ref=f1e471]
+            - generic [ref=f1e475]:
+              - textbox [ref=f1e486]
+              - generic [ref=f1e493]: 暂无评论
+          - generic [ref=f1e502]:
+            - generic "边栏锚点"
+            - generic [ref=f1e503]:
+              - complementary "关于作者" [ref=f1e504]:
+                - generic [ref=f1e506]: 关于作者
+                - generic [ref=f1e508]:
+                  - link "饼干哥哥AGI" [ref=f1e511] [cursor=pointer]:
+                    - /url: //www.zhihu.com/people/sonnyles
+                    - img "饼干哥哥AGI" [ref=f1e512]
+                  - link "饼干哥哥AGI" [ref=f1e516] [cursor=pointer]:
+                    - /url: //www.zhihu.com/people/sonnyles
+                - generic [ref=f1e517]:
+                  - generic [ref=f1e519]:
+                    - link "回答" [ref=f1e520] [cursor=pointer]:
+                      - /url: //www.zhihu.com/people/sonnyles/answers
+                      - generic [ref=f1e521]:
+                        - generic [ref=f1e522]: 回答
+                        - strong
+                    - link "文章" [ref=f1e523] [cursor=pointer]:
+                      - /url: //www.zhihu.com/people/sonnyles/posts
+                      - generic [ref=f1e524]:
+                        - generic [ref=f1e525]: 文章
+                        - strong
+                    - link "关注者" [ref=f1e526] [cursor=pointer]:
+                      - /url: //www.zhihu.com/people/sonnyles/followers
+                      - generic [ref=f1e527]:
+                        - generic [ref=f1e528]: 关注者
+                        - strong
+                  - generic [ref=f1e529]:
+                    - button "关注他" [ref=f1e530] [cursor=pointer]:
+                      - img [ref=f1e532]
+                      - text: 关注他
+                    - button "发私信" [ref=f1e534] [cursor=pointer]:
+                      - img [ref=f1e536]
+                      - text: 发私信
+              - generic [ref=f1e539]:
+                - img
+                - generic [ref=f1e540]:
+                  - img [ref=f1e541]
+                  - generic [ref=f1e543]: 大家都在搜
+                  - button "换一换" [ref=f1e544] [cursor=pointer]:
+                    - img [ref=f1e545]
+                    - text: 换一换
+                - generic [ref=f1e547]:
+                  - generic [ref=f1e548] [cursor=pointer]:
+                    - link "官方通报西安赛格商场人员坠楼 376 万" [ref=f1e550]:
+                      - /url: https://www.zhihu.com/search?q=%E5%AE%98%E6%96%B9%E9%80%9A%E6%8A%A5%E8%A5%BF%E5%AE%89%E8%B5%9B%E6%A0%BC%E5%95%86%E5%9C%BA%E4%BA%BA%E5%91%98%E5%9D%A0%E6%A5%BC&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                      - generic "官方通报西安赛格商场人员坠楼" [ref=f1e551]
+                      - generic [ref=f1e552]: 376 万
+                    - generic [ref=f1e553]: 热
+                  - generic [ref=f1e554] [cursor=pointer]:
+                    - link "阿根廷3-2险胜佛得角 371 万" [ref=f1e556]:
+                      - /url: https://www.zhihu.com/search?q=%E9%98%BF%E6%A0%B9%E5%BB%B73-2%E9%99%A9%E8%83%9C%E4%BD%9B%E5%BE%97%E8%A7%92&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                      - generic "阿根廷3-2险胜佛得角" [ref=f1e557]
+                      - generic [ref=f1e558]: 371 万
+                    - generic [ref=f1e559]: 热
+                  - generic [ref=f1e560] [cursor=pointer]:
+                    - link "王楚钦孙颖莎获混双亚军 354 万" [ref=f1e562]:
+                      - /url: https://www.zhihu.com/search?q=%E7%8E%8B%E6%A5%9A%E9%92%A6%E5%AD%99%E9%A2%96%E8%8E%8E%E8%8E%B7%E6%B7%B7%E5%8F%8C%E4%BA%9A%E5%86%9B&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                      - generic "王楚钦孙颖莎获混双亚军" [ref=f1e563]
+                      - generic [ref=f1e564]: 354 万
+                    - generic [ref=f1e565]: 新
+                  - generic [ref=f1e566] [cursor=pointer]:
+                    - link "新能源汽车车船税优惠政策调整 345 万" [ref=f1e568]:
+                      - /url: https://www.zhihu.com/search?q=%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E8%BD%A6%E8%88%B9%E7%A8%8E%E4%BC%98%E6%83%A0%E6%94%BF%E7%AD%96%E8%B0%83%E6%95%B4&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                      - generic "新能源汽车车船税优惠政策调整" [ref=f1e569]
+                      - generic [ref=f1e570]: 345 万
+                    - generic [ref=f1e571]: 新
+                  - link "哥伦比亚 1 比 0 加纳 343 万" [ref=f1e574] [cursor=pointer]:
+                    - /url: https://www.zhihu.com/search?q=%E5%93%A5%E4%BC%A6%E6%AF%94%E4%BA%9A+1+%E6%AF%94+0+%E5%8A%A0%E7%BA%B3&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                    - generic "哥伦比亚 1 比 0 加纳" [ref=f1e575]
+                    - generic [ref=f1e576]: 343 万
+                  - generic [ref=f1e577] [cursor=pointer]:
+                    - link "蒋方舟回应遭清华教授举报论文造假 341 万" [ref=f1e579]:
+                      - /url: https://www.zhihu.com/search?q=%E8%92%8B%E6%96%B9%E8%88%9F%E5%9B%9E%E5%BA%94%E9%81%AD%E6%B8%85%E5%8D%8E%E6%95%99%E6%8E%88%E4%B8%BE%E6%8A%A5%E8%AE%BA%E6%96%87%E9%80%A0%E5%81%87&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                      - generic "蒋方舟回应遭清华教授举报论文造假" [ref=f1e580]
+                      - generic [ref=f1e581]: 341 万
+                    - generic [ref=f1e582]: 热
+                  - generic [ref=f1e583] [cursor=pointer]:
+                    - link "曝有人学术造假后入职浙大清华 337 万" [ref=f1e585]:
+                      - /url: https://www.zhihu.com/search?q=%E6%9B%9D%E6%9C%89%E4%BA%BA%E5%AD%A6%E6%9C%AF%E9%80%A0%E5%81%87%E5%90%8E%E5%85%A5%E8%81%8C%E6%B5%99%E5%A4%A7%E6%B8%85%E5%8D%8E&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                      - generic "曝有人学术造假后入职浙大清华" [ref=f1e586]
+                      - generic [ref=f1e587]: 337 万
+                    - generic [ref=f1e588]: 热
+                  - link "夫妻月入两万被登记困难职工 302 万" [ref=f1e591] [cursor=pointer]:
+                    - /url: https://www.zhihu.com/search?q=%E5%A4%AB%E5%A6%BB%E6%9C%88%E5%85%A5%E4%B8%A4%E4%B8%87%E8%A2%AB%E7%99%BB%E8%AE%B0%E5%9B%B0%E9%9A%BE%E8%81%8C%E5%B7%A5&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                    - generic "夫妻月入两万被登记困难职工" [ref=f1e592]
+                    - generic [ref=f1e593]: 302 万
+                  - link "葡萄牙 2-1 克罗地亚 300 万" [ref=f1e596] [cursor=pointer]:
+                    - /url: https://www.zhihu.com/search?q=%E8%91%A1%E8%90%84%E7%89%99+2-1+%E5%85%8B%E7%BD%97%E5%9C%B0%E4%BA%9A&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                    - generic "葡萄牙 2-1 克罗地亚" [ref=f1e597]
+                    - generic [ref=f1e598]: 300 万
+                  - link "西安赛格回应商户坠亡 284 万" [ref=f1e601] [cursor=pointer]:
+                    - /url: https://www.zhihu.com/search?q=%E8%A5%BF%E5%AE%89%E8%B5%9B%E6%A0%BC%E5%9B%9E%E5%BA%94%E5%95%86%E6%88%B7%E5%9D%A0%E4%BA%A1&search_source=Trending&utm_content=search_hot&utm_medium=organic&utm_source=zhihu&type=content
+                    - generic "西安赛格回应商户坠亡" [ref=f1e602]
+                    - generic [ref=f1e603]: 284 万
+        - complementary "推荐阅读" [ref=f1e605]:
+          - heading "推荐阅读" [level=3] [ref=f1e606]
+          - list [ref=f1e607]:
+            - link "Claude Code狠甩竞品十条街，花230块一个月3天工 半年烧掉上万订阅费，亲测Copilot、Cursor、Claude Code、Aider、Windsurf，终于摸出“80%日常+20%核爆”组合，单月省15小时，1小时200刀单价直接回本，附赠GitHub Actions无人值守PR黑科技… 极道Jdon" [ref=f1e608] [cursor=pointer]:
+              - /url: https://zhuanlan.zhihu.com/p/1974055942191597426
+              - generic [ref=f1e609]:
+                - heading "Claude Code狠甩竞品十条街，花230块一个月3天工" [level=1] [ref=f1e610]
+                - paragraph [ref=f1e611]: 半年烧掉上万订阅费，亲测Copilot、Cursor、Claude Code、Aider、Windsurf，终于摸出“80%日常+20%核爆”组合，单月省15小时，1小时200刀单价直接回本，附赠GitHub Actions无人值守PR黑科技…
+                - generic [ref=f1e613]: 极道Jdon
+            - link "介绍一些我正在使用 claude code 的 skill 和 MCP 直接安装 claude code 完成后，是裸机，只能写一些简单的代码，干一些简单的事，增删查改一些文件，运行一些简单的 bash 命令。 所以必须得安装 MCP 和 skill ，前者是直接可以让 AI 去干的… 独元殇" [ref=f1e614] [cursor=pointer]:
+              - /url: https://zhuanlan.zhihu.com/p/2020780834286829973
+              - generic [ref=f1e615]:
+                - heading "介绍一些我正在使用 claude code 的 skill 和 MCP" [level=1] [ref=f1e616]
+                - paragraph [ref=f1e617]: 直接安装 claude code 完成后，是裸机，只能写一些简单的代码，干一些简单的事，增删查改一些文件，运行一些简单的 bash 命令。 所以必须得安装 MCP 和 skill ，前者是直接可以让 AI 去干的…
+                - generic [ref=f1e619]: 独元殇
+            - link "Claude Code史诗级更新，突破终端，把工作实时变成网页看板 Claude Code 的输出终于不只是终端里无聊的文字了！ 今天，Anthropic 宣布 Claude Code 的一个重磅更新，正式支持 Artifacts 功能。能够实现实时地把用户在终端里和 Claude Code 对话的过程… 机器之心" [ref=f1e620] [cursor=pointer]:
+              - /url: https://zhuanlan.zhihu.com/p/2051357092750145458
+              - generic [ref=f1e621]:
+                - heading "Claude Code史诗级更新，突破终端，把工作实时变成网页看板" [level=1] [ref=f1e622]
+                - paragraph [ref=f1e623]: Claude Code 的输出终于不只是终端里无聊的文字了！ 今天，Anthropic 宣布 Claude Code 的一个重磅更新，正式支持 Artifacts 功能。能够实现实时地把用户在终端里和 Claude Code 对话的过程…
+                - generic [ref=f1e625]: 机器之心
+            - link "从0到1彻底掌握Trae：手把手带你实战开发AI Chatbot，提升开发效率的必备指南！ 从0到1彻底掌握Trae：手把手带你实战开发AI Chatbot，提升开发效率的必备指南！ Kian Ried" [ref=f1e626] [cursor=pointer]:
+              - /url: https://zhuanlan.zhihu.com/p/22542620905
+              - generic [ref=f1e627]:
+                - img "从0到1彻底掌握Trae：手把手带你实战开发AI Chatbot，提升开发效率的必备指南！" [ref=f1e628]
+                - heading "从0到1彻底掌握Trae：手把手带你实战开发AI Chatbot，提升开发效率的必备指南！" [level=1] [ref=f1e629]
+                - generic [ref=f1e631]: Kian Ried
+            - button [ref=f1e632] [cursor=pointer]:
+              - img [ref=f1e633]
+    - complementary:
+      - button "回到顶部" [ref=f1e635] [cursor=pointer]:
+        - img [ref=f1e636]
+  - generic [ref=f1e641] [cursor=pointer]:
+    - combobox [ref=f1e642]
+    - img [ref=f1e643]
+  - generic [active] [ref=f1e647]:
+    - generic [ref=f1e651]:
+      - generic [ref=f1e652]:
+        - generic [ref=f1e653]:
+          - generic [ref=f1e654]:
+            - generic [ref=f1e655]: 打开知乎App
+            - generic [ref=f1e656]: 在「我的页」右上角打开扫一扫
+            - generic [ref=f1e664]: 其他扫码方式：微信
+          - generic [ref=f1e665]:
+            - button "下载知乎App" [ref=f1e667] [cursor=pointer]
+            - button "无障碍模式" [ref=f1e669] [cursor=pointer]
+        - generic [ref=f1e671]:
+          - generic [ref=f1e673]:
+            - generic [ref=f1e674]:
+              - generic [ref=f1e675]:
+                - button "验证码登录" [ref=f1e676] [cursor=pointer]
+                - button "密码登录" [ref=f1e677] [cursor=pointer]
+                - link "开通机构号" [ref=f1e678] [cursor=pointer]:
+                  - /url: /org/signup
+              - textbox [ref=f1e682]:
+                - /placeholder: 手机号
+              - generic [ref=f1e683]:
+                - textbox [ref=f1e686]:
+                  - /placeholder: 输入 6 位短信验证码
+                - button "获取短信验证码" [ref=f1e687] [cursor=pointer]
+              - generic [ref=f1e688]:
+                - button
+                - button "忘记密码" [ref=f1e689] [cursor=pointer]:
+                  - generic [ref=f1e690]: 忘记密码
+              - button "登录/注册" [ref=f1e691] [cursor=pointer]
+            - generic:
+              - log
+          - generic [ref=f1e694]: 其他方式登录
+          - generic [ref=f1e697]:
+            - button [ref=f1e698] [cursor=pointer]:
+              - img [ref=f1e699]
+            - button [ref=f1e701] [cursor=pointer]:
+              - img [ref=f1e702]
+            - button [ref=f1e704] [cursor=pointer]:
+              - img [ref=f1e705]
+          - generic [ref=f1e707]:
+            - text: 未注册手机验证后自动登录，注册即代表同意
+            - link "《知乎协议》" [ref=f1e708] [cursor=pointer]:
+              - /url: https://www.zhihu.com/term/zhihu-terms
+            - link "《隐私保护指引》" [ref=f1e709] [cursor=pointer]:
+              - /url: https://www.zhihu.com/term/privacy
+      - generic:
+        - paragraph: 扫码下载知乎 App
+        - button "关闭二维码":
+          - img
+          - text: 关闭二维码
+    - button "关闭" [ref=f1e710] [cursor=pointer]:
+      - img [ref=f1e711]
+  - generic [ref=f1e715]:
+    - generic [ref=f1e719]:
+      - generic [ref=f1e720]:
+        - generic [ref=f1e721]:
+          - generic [ref=f1e722]:
+            - generic [ref=f1e723]: 打开知乎App
+            - generic [ref=f1e724]: 在「我的页」右上角打开扫一扫
+            - generic [ref=f1e732]: 其他扫码方式：微信
+          - generic [ref=f1e733]:
+            - button "下载知乎App" [ref=f1e735] [cursor=pointer]
+            - button "无障碍模式" [ref=f1e737] [cursor=pointer]
+        - generic [ref=f1e739]:
+          - generic [ref=f1e741]:
+            - generic [ref=f1e742]:
+              - generic [ref=f1e743]:
+                - button "验证码登录" [ref=f1e744] [cursor=pointer]
+                - button "密码登录" [ref=f1e745] [cursor=pointer]
+                - link "开通机构号" [ref=f1e746] [cursor=pointer]:
+                  - /url: /org/signup
+              - textbox [ref=f1e750]:
+                - /placeholder: 手机号
+              - generic [ref=f1e751]:
+                - textbox [ref=f1e754]:
+                  - /placeholder: 输入 6 位短信验证码
+                - button "获取短信验证码" [ref=f1e755] [cursor=pointer]
+              - generic [ref=f1e756]:
+                - button
+                - button "忘记密码" [ref=f1e757] [cursor=pointer]:
+                  - generic [ref=f1e758]: 忘记密码
+              - button "登录/注册" [ref=f1e759] [cursor=pointer]
+            - generic:
+              - log
+          - generic [ref=f1e762]: 其他方式登录
+          - generic [ref=f1e765]:
+            - button [ref=f1e766] [cursor=pointer]:
+              - img [ref=f1e767]
+            - button [ref=f1e769] [cursor=pointer]:
+              - img [ref=f1e770]
+            - button [ref=f1e772] [cursor=pointer]:
+              - img [ref=f1e773]
+          - generic [ref=f1e775]:
+            - text: 未注册手机验证后自动登录，注册即代表同意
+            - link "《知乎协议》" [ref=f1e776] [cursor=pointer]:
+              - /url: https://www.zhihu.com/term/zhihu-terms
+            - link "《隐私保护指引》" [ref=f1e777] [cursor=pointer]:
+              - /url: https://www.zhihu.com/term/privacy
+      - generic:
+        - paragraph: 扫码下载知乎 App
+        - button "关闭二维码":
+          - img
+          - text: 关闭二维码
+    - button "关闭" [ref=f1e778] [cursor=pointer]:
+      - img [ref=f1e779]
