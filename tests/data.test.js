@@ -15,9 +15,9 @@ describe('data integrity', () => {
     const ids = new Set(INGREDIENTS.map(i => i.id));
     for (const d of DISHES) for (const ing of d.recipe) expect(ids.has(ing), `${d.id}:${ing}`).toBe(true);
   });
-  it('每道菜/顾客都有 img 字段', () => {
-    for (const d of DISHES) expect(typeof d.img).toBe('string');
-    for (const c of CUSTOMER_TYPES) expect(typeof c.img).toBe('string');
+  it('每道菜/顾客都有 emoji（本作用 emoji 视觉，不依赖外部美术）', () => {
+    for (const d of DISHES) expect(d.emoji && typeof d.emoji === 'string').toBeTruthy();
+    for (const c of CUSTOMER_TYPES) expect(c.emoji && typeof c.emoji === 'string').toBeTruthy();
   });
   it('规模达标: 食材≥10 菜≥12 顾客≥6 升级≥7 声望等级=6 事件≥8', () => {
     expect(INGREDIENTS.length).toBeGreaterThanOrEqual(10);

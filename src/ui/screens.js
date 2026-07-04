@@ -87,7 +87,7 @@ function renderPrep(state, dispatch) {
     // 显示当前食材还能再做几份，把"买的原料"和"能炒的菜"直接挂钩
     const desc = `配方 ${recipeTxt}｜卖 $${d.price}｜库存还能做 ${canMake} 份`;
     return stepperRow(
-      pic(d.img, d.emoji, 'item-emoji'), d.name, desc, cooked,
+      pic(d.emoji, 'item-emoji'), d.name, desc, cooked,
       () => dispatch({ type: 'COOK', id: d.id, qty: -1 }),
       () => dispatch({ type: 'COOK', id: d.id, qty: 1 }),
       cooked <= 0, canMake <= 0 || used >= cap);
@@ -104,7 +104,7 @@ function renderService(state, dispatch) {
   const svc = state.service;
   const cur = svc.current;
   const ct = CT_BY_ID[cur.type];
-  const face = pic(ct.img, ct.emoji, 'customer-face');
+  const face = pic(ct.emoji, 'customer-face');
   const orderChips = h('div', { class: 'order-list' },
     ...cur.dishes.map(id => {
       const miss = (state.cooked[id] || 0) <= 0 && svc.step === 'meet';

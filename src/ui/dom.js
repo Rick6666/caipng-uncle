@@ -17,13 +17,9 @@ export function h(tag, attrs = {}, ...children) {
   return el;
 }
 
-// 菜品/顾客图：像素画 + 加载失败回退 emoji
-export function pic(src, emoji, cls) {
-  const span = h('span', { class: cls });
-  const img = h('img', { src, alt: '', style: 'width:100%;height:100%;object-fit:contain;display:block' });
-  img.addEventListener('error', () => { span.textContent = emoji; });
-  span.append(img);
-  return span;
+// 菜品/顾客图标：本作采用 emoji 视觉，不加载外部美术资产（避免 404、零网络依赖）
+export function pic(emoji, cls) {
+  return h('span', { class: cls }, emoji);
 }
 
 let toastLayer;

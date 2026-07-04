@@ -1,0 +1,10 @@
+[   53816ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:8000/?seed=3:0
+[   76706ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%A5%97:0
+[   76707ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%AB%9B:0
+[   76707ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%A5%AC:0
+[   76708ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%8D%B3:0
+[   76708ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%A5%9A:0
+[   76709ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%8D%96:0
+[   76710ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%A7%91%E2%80%8D%F0%9F%92%BC:0
+[   76711ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%A5%A9:0
+[   76711ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8000/%F0%9F%8D%9B:0
