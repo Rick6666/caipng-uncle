@@ -58,7 +58,8 @@ function runService(s, tier, useSub) {
   let guard = 0;
   while (s.phase === 'service' && guard++ < 300) {
     const step = s.service.step;
-    if (step === 'meet') {
+    if (step === 'request') s = dispatch(s, 'RESOLVE_REQUEST', { accept: true }); // bot 默认应对需求
+    else if (step === 'meet') {
       if (s.service.canServe) s = dispatch(s, 'SERVE');
       else if (useSub && canSubAll(s)) s = dispatch(s, 'OFFER_SUB');
       else s = dispatch(s, 'APOLOGIZE');

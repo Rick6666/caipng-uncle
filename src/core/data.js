@@ -92,6 +92,20 @@ export const REACTION = {
   foodie:     { kind: { pay: 1.0, rep: 4 }, normal: { pay: 1.0, rep: 2 }, slash: { pay: 0.6, repPaid: -5, repWalk: -4 } }
 };
 
+// 特殊顾客需求（CR-19）：部分顾客见面时提请求，玩家「应对 / 拒绝」二选一，效果累积到打法风格。
+// chance = 该类顾客触发概率；应对多为「贴一点成本/耐心换口碑」，拒绝多为「省事但掉一点口碑」。
+export const REQUESTS = {
+  labourer:   { chance: 0.35, prompt: '加饭加肉啦 Uncle，兄弟今天出大力！',
+                accept:  { rep: 2, money: -2, label: '给他加料', line: '你多舀了一勺肉，工人咧嘴一笑：够意思！' },
+                decline: { rep: 0, money: 0,  label: '照常份量', line: '你照常份量出餐，工人耸耸肩收下了。' } },
+  influencer: { chance: 0.50, prompt: '等等，我摆盘拍个照先，Uncle 配合下 📸',
+                accept:  { rep: 3, money: 0,  label: '配合她拍', line: '你耐心等她摆好拍完，她笑着比了个赞：帮你 post！' },
+                decline: { rep: -1, money: 0, label: '赶时间啦', line: '你说赶时间下一位，她撇撇嘴收起了手机。' } },
+  ahma:       { chance: 0.30, prompt: 'Uncle，让阿嬷先试吃一小口好吗 hor？',
+                accept:  { rep: 1, money: 0,  label: '夹一口给她', line: '你夹了一小块给她，阿嬷点点头：新鲜，好！' },
+                decline: { rep: -1, money: 0, label: '不好意思啦', line: '你婉拒了，阿嬷嘟囔了一句「小气」。' } }
+};
+
 export const REP_LEVELS = [
   { threshold: 0,   title: '路边小摊' },
   { threshold: 15,  title: '巷口熟客' },

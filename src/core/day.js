@@ -1,4 +1,4 @@
-import { CONST, DISHES, UPGRADES } from './data.js';
+import { CONST, DISHES, UPGRADES, REQUESTS } from './data.js';
 import { createRng } from './rng.js';
 import { newGame, prepCap, ingredientPrice, unlockedIngredients } from './state.js';
 import { generateQueue, resolveQuote, resolveHaggle, findSubstitute } from './customers.js';
@@ -18,6 +18,7 @@ export function reduce(state, action) {
     case 'FINISH_MORNING':return guard(state, ['morning'], () => ({ ...state, phase: 'prep' }));
     case 'COOK':          return guard(state, ['prep'], () => doCook(state, action));
     case 'OPEN_STALL':    return guard(state, ['prep'], () => openStall(state));
+    case 'RESOLVE_REQUEST':return serviceStep(state, 'request', () => doResolveRequest(state, action));
     case 'SERVE':         return serviceStep(state, 'meet', () => doServe(state));
     case 'OFFER_SUB':     return serviceStep(state, 'meet', () => doOfferSub(state));
     case 'APOLOGIZE':     return serviceStep(state, 'meet', () => doApologize(state));
@@ -110,15 +111,36 @@ function openStall(state) {
     n, rng
   );
   const service = {
-    queue, index: 0, current: queue[0] || null, step: 'meet',
+    queue, index: 0, current: queue[0] || null,
+    step: queue[0] && queue[0].request ? 'request' : 'meet',
     canServe: queue[0] ? canServe(state.cooked, queue[0].dishes) : false,
-    offer: null, lastOutcome: null
+    offer: null, lastOutcome: null, requestNotice: null
   };
   return { ...state, phase: 'service', service, rng: rng.getState() };
 }
 
 function canServe(cooked, dishes) {
   return dishes.length > 0 && dishes.every(d => (cooked[d] || 0) > 0);
+}
+
+// CR-19：应对特殊需求。施加 rep/money 效果后转回正常见面（保留应对台词供 meet 展示）
+function doResolveRequest(state, { accept }) {
+  const cur = state.service.current;
+  const rq = REQUESTS[cur.request];
+  if (!rq) return state;
+  const eff = accept ? rq.accept : rq.decline;
+  let s = applyRep(state, eff.rep);
+  if (eff.money) {
+    s = { ...s, money: s.money + eff.money,
+      today: { ...s.today, spend: s.today.spend + (eff.money < 0 ? -eff.money : 0) } };
+  }
+  return {
+    ...s,
+    service: {
+      ...s.service, step: 'meet', requestNotice: eff.line,
+      current: { ...cur, request: null }
+    }
+  };
 }
 
 // 出餐：扣 cooked，进入报价
@@ -237,8 +259,9 @@ function nextCustomer(state) {
     return {
       ...state,
       service: {
-        ...state.service, index: idx, current, step: 'meet',
-        canServe: canServe(state.cooked, current.dishes), offer: null, lastOutcome: null
+        ...state.service, index: idx, current,
+        step: current.request ? 'request' : 'meet',
+        canServe: canServe(state.cooked, current.dishes), offer: null, lastOutcome: null, requestNotice: null
       }
     };
   }

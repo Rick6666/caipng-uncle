@@ -1,4 +1,4 @@
-import { CONST, DISHES, REACTION, LINES } from './data.js';
+import { CONST, DISHES, REACTION, LINES, REQUESTS } from './data.js';
 import { unlockedCustomerTypes } from './state.js';
 import { quotePrices, orderBase } from './economy.js';
 
@@ -37,12 +37,13 @@ export function generateQueue(ctx, n, rng) {
   const queue = [];
   for (let i = 0; i < n; i++) {
     const type = rng.weighted(types.map(c => ({ ...c, weight: eventWeight(c, ctx.todayEvent) })));
-    queue.push({
-      type: type.id,
-      name: rng.pick(LINES.names),
-      dishes: availIds.length ? pickDishes(availIds, type.dishCount, rng) : [],
-      greeting: rng.pick(LINES.greetings[type.id])
-    });
+    const name = rng.pick(LINES.names);
+    const dishes = availIds.length ? pickDishes(availIds, type.dishCount, rng) : [];
+    const greeting = rng.pick(LINES.greetings[type.id]);
+    // CR-19：部分顾客带一个特殊需求（掷骰在最后，保持前面点单/问候的随机流不变）
+    const rq = REQUESTS[type.id];
+    const request = rq && rng.chance(rq.chance) ? type.id : null;
+    queue.push({ type: type.id, name, dishes, greeting, request });
   }
   return queue;
 }

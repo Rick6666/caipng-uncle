@@ -3,7 +3,7 @@ import {
   unlockedIngredients, unlockedDishes, prepCap, ingredientPrice,
   dailyCustomerCount, uncleTitle, epitaph, finalScore, grade, dailyVerdict, repLevel
 } from '../core/state.js';
-import { INGREDIENTS, DISHES, UPGRADES, LINES, CONST, CUSTOMER_TYPES } from '../core/data.js';
+import { INGREDIENTS, DISHES, UPGRADES, LINES, CONST, CUSTOMER_TYPES, REQUESTS } from '../core/data.js';
 import { quotePrices } from '../core/economy.js';
 
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
@@ -122,7 +122,24 @@ function renderService(state, dispatch) {
     h('div', { class: 'customer-type' }, ct.name),
     orderChips);
 
+  if (svc.step === 'request') {
+    const rq = REQUESTS[cur.request];
+    const eff = (e) => {
+      const parts = [];
+      if (e.rep) parts.push(`声望 ${e.rep > 0 ? '+' : ''}${e.rep}`);
+      if (e.money < 0) parts.push(`花 $${-e.money}`);
+      else if (e.money > 0) parts.push(`赚 $${e.money}`);
+      return parts.join(' · ') || '照常';
+    };
+    card.append(h('div', { class: 'speech' }, rq.prompt));
+    setScreen(tag(`营业中 · 第 ${svc.index + 1}/${svc.queue.length} 位`), card);
+    setActions(
+      btn(rq.accept.label, 'btn-green', () => dispatch({ type: 'RESOLVE_REQUEST', accept: true }), eff(rq.accept)),
+      btn(rq.decline.label, 'btn-plain', () => dispatch({ type: 'RESOLVE_REQUEST', accept: false }), eff(rq.decline)));
+    return;
+  }
   if (svc.step === 'meet') {
+    if (svc.requestNotice) card.append(h('div', { class: 'narrative' }, h('em', {}, svc.requestNotice)));
     card.append(h('div', { class: 'speech' }, cur.greeting));
     setScreen(tag(`营业中 · 第 ${svc.index + 1}/${svc.queue.length} 位`), card);
     if (svc.canServe) {

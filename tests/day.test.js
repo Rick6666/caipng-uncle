@@ -25,7 +25,8 @@ describe('day state machine', () => {
     let guard = 0;
     while (s.phase === 'service' && guard++ < 200) {
       const step = s.service.step;
-      if (step === 'meet') s = d(s, s.service.canServe ? 'SERVE' : 'APOLOGIZE');
+      if (step === 'request') s = d(s, 'RESOLVE_REQUEST', { accept: true });
+      else if (step === 'meet') s = d(s, s.service.canServe ? 'SERVE' : 'APOLOGIZE');
       else if (step === 'pricing') s = d(s, 'QUOTE', { tier: 'normal' });
       else if (step === 'haggle') s = d(s, 'HAGGLE', { accept: true });
       else if (step === 'result') s = d(s, 'NEXT_CUSTOMER');
@@ -77,6 +78,20 @@ describe('day state machine', () => {
     expect(d(s, 'START_DAY')).toBe(s);
   });
 
+  it('CR-19 特殊需求：应对施加 rep/money 并转回见面；非 request 阶段调用返回原 state', () => {
+    const cust = { type: 'labourer', name: 'x', dishes: ['friedCabbage'], greeting: '', request: 'labourer' };
+    const s = { ...newGame(1), phase: 'service', money: 50,
+      today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0 },
+      service: { queue: [cust], index: 0, step: 'request', current: cust, canServe: true, offer: null, lastOutcome: null, requestNotice: null } };
+    const yes = d(s, 'RESOLVE_REQUEST', { accept: true });   // labourer 加料 rep+2 money-2
+    expect(yes.rep).toBe(2);
+    expect(yes.money).toBe(48);
+    expect(yes.service.step).toBe('meet');
+    expect(yes.service.current.request).toBe(null);          // 需求已处理，不会重复触发
+    expect(yes.service.requestNotice).toBeTruthy();
+    expect(d(yes, 'RESOLVE_REQUEST', { accept: true })).toBe(yes); // 已在 meet，非法 → 原 state 引用
+  });
+
   it('CR-17 空备菜也能开档并走完当天（没料可炒不软锁，最终进结算/破产）', () => {
     // 破产边缘：$0、无库存、无熟菜 → 开档 → 全部道歉 → 收档 → 结算/破产，绝不卡死
     let s = { ...newGame(3), phase: 'prep', money: 0, inventory: {}, cooked: {} };
@@ -85,7 +100,8 @@ describe('day state machine', () => {
     let guard = 0;
     while (s.phase === 'service' && guard++ < 200) {
       const step = s.service.step;
-      if (step === 'meet') s = d(s, s.service.canServe ? 'SERVE' : 'APOLOGIZE');
+      if (step === 'request') s = d(s, 'RESOLVE_REQUEST', { accept: true });
+      else if (step === 'meet') s = d(s, s.service.canServe ? 'SERVE' : 'APOLOGIZE');
       else if (step === 'pricing') s = d(s, 'QUOTE', { tier: 'normal' });
       else if (step === 'haggle') s = d(s, 'HAGGLE', { accept: true });
       else if (step === 'result') s = d(s, 'NEXT_CUSTOMER');
