@@ -60,6 +60,33 @@ describe('day state machine', () => {
     expect(d(s, 'SERVE')).toBe(s);
   });
 
+  it('B-2 OFFER_SUB 在货全在时（canServe=true）返回原 state，不误判缺菜（reducer 自守）', () => {
+    const s = svcState({
+      cooked: { friedCabbage: 9 },
+      service: {
+        queue: [{ type: 'worker', name: 'a', dishes: ['friedCabbage'], greeting: '' }],
+        index: 0, step: 'meet', offer: null, lastOutcome: null,
+        current: { type: 'worker', name: 'a', dishes: ['friedCabbage'], greeting: '' },
+        canServe: true
+      }
+    });
+    expect(d(s, 'OFFER_SUB')).toBe(s);
+  });
+
+  it('B-3 QUOTE 携带非法 tier 返回原 state（不抛异常）', () => {
+    const s = svcState({
+      cooked: { friedCabbage: 9 },
+      service: {
+        queue: [{ type: 'worker', name: 'a', dishes: ['friedCabbage'], greeting: '' }],
+        index: 0, step: 'pricing', offer: null, lastOutcome: null,
+        current: { type: 'worker', name: 'a', dishes: ['friedCabbage'], greeting: '' },
+        canServe: true
+      }
+    });
+    expect(d(s, 'QUOTE', { tier: 'bogus' })).toBe(s);
+    expect(() => d(s, 'QUOTE', { tier: 'bogus' })).not.toThrow();
+  });
+
   it('CR-03 两道同类缺菜只剩一份替代货 → OFFER_SUB 无法满足，返回原 state', () => {
     const s = svcState({
       cooked: { curryChicken: 1 }, // meat 只有 1 份
@@ -117,6 +144,48 @@ describe('day state machine', () => {
     expect(out.today.repDelta).toBe(0); // 实际没跌，不记 -1
   });
 
+  it('A-1 BUY 负 qty 不能退超过当日购买量，即便库存里还有余量（防退货套利）', () => {
+    // inventory 里 10 份 cabbage：6 份是跨天结转的，今天只买了 4 份
+    let s = { ...newGame(1), phase: 'morning', inventory: { cabbage: 10 },
+      today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0, boughtToday: { cabbage: 4 } } };
+    expect(d(s, 'BUY', { id: 'cabbage', qty: -5 })).toBe(s); // 只买了 4，退 5 非法
+    const ok = d(s, 'BUY', { id: 'cabbage', qty: -4 });      // 退光当日买的，合法
+    expect(ok.inventory.cabbage).toBe(6);
+  });
+
+  it('A-1 BUY 不能退跨天结转的库存（当日购买台账每天清零）', () => {
+    // 模拟次日 morning：库存是昨天结转的，但今天还没买过
+    let s = { ...newGame(1), phase: 'morning', inventory: { cabbage: 10 },
+      today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0, boughtToday: {} } };
+    expect(d(s, 'BUY', { id: 'cabbage', qty: -1 })).toBe(s);
+  });
+
+  it('A-1 marketUp 日无法靠「昨天买今天退」吃跨天差价', () => {
+    // 昨天(平价 $1)买 10 份留到今天，今天涨价(×1.2→$2)，今天没再买过 → 今天不能退昨天的库存
+    let s = { ...newGame(1), phase: 'morning', priceMul: 1.2, inventory: { cabbage: 10 },
+      today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0, boughtToday: {} } };
+    expect(d(s, 'BUY', { id: 'cabbage', qty: -10 })).toBe(s);
+  });
+
+  it('A-1 当日买当日退（同价）净花费为 0，不构成套利', () => {
+    let s = d(newGame(1), 'START_DAY');
+    const before = s.money;
+    s = d(s, 'BUY', { id: 'cabbage', qty: 10 });
+    s = d(s, 'BUY', { id: 'cabbage', qty: -10 });
+    expect(s.money).toBe(before);
+  });
+
+  it('B-4 BUY/COOK 非整数 qty（NaN/小数/非数字）返回原 state，不污染 money/inventory', () => {
+    let s = d(newGame(1), 'START_DAY');
+    expect(d(s, 'BUY', { id: 'cabbage', qty: NaN })).toBe(s);
+    expect(d(s, 'BUY', { id: 'cabbage', qty: 1.5 })).toBe(s);
+    expect(d(s, 'BUY', { id: 'cabbage', qty: undefined })).toBe(s);
+    expect(d(s, 'BUY', { id: 'cabbage', qty: 'x' })).toBe(s);
+    s = d(s, 'BUY', { id: 'cabbage', qty: 4 });
+    s = d(s, 'FINISH_MORNING');
+    expect(d(s, 'COOK', { id: 'friedCabbage', qty: NaN })).toBe(s);
+  });
+
   it('COOK 超容量拒绝；wok 提升到 24', () => {
     let s = d(newGame(1), 'START_DAY');
     s = d(s, 'BUY', { id: 'cabbage', qty: 20 });
@@ -145,6 +214,12 @@ describe('day state machine', () => {
     expect(s.phase).toBe('morning');
     expect(s.cooked.friedCabbage).toBe(2); // carryOver 并入
     expect(s.carryOver).toEqual({});
+  });
+
+  it('B-8 次日 morning 清除昨日收档事件文案（closeLines 不应残留到下一天）', () => {
+    let s = { ...newGame(1), day: 3, phase: 'shop', closeLines: ['🐱 一只野猫窜上摊子...'] };
+    s = d(s, 'END_SHOP');
+    expect(s.closeLines).toBe(null);
   });
 
   it('BUY_UPGRADE 扣钱且不重复购买', () => {

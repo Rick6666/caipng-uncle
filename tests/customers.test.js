@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { generateQueue, resolveQuote, resolveHaggle, findSubstitute } from '../src/core/customers.js';
 import { createRng } from '../src/core/rng.js';
+import { LINES } from '../src/core/data.js';
 
 const ctx = (over = {}) => ({ rep: 0, cooked: { friedCabbage: 9, sweetSourPork: 9 }, todayEvent: null, upgrades: [], ...over });
 
@@ -40,6 +41,15 @@ describe('customers', () => {
     const out = resolveQuote({ type: 'ahma', name: 'x', dishes: ['friedCabbage'] }, 'slash', createRng(1));
     expect(out.haggle).toBe(true);
   });
+  it('B-7 normal 档走人时台词不能是「付钱」台词（文案与行为需一致）', () => {
+    const walkRng = { chance: () => false, pick: (a) => a[0] };
+    const out = resolveQuote({ type: 'student', name: 'x', dishes: ['friedCabbage'] }, 'normal', walkRng);
+    expect(out.paid).toBe(false);
+    // normal 档台词库全是"付钱"口吻，走人时应改用 slash 档的负面台词库，而非误用 normal 台词
+    expect(LINES.reactions.student.normal).not.toContain(out.line);
+    expect(LINES.reactions.student.slash).toContain(out.line);
+  });
+
   it('student + slash 两分支 rep 分别 -3 / -2', () => {
     // 打桩 rng.chance：真=付款 / 假=走人
     const paidRng = { chance: () => true, pick: (a) => a[0] };

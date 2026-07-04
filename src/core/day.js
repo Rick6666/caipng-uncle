@@ -51,7 +51,8 @@ function enterMorning(state) {
     upgrades: [...state.upgrades],
     priceMul: 1,
     loanTaken: false,
-    today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0 },
+    closeLines: null, // B-8：每天清除昨日收档事件文案，不带到次日
+    today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0, boughtToday: {} },
     stats: { ...state.stats }
   };
   const ev = rollOpenEvent(s, rng);
@@ -64,6 +65,7 @@ function enterMorning(state) {
 }
 
 function doBuy(state, { id, qty }) {
+  if (!Number.isInteger(qty)) return state;   // B-4：非整数/NaN 一律非法
   const ing = ING_BY_ID[id];
   if (!ing || state.rep < ing.unlockRep) return state;
   const price = ingredientPrice(state, id);
@@ -71,16 +73,20 @@ function doBuy(state, { id, qty }) {
   const nextQty = (state.inventory[id] || 0) + qty;
   if (nextQty < 0) return state;              // 不能退到负库存
   if (qty > 0 && state.money < cost) return state; // 钱不够
+  const boughtToday = { ...state.today.boughtToday };
+  if (qty < 0 && -qty > (boughtToday[id] || 0)) return state; // A-1：不可退超过当日购买量
+  boughtToday[id] = (boughtToday[id] || 0) + qty;
   const inventory = { ...state.inventory, [id]: nextQty };
   return {
     ...state,
     money: state.money - cost,
     inventory,
-    today: { ...state.today, spend: state.today.spend + cost }
+    today: { ...state.today, spend: state.today.spend + cost, boughtToday }
   };
 }
 
 function doCook(state, { id, qty }) {
+  if (!Number.isInteger(qty)) return state;   // B-4：非整数/NaN 一律非法
   const dish = DISH_BY_ID[id];
   if (!dish) return state;
   const totalCooked = Object.values(state.cooked).reduce((a, b) => a + b, 0);
@@ -154,6 +160,7 @@ function doServe(state) {
 
 // 缺菜推荐替代
 function doOfferSub(state) {
+  if (state.service.canServe) return state; // B-2：货全在时无缺菜可替代，reducer 自守
   const rng = createRng(state.rng);
   const cur = state.service.current;
   const missing = cur.dishes.filter(d => (state.cooked[d] || 0) <= 0);
@@ -189,7 +196,9 @@ function doApologize(state) {
     { kind: 'apologize', line: '你婉言道歉送客，这单没做成。' });
 }
 
+const VALID_TIERS = new Set(['kind', 'normal', 'slash']);
 function doQuote(state, { tier }) {
+  if (!VALID_TIERS.has(tier)) return state; // B-3：非法 tier 原样返回，不抛异常
   const rng = createRng(state.rng);
   const cur = state.service.current;
   const out = resolveQuote(cur, tier, rng);

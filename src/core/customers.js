@@ -58,15 +58,17 @@ export function resolveQuote(customer, tier, rng) {
   const price = quotePrices(customer.dishes)[tier];
   if (r.haggle) return { haggle: true, price };
 
-  const line = pickLine(customer.type, tier, rng);
   if (tier === 'slash') {
     const paid = rng.chance(r.pay);
+    const line = pickLine(customer.type, tier, rng);
     return paid
       ? { paid: true, walkout: false, price, repDelta: r.repPaid, line }
       : { paid: false, walkout: true, price: 0, repDelta: r.repWalk, line };
   }
-  // kind / normal
+  // kind / normal：该档台词库通篇"付钱"口吻，没有专门的走人台词——
+  // B-7：走人时改用 slash 档的负面台词库，避免展示台词与实际行为矛盾
   const paid = rng.chance(r.pay);
+  const line = paid ? pickLine(customer.type, tier, rng) : pickLine(customer.type, 'slash', rng);
   return paid
     ? { paid: true, walkout: false, price, repDelta: r.rep, line }
     : { paid: false, walkout: true, price: 0, repDelta: 0, line };
@@ -75,11 +77,13 @@ export function resolveQuote(customer, tier, rng) {
 // 阿嬷砍价子选择：accept=收正常价 rep0 / gamble=赌一把
 export function resolveHaggle(customer, accept, rng) {
   const h = REACTION[customer.type].haggle;
-  const line = pickLine(customer.type, 'normal', rng);
   if (accept) {
+    const line = pickLine(customer.type, 'normal', rng);
     return { paid: true, walkout: false, price: quotePrices(customer.dishes).normal, repDelta: h.accept.rep, line };
   }
+  // B-7：赌一把的两个分支结果不同，台词也要按结果分别取（付款仍算 normal 口吻，走人用 slash 负面台词）
   const paid = rng.chance(h.gamble.payChance);
+  const line = paid ? pickLine(customer.type, 'normal', rng) : pickLine(customer.type, 'slash', rng);
   return paid
     ? { paid: true, walkout: false, price: quotePrices(customer.dishes).slash, repDelta: h.gamble.repPaid, line }
     : { paid: false, walkout: true, price: 0, repDelta: h.gamble.repWalk, line };

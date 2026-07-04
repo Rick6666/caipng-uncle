@@ -60,4 +60,13 @@ describe('events', () => {
     const r = rollCloseEvents(s, onlyCat);
     expect(r.removeDish).toBe(null);
   });
+
+  it('B-6 野猫偷走唯一剩菜后，卫生检查按「已无剩菜」判定（不能对不存在的剩菜罚款）', () => {
+    const both = { chance: () => true, pick: (a) => a[0] };
+    const s = { ...newGame(1), cooked: { friedCabbage: 1 }, upgrades: [] };
+    const r = rollCloseEvents(s, both);
+    expect(r.removeDish).toBe('friedCabbage'); // 猫偷走了唯一的剩菜
+    expect(r.moneyDelta).toBe(0);              // 偷完已无剩菜 → 不应再被罚款
+    expect(r.repDelta).toBe(2);                // 应按「无剩菜」表扬 +2，而不是「有剩菜无冰箱」罚 −2
+  });
 });

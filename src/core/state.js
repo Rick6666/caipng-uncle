@@ -20,7 +20,8 @@ export function newGame(seed) {
     priceMul: 1,
     todayEvent: null,
     service: null,
-    today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0 },
+    closeLines: null,
+    today: { revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0, boughtToday: {} },
     stats: { totalServed: 0, totalRevenue: 0, bestDayRevenue: 0, slashCount: 0, walkoutCount: 0 }
   };
 }
