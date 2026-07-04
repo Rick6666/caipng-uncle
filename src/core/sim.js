@@ -1,7 +1,7 @@
 // 平衡模拟：纯 core 调用，驱动 reduce 跑完整一局，产出终局摘要。供 sim.test.js 回归。
 import { reduce } from './day.js';
 import { newGame, prepCap, dailyCustomerCount, ingredientPrice, uncleTitle, epitaph, grade } from './state.js';
-import { CONST, DISHES } from './data.js';
+import { CONST, DISHES, REQUESTS } from './data.js';
 
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
 // 合理策略的均衡菜单（1 素 1 蛋 2 荤，覆盖"有荤必点一道荤"的点单规则；均为声望 0 即可做）
@@ -58,7 +58,12 @@ function runService(s, tier, useSub) {
   let guard = 0;
   while (s.phase === 'service' && guard++ < 300) {
     const step = s.service.step;
-    if (step === 'request') s = dispatch(s, 'RESOLVE_REQUEST', { accept: true }); // bot 默认应对需求
+    if (step === 'request') {
+      // 理性玩家：免费的口碑照拿，要花钱的慷慨在手头紧时拒绝（贴近"reasonable"基线）
+      const rq = REQUESTS[s.service.current.request];
+      const accept = rq.accept.money >= 0; // 理性基线：免费口碑照拿，要花钱的慷慨一律不接
+      s = dispatch(s, 'RESOLVE_REQUEST', { accept });
+    }
     else if (step === 'meet') {
       if (s.service.canServe) s = dispatch(s, 'SERVE');
       else if (useSub && canSubAll(s)) s = dispatch(s, 'OFFER_SUB');

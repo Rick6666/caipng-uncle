@@ -103,7 +103,17 @@ export const REQUESTS = {
                 decline: { rep: -1, money: 0, label: '赶时间啦', line: '你说赶时间下一位，她撇撇嘴收起了手机。' } },
   ahma:       { chance: 0.30, prompt: 'Uncle，让阿嬷先试吃一小口好吗 hor？',
                 accept:  { rep: 1, money: 0,  label: '夹一口给她', line: '你夹了一小块给她，阿嬷点点头：新鲜，好！' },
-                decline: { rep: -1, money: 0, label: '不好意思啦', line: '你婉拒了，阿嬷嘟囔了一句「小气」。' } }
+                decline: { rep: -1, money: 0, label: '不好意思啦', line: '你婉拒了，阿嬷嘟囔了一句「小气」。' } },
+  // —— 第二批：真·道德两难（CR-21），应对与拒绝各有代价，不是纯赚 ——
+  foodie:     { chance: 0.40, prompt: 'Uncle 你这火候…我吃过更好的 leh。',
+                accept:  { rep: 2, money: 0,  label: '虚心受教', line: '你笑笑说下次改进，美食家满意地点头：有诚意。' },
+                decline: { rep: -1, money: 0, label: '我这就是这个味', line: '你回一句「爱吃不吃 lah」，美食家皱起了眉。' } },
+  student:    { chance: 0.35, prompt: 'Uncle 我钱包剩没几块…算我便宜点啦 😅',
+                accept:  { rep: 2, money: -1, label: '算你便宜', line: '你少收他一块，穷学生连声道谢：Uncle 好人一生平安！' },
+                decline: { rep: 0, money: 0,  label: '小本生意原价', line: '你说小本生意不好意思，学生摸摸钱包，原价付了。' } },
+  uncle2:     { chance: 0.30, prompt: 'Eh Uncle，这次先记账，出粮再还你行不 lah？',
+                accept:  { rep: 2, money: -2, label: '记你账上', line: '你大手一挥记了账，老伯拍拍你肩：够义气！' },
+                decline: { rep: 0, money: 0,  label: '现结啦老朋友', line: '你说现结比较好算，老伯爽快地现结了。' } }
 };
 
 export const REP_LEVELS = [

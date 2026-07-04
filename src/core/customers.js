@@ -1,6 +1,7 @@
 import { CONST, DISHES, REACTION, LINES, REQUESTS } from './data.js';
 import { unlockedCustomerTypes } from './state.js';
 import { quotePrices, orderBase } from './economy.js';
+import { createRng } from './rng.js';
 
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
 const MEATY = new Set(['meat', 'premium']);
@@ -31,6 +32,9 @@ function pickDishes(availableIds, dishCount, rng) {
 export function generateQueue(ctx, n, rng) {
   const availIds = Object.keys(ctx.cooked).filter(id => ctx.cooked[id] > 0);
   const variety = availIds.length;
+  // CR-19/21：特殊需求走一条从主 rng 派生的独立子流，不推进主 rng——
+  // 保证客型/菜品/报价/事件等平衡关键随机流与历史校准逐字节一致（仍确定性、仍源自 state.rng）
+  const reqRng = createRng((rng.getState().s ^ 0x9e3779b9) >>> 0);
   const types = unlockedCustomerTypes(ctx.rep).filter(
     c => c.id !== 'foodie' || variety >= CONST.FOODIE_MIN_VARIETY_SPAWN
   );
@@ -42,7 +46,7 @@ export function generateQueue(ctx, n, rng) {
     const greeting = rng.pick(LINES.greetings[type.id]);
     // CR-19：部分顾客带一个特殊需求（掷骰在最后，保持前面点单/问候的随机流不变）
     const rq = REQUESTS[type.id];
-    const request = rq && rng.chance(rq.chance) ? type.id : null;
+    const request = rq && reqRng.chance(rq.chance) ? type.id : null;
     queue.push({ type: type.id, name, dishes, greeting, request });
   }
   return queue;
