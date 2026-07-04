@@ -38,14 +38,14 @@
 - **验收**：新增失败测试先行（退昨日库存被拒、退超当日购买量被拒、marketUp 日买卖往返不盈利）；`npm test` 全绿且 sim 存活率断言不漂。
 
 ### A-2. E2E 层完全缺失，`npm run e2e` 不可用，UI 零测试覆盖
-- [ ] 状态
+- [x] 状态 — 已完成（commit a6658fc，npm run e2e 16/16 全绿）
 - **位置**：`playwright.config.js`（`testDir: 'e2e'`）；仓库无 `e2e/` 目录、无任何 `*.spec.js`
 - **问题**：`docs/04-test-plan.md` §4 规划的 8 个 E2E 场景（开局流程、beforeunload、报价交互、缺菜路径、移动端体检、7 天通关、破产墓志铭、截图存证）0 个实现。测试策略是「UI 不写单测、由 E2E 兜底」——兜底不存在，`src/ui/` 三文件（465 行）零自动化测试。
 - **修复建议**：创建 `e2e/playthrough.spec.js`，按 04-test-plan §4 逐场景实现（注意先按 D-2 修正 04 文档中过期的数值预期）；用固定 `?seed=` 保证确定性。
 - **验收**：`npm run e2e` 在手机视口全绿。
 
 ### A-3. 无 CI
-- [ ] 状态
+- [x] 状态 — 已完成（commit a6658fc）。远程仓库/Pages 部署部分需用户授权后另行执行，见 05-implementation-plan.md Task 12 Step 2-5
 - **位置**：`.github/` 不存在；`docs/04-test-plan.md` §5、`docs/05-implementation-plan.md` Task 12 均有要求
 - **问题**：唯一门禁是本地 pre-commit（`core.hooksPath` 是 clone 级配置，新 clone 失效，可 `--no-verify` 绕过）。无强制绿灯、无覆盖率核查（目标 core ≥85%）、无自动部署。
 - **修复建议**：按 05-plan Task 12 建 `.github/workflows/ci.yml`（npm test + coverage 阈值 + Playwright E2E + Pages 部署）。Vitest/Playwright/Actions API 用法不确定时用 context7 核实（CLAUDE.md 铁律）。
