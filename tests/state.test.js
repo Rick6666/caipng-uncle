@@ -8,7 +8,7 @@ import {
 describe('state', () => {
   it('newGame 初始值与 schema 一致', () => {
     const s = newGame(42);
-    expect(s).toMatchObject({ seed: 42, day: 1, phase: 'title', money: 82, rep: 0, upgrades: [], loan: null, usedLoan: false, priceMul: 1 });
+    expect(s).toMatchObject({ seed: 42, day: 1, phase: 'title', money: 55, rep: 0, upgrades: [], loan: null, usedLoan: false, priceMul: 1 });
     expect(s.rng).toHaveProperty('s');
     expect(JSON.parse(JSON.stringify(s))).toEqual(s); // 可序列化
   });
@@ -25,8 +25,8 @@ describe('state', () => {
   });
   it('ingredientPrice 受 priceMul 影响且向上取整', () => {
     const s = newGame(1);
-    expect(ingredientPrice(s, 'chicken')).toBe(3);
-    expect(ingredientPrice({ ...s, priceMul: 1.2 }, 'chicken')).toBe(4); // ceil(3.6)
+    expect(ingredientPrice(s, 'chicken')).toBe(2);
+    expect(ingredientPrice({ ...s, priceMul: 1.2 }, 'chicken')).toBe(3); // ceil(2.4)
   });
   it('解锁: rep 0 无 curry, rep 15 有', () => {
     expect(unlockedIngredients(0).some(i => i.id === 'curry')).toBe(false);

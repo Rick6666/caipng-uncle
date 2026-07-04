@@ -9,6 +9,9 @@ import { quotePrices } from '../core/economy.js';
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
 const ING_BY_ID = Object.fromEntries(INGREDIENTS.map(i => [i.id, i]));
 const CT_BY_ID = Object.fromEntries(CUSTOMER_TYPES.map(c => [c.id, c]));
+// 每种食材能做出哪些菜（用于采购界面提示"买这个能做什么"）
+const DISHES_BY_ING = {};
+for (const d of DISHES) for (const ing of d.recipe) (DISHES_BY_ING[ing] ||= []).push(d);
 
 function tag(text) { return h('div', { class: 'phase-tag' }, text); }
 function stepperRow(emojiNode, name, desc, count, onMinus, onPlus, minusOff, plusOff) {
@@ -51,11 +54,17 @@ function renderTitle(state, dispatch) {
 }
 
 function renderMorning(state, dispatch) {
+  const unlockedDishIds = new Set(unlockedDishes(state.rep).map(d => d.id));
   const list = unlockedIngredients(state.rep).map(ing => {
     const price = ingredientPrice(state, ing.id);
     const have = state.inventory[ing.id] || 0;
+    // 提示：这份食材能做出哪些（已解锁的）菜
+    const makes = (DISHES_BY_ING[ing.id] || []).filter(d => unlockedDishIds.has(d.id)).map(d => d.name);
+    const desc = ing.id === 'rice'
+      ? `$${price}／份 · 每单必配`
+      : makes.length ? `$${price}／份 · 做：${makes.join('、')}` : `$${price}／份`;
     return stepperRow(
-      h('span', { class: 'item-emoji' }, ing.emoji), ing.name, `$${price}／份`, have,
+      h('span', { class: 'item-emoji' }, ing.emoji), ing.name, desc, have,
       () => dispatch({ type: 'BUY', id: ing.id, qty: -1 }),
       () => dispatch({ type: 'BUY', id: ing.id, qty: 1 }),
       have <= 0, state.money < price);
@@ -63,7 +72,7 @@ function renderMorning(state, dispatch) {
   setScreen(
     tag('清晨 · 采购'),
     eventBanner(state),
-    h('p', { class: 'subtitle' }, `预计今天约 ${dailyCustomerCount(state)} 位客人。买好食材，别压太多本钱。`),
+    h('p', { class: 'subtitle' }, `预计今天约 ${dailyCustomerCount(state)} 位客人。看清每样食材能做什么，别乱买。`),
     ...list);
   setActions(btn(`去备菜`, 'btn-green', () => dispatch({ type: 'FINISH_MORNING' }), `手头 $${state.money}`));
 }
@@ -74,16 +83,18 @@ function renderPrep(state, dispatch) {
   const list = unlockedDishes(state.rep).map(d => {
     const canMake = Math.min(...d.recipe.map(ing => state.inventory[ing] || 0));
     const cooked = state.cooked[d.id] || 0;
-    const recipeTxt = d.recipe.map(ing => ING_BY_ID[ing].name).join('+');
+    const recipeTxt = d.recipe.map(ing => `${ING_BY_ID[ing].name}×1`).join('+');
+    // 显示当前食材还能再做几份，把"买的原料"和"能炒的菜"直接挂钩
+    const desc = `配方 ${recipeTxt}｜卖 $${d.price}｜库存还能做 ${canMake} 份`;
     return stepperRow(
-      pic(d.img, d.emoji, 'item-emoji'), d.name, `配方：${recipeTxt}`, cooked,
+      pic(d.img, d.emoji, 'item-emoji'), d.name, desc, cooked,
       () => dispatch({ type: 'COOK', id: d.id, qty: -1 }),
       () => dispatch({ type: 'COOK', id: d.id, qty: 1 }),
       cooked <= 0, canMake <= 0 || used >= cap);
   });
   setScreen(
     tag('清晨 · 备菜'),
-    h('p', { class: 'subtitle' }, `已备 ${used}/${cap} 份。多备种类，客人点单更容易凑齐。`),
+    h('p', { class: 'subtitle' }, `已备 ${used}/${cap} 份。「库存还能做 N 份」= 你买的食材够炒几份；多备种类，客人更容易凑齐一单。`),
     ...list);
   const openOff = used <= 0;
   setActions(btn('开档营业！', 'btn-primary', () => dispatch({ type: 'OPEN_STALL' }), openOff ? '先备点菜' : `共 ${used} 份`, openOff));

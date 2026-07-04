@@ -3,9 +3,9 @@
 
 // 数值经 sim.js 千局校准（reasonable 存活 ~37%、lazy ~0%），详见 docs/02-game-design §11
 export const CONST = {
-  START_MONEY: 82,
+  START_MONEY: 55,
   START_REP: 0,
-  RENT_PER_DAY: 32,
+  RENT_PER_DAY: 10,
   BASE_PREP_CAP: 16,
   WOK_BONUS: 8,
   BASE_CUSTOMERS: 9,
@@ -13,8 +13,9 @@ export const CONST = {
   HELPER_CUSTOMER_BONUS: 4,
   SIGN_CUSTOMER_BONUS: 2,
   GAME_DAYS: 7,
-  LOAN_AMOUNT: 60,
-  LOAN_REPAY: 90,
+  RENT_ESCALATION: 3,          // 房租逐日递增：第 N 天租金 = RENT_PER_DAY + (N-1)×此值（越往后越紧张）
+  LOAN_AMOUNT: 30,
+  LOAN_REPAY: 45,
   LOAN_INTEREST: 10,
   RICE_COST: 1,
   RICE_PRICE: 1,
@@ -33,35 +34,36 @@ export const CONST = {
   WORKER_UNLOCK: 0             // 占位（worker 无门槛）
 };
 
+// 成本 = 每份食材的批发价（贴近真实物价：青菜/蛋角几毛，按整数记 $1；肉类 $2；海鲜 $3~4）
 export const INGREDIENTS = [
   { id: 'rice',    name: '米',     emoji: '🍚', price: 1, unlockRep: 0 },
   { id: 'egg',     name: '鸡蛋',   emoji: '🥚', price: 1, unlockRep: 0 },
   { id: 'veg',     name: '青菜',   emoji: '🥬', price: 1, unlockRep: 0 },
   { id: 'cabbage', name: '高丽菜', emoji: '🥗', price: 1, unlockRep: 0 },
-  { id: 'tofu',    name: '豆腐',   emoji: '🧈', price: 2, unlockRep: 0 },
+  { id: 'tofu',    name: '豆腐',   emoji: '🧈', price: 1, unlockRep: 0 },
   { id: 'braise',  name: '卤汁',   emoji: '🫗', price: 1, unlockRep: 0 },
-  { id: 'chicken', name: '鸡肉',   emoji: '🍗', price: 3, unlockRep: 0 },
-  { id: 'pork',    name: '猪肉',   emoji: '🥩', price: 3, unlockRep: 0 },
+  { id: 'chicken', name: '鸡肉',   emoji: '🍗', price: 2, unlockRep: 0 },
+  { id: 'pork',    name: '猪肉',   emoji: '🥩', price: 2, unlockRep: 0 },
   { id: 'curry',   name: '咖喱酱', emoji: '🍛', price: 1, unlockRep: 15 },
-  { id: 'fish',    name: '鲜鱼',   emoji: '🐟', price: 4, unlockRep: 30 },
-  { id: 'prawn',   name: '大虾',   emoji: '🦐', price: 5, unlockRep: 55 }
+  { id: 'fish',    name: '鲜鱼',   emoji: '🐟', price: 3, unlockRep: 30 },
+  { id: 'prawn',   name: '大虾',   emoji: '🦐', price: 4, unlockRep: 55 }
 ];
 
 // price = 基准价；cat 决定荤素分类与替代逻辑；img 走 assets/，加载失败回退 emoji
-// price = 售价（已抬高至每道菜 $2~4 毛利，成本见 recipe 食材单价之和）
+// price = 售价（贴近真实杂菜饭物价：素菜 $2、蛋/荤 $2~3、海鲜 $4~5；每道菜留 $1~2 毛利）
 export const DISHES = [
-  { id: 'stirVeg',       name: '炒青菜',   emoji: '🥬', recipe: ['veg'],            price: 3, weight: 10, cat: 'veg',     img: 'assets/dishes/stirVeg.webp' },
-  { id: 'cabbageStew',   name: '焖高丽菜', emoji: '🥗', recipe: ['cabbage'],        price: 3, weight: 8,  cat: 'veg',     img: 'assets/dishes/cabbageStew.webp' },
-  { id: 'braisedEgg',    name: '卤蛋',     emoji: '🥚', recipe: ['egg', 'braise'],  price: 4, weight: 10, cat: 'egg',     img: 'assets/dishes/braisedEgg.webp' },
-  { id: 'bitterEgg',     name: '苦瓜炒蛋', emoji: '🍳', recipe: ['veg', 'egg'],     price: 4, weight: 6,  cat: 'egg',     img: 'assets/dishes/bitterEgg.webp' },
-  { id: 'mapoTofu',      name: '麻婆豆腐', emoji: '🥘', recipe: ['tofu'],           price: 4, weight: 7,  cat: 'veg',     img: 'assets/dishes/mapoTofu.webp' },
-  { id: 'friedWing',     name: '炸鸡翅',   emoji: '🍗', recipe: ['chicken'],        price: 6, weight: 10, cat: 'meat',    img: 'assets/dishes/friedWing.webp' },
-  { id: 'curryChicken',  name: '咖喱鸡',   emoji: '🍛', recipe: ['chicken', 'curry'], price: 7, weight: 9, cat: 'meat',   img: 'assets/dishes/curryChicken.webp' },
-  { id: 'braisedPork',   name: '卤肉',     emoji: '🥩', recipe: ['pork', 'braise'], price: 7, weight: 8,  cat: 'meat',    img: 'assets/dishes/braisedPork.webp' },
-  { id: 'sweetSourPork', name: '咕咾肉',   emoji: '🍖', recipe: ['pork'],           price: 6, weight: 7,  cat: 'meat',    img: 'assets/dishes/sweetSourPork.webp' },
-  { id: 'steamedFish',   name: '清蒸鱼',   emoji: '🐟', recipe: ['fish'],           price: 8, weight: 6,  cat: 'premium', img: 'assets/dishes/steamedFish.webp' },
-  { id: 'curryFishHead', name: '咖喱鱼头', emoji: '🐠', recipe: ['fish', 'curry'],  price: 9, weight: 5,  cat: 'premium', img: 'assets/dishes/curryFishHead.webp' },
-  { id: 'chiliPrawn',    name: '辣椒虾',   emoji: '🦐', recipe: ['prawn'],          price: 9, weight: 5,  cat: 'premium', img: 'assets/dishes/chiliPrawn.webp' }
+  { id: 'stirVeg',       name: '炒青菜',   emoji: '🥬', recipe: ['veg'],            price: 2, weight: 10, cat: 'veg',     img: 'assets/dishes/stirVeg.webp' },
+  { id: 'cabbageStew',   name: '焖高丽菜', emoji: '🥗', recipe: ['cabbage'],        price: 2, weight: 8,  cat: 'veg',     img: 'assets/dishes/cabbageStew.webp' },
+  { id: 'braisedEgg',    name: '卤蛋',     emoji: '🥚', recipe: ['egg', 'braise'],  price: 3, weight: 10, cat: 'egg',     img: 'assets/dishes/braisedEgg.webp' },
+  { id: 'bitterEgg',     name: '苦瓜炒蛋', emoji: '🍳', recipe: ['veg', 'egg'],     price: 3, weight: 6,  cat: 'egg',     img: 'assets/dishes/bitterEgg.webp' },
+  { id: 'mapoTofu',      name: '麻婆豆腐', emoji: '🥘', recipe: ['tofu'],           price: 2, weight: 7,  cat: 'veg',     img: 'assets/dishes/mapoTofu.webp' },
+  { id: 'friedWing',     name: '炸鸡翅',   emoji: '🍗', recipe: ['chicken'],        price: 4, weight: 10, cat: 'meat',    img: 'assets/dishes/friedWing.webp' },
+  { id: 'curryChicken',  name: '咖喱鸡',   emoji: '🍛', recipe: ['chicken', 'curry'], price: 5, weight: 9, cat: 'meat',   img: 'assets/dishes/curryChicken.webp' },
+  { id: 'braisedPork',   name: '卤肉',     emoji: '🥩', recipe: ['pork', 'braise'], price: 5, weight: 8,  cat: 'meat',    img: 'assets/dishes/braisedPork.webp' },
+  { id: 'sweetSourPork', name: '咕咾肉',   emoji: '🍖', recipe: ['pork'],           price: 4, weight: 7,  cat: 'meat',    img: 'assets/dishes/sweetSourPork.webp' },
+  { id: 'steamedFish',   name: '清蒸鱼',   emoji: '🐟', recipe: ['fish'],           price: 5, weight: 6,  cat: 'premium', img: 'assets/dishes/steamedFish.webp' },
+  { id: 'curryFishHead', name: '咖喱鱼头', emoji: '🐠', recipe: ['fish', 'curry'],  price: 6, weight: 5,  cat: 'premium', img: 'assets/dishes/curryFishHead.webp' },
+  { id: 'chiliPrawn',    name: '辣椒虾',   emoji: '🦐', recipe: ['prawn'],          price: 6, weight: 5,  cat: 'premium', img: 'assets/dishes/chiliPrawn.webp' }
 ];
 
 export const CUSTOMER_TYPES = [
@@ -96,14 +98,15 @@ export const REP_LEVELS = [
   { threshold: 120, title: '全城最强杂菜饭' }
 ];
 
+// 升级价贴合当前经济体量（起始 $55、日结余几十块），让升级成为够得着的策略选择而非死内容
 export const UPGRADES = [
-  { id: 'awning',  name: '遮阳棚',   emoji: '⛱️', price: 60,  desc: '雨天客流不减' },
-  { id: 'speaker', name: '老歌音响', emoji: '📻', price: 90,  desc: '每天开档声望 +1' },
-  { id: 'fridge',  name: '二手冰箱', emoji: '🧊', price: 80,  desc: '剩菜保留六成到明天' },
-  { id: 'wok',     name: '大炒锅',   emoji: '🍳', price: 100, desc: '备菜上限 +8' },
-  { id: 'sign',    name: '霓虹招牌', emoji: '🪧', price: 120, desc: '每天客人 +2' },
-  { id: 'kopi',    name: '咖啡机',   emoji: '☕', price: 150, desc: '每位付款客人多给 $1 kopi 钱' },
-  { id: 'helper',  name: '帮手阿明', emoji: '🧑‍🍳', price: 200, desc: '客流上限 +4；收档时阿明再卖 2 份剩菜' }
+  { id: 'awning',  name: '遮阳棚',   emoji: '⛱️', price: 18, desc: '雨天客流不减' },
+  { id: 'speaker', name: '老歌音响', emoji: '📻', price: 28, desc: '每天开档声望 +1' },
+  { id: 'fridge',  name: '二手冰箱', emoji: '🧊', price: 24, desc: '剩菜保留六成到明天' },
+  { id: 'wok',     name: '大炒锅',   emoji: '🍳', price: 34, desc: '备菜上限 +8' },
+  { id: 'sign',    name: '霓虹招牌', emoji: '🪧', price: 40, desc: '每天客人 +2' },
+  { id: 'kopi',    name: '咖啡机',   emoji: '☕', price: 46, desc: '每位付款客人多给 $1 kopi 钱' },
+  { id: 'helper',  name: '帮手阿明', emoji: '🧑‍🍳', price: 60, desc: '客流上限 +4；收档时阿明再卖 2 份剩菜' }
 ];
 
 // 开档事件（weighted 抽取，cond 为可选出现条件）；收档事件单独判定

@@ -88,9 +88,9 @@ export function finalScore(state) {
   return state.money + state.rep * 5;
 }
 export function grade(score) {
-  if (score >= 140) return 'S';
-  if (score >= 85) return 'A';
-  if (score >= 40) return 'B';
+  if (score >= 100) return 'S';
+  if (score >= 50) return 'A';
+  if (score >= 20) return 'B';
   return 'C';
 }
 

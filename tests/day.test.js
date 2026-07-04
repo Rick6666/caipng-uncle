@@ -12,7 +12,7 @@ describe('day state machine', () => {
     const before = s.money;
     s = d(s, 'BUY', { id: 'veg', qty: 4 });
     s = d(s, 'BUY', { id: 'chicken', qty: 4 });
-    expect(s.money).toBe(before - 4 - 12);
+    expect(s.money).toBe(before - 4 - 8); // veg $1×4, chicken $2×4
     s = d(s, 'FINISH_MORNING');
     expect(s.phase).toBe('prep');
     s = d(s, 'COOK', { id: 'stirVeg', qty: 4 });
@@ -72,11 +72,11 @@ describe('day state machine', () => {
   });
 
   it('BUY_UPGRADE 扣钱且不重复购买', () => {
-    let s = { ...newGame(1), phase: 'shop', money: 100 };
-    s = d(s, 'BUY_UPGRADE', { id: 'fridge' }); // 80
-    expect(s.money).toBe(20);
+    let s = { ...newGame(1), phase: 'shop', money: 30 };
+    s = d(s, 'BUY_UPGRADE', { id: 'fridge' }); // 24
+    expect(s.money).toBe(6);
     expect(s.upgrades).toContain('fridge');
-    expect(d(s, 'BUY_UPGRADE', { id: 'wok' })).toBe(s);     // 钱不够
+    expect(d(s, 'BUY_UPGRADE', { id: 'wok' })).toBe(s);     // 34 钱不够（剩 6）
     expect(d(s, 'BUY_UPGRADE', { id: 'fridge' })).toBe(s);  // 已拥有
   });
 

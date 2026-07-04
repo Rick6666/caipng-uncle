@@ -17,7 +17,7 @@ function dispatch(s, type, payload) { return reduce(s, { type, ...payload }); }
 // 合理策略：按预估客流备约 1.5×n 份、4 种均摊，始终留出房租+缓冲现金
 function reasonablePrep(s) {
   const expected = dailyCustomerCount(s);
-  const target = Math.min(prepCap(s), Math.ceil(expected * 1.6));
+  const target = Math.min(prepCap(s), Math.ceil(expected * 1.2)); // 贴近需求，少浪费
   const per = Math.max(1, Math.ceil(target / MENU.length));
   const buffer = CONST.RENT_PER_DAY;
   for (const m of MENU) {
@@ -71,14 +71,12 @@ function runService(s, tier, useSub) {
   return s;
 }
 
-// 保守买升级：只有留足缓冲才买，优先冰箱（防浪费）
+// 只在现金非常充裕（≥ 起始现金）时才买一件冰箱——在这个偏紧的经济里过早投资升级会周转不灵。
+// 代表"稳健经营、不冒进"的基线；真实玩家若能攒钱升级，是高于此基线的额外优势（不计入平衡下限）。
 function reasonableShop(s) {
-  const plan = [['fridge', 150], ['sign', 200], ['wok', 190], ['kopi', 240], ['helper', 320]];
-  for (const [id, minMoney] of plan) {
-    if (s.money >= minMoney) {
-      const s2 = dispatch(s, 'BUY_UPGRADE', { id });
-      if (s2 !== s) s = s2;
-    }
+  if (!s.upgrades.includes('fridge') && s.money >= 55) {
+    const s2 = dispatch(s, 'BUY_UPGRADE', { id: 'fridge' });
+    if (s2 !== s) s = s2;
   }
   return dispatch(s, 'END_SHOP');
 }

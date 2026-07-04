@@ -68,9 +68,10 @@ export function settleDay(state) {
     }
   }
 
-  // 步骤 3：房租
-  s.money -= CONST.RENT_PER_DAY;
-  s.today.spend += CONST.RENT_PER_DAY;
+  // 步骤 3：房租（逐日递增：第 N 天 = RENT_PER_DAY + (N-1)×RENT_ESCALATION）
+  const rent = CONST.RENT_PER_DAY + (s.day - 1) * CONST.RENT_ESCALATION;
+  s.money -= rent;
+  s.today.spend += rent;
 
   // 步骤 4：贷款利息
   if (s.loan) {
