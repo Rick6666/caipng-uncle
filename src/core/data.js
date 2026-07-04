@@ -260,20 +260,23 @@ export const LINES = {
   // rep≥120 特殊附言
   legend: '🏆 这一局，你干到了「全岛最强杂菜饭」！',
 
-  // 破产墓志铭（§9.2，与 epitaph 的 id 对应）
+  // 破产墓志铭（§9.2）：打法风格驱动、与 epitaph 的 id 对应。
+  // 74% 玩家在此收场——一律写成"可认领、能配文截图"的自嘲身份，而非纯失败标签。
   epitaphs: {
-    early:   { title: '💀 早夭 Uncle', line: '接手摊子没两天就撑不住，邻居 Uncle 看了直摇头。' },
-    karma:   { title: '🦈 现世报 Uncle', line: '一路斩客斩上瘾，资金链没扛住，也是活该。' },
-    soClose: { title: '😭 一步之遥 Uncle', line: '就差一两天就能好好把摊子交回去了，天不助我。' },
-    honest:  { title: '😮‍💨 苦撑 Uncle', line: '老老实实做生意，还是没扛过这个坎。' }
+    shark:   { title: '🦈 斩到没朋友 Uncle', line: '一路斩客斩上瘾，客人跑光、资金链也断了——也是活该 lah。' },
+    awkward: { title: '😅 全跑光了 Uncle', line: '客人一个接一个摇头走，摊子还没倒你先社死。' },
+    early:   { title: '💀 出师未捷 Uncle', line: '接手没两天就撑不住，邻居 Uncle 看了直摇头 hor。' },
+    soClose: { title: '😭 一步之遥 Uncle', line: '就差一两天就能好好把摊子交回去，天不助我 ah。' },
+    honest:  { title: '😮‍💨 苦撑 Uncle', line: '老老实实做生意，还是没扛过这个坎——下次一定。' }
   },
 
-  // 存活结局人设标签（§9.1，与 uncleTitle 的 id 对应）
+  // 存活结局人设标签（§9.1，打法风格驱动，与 uncleTitle 的 id 对应）
   titles: {
-    shark:   { title: '🦈 奸商 Uncle', flavor: '逢人就宰，回头客都被你吓跑了。' },
-    awkward: { title: '😅 社死 Uncle', flavor: '被气走的顾客比留下的还多，风评有点危险。' },
-    kind:    { title: '😇 良心 Uncle', flavor: '几乎不斩客，街坊都念你的好。' },
-    broke:   { title: '😩 苦命 Uncle', flavor: '惨淡经营，还在摸索门道。' },
+    shark:   { title: '🦈 奸商 Uncle', flavor: '逢人就斩，回头客都被你吓跑咯。' },
+    awkward: { title: '😅 社死 Uncle', flavor: '被气走的客人比留下的还多，风评有点危险 hor。' },
+    kind:    { title: '😇 良心 Uncle', flavor: '几乎不斩客，整条街的街坊都念你的好。' },
+    hustler: { title: '🔥 拼命 Uncle', flavor: '满摊狂卖，从开档忙到收档，够力！' },
+    zen:     { title: '🧘 佛系 Uncle', flavor: '不慌不忙，卖多卖少都随缘，佛系摆摊。' },
     worldly: { title: '😎 江湖 Uncle', flavor: '精明世故，眼里有生意也有人情。' }
   }
 };

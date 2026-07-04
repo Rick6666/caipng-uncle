@@ -45,21 +45,23 @@ describe('state', () => {
     expect(unlockedCustomerTypes(0).some(c => c.id === 'foodie')).toBe(false);
     expect(unlockedCustomerTypes(55).some(c => c.id === 'foodie')).toBe(true);
   });
-  it('uncleTitle 人设标签优先级（02-game-design §9.1）', () => {
-    const stats = (over) => ({ totalServed: 100, totalRevenue: 0, bestDayRevenue: 0, slashCount: 0, walkoutCount: 0, ...over });
-    expect(uncleTitle(stats({ slashCount: 45 }), 50, 500).id).toBe('shark');
-    expect(uncleTitle(stats({ walkoutCount: 25 }), 50, 500).id).toBe('awkward');
-    expect(uncleTitle(stats({ slashCount: 2 }), 30, 500).id).toBe('kind');   // 少斩客 + rep≥30
-    expect(uncleTitle(stats(), 10, 50).id).toBe('broke');                    // 勉强糊口：money<80 且 rep<15
-    expect(uncleTitle(stats({ slashCount: 10 }), 40, 400).id).toBe('worldly');
+  it('uncleTitle 人设标签优先级（打法风格驱动，§9.1）', () => {
+    const stats = (over) => ({ totalServed: 40, totalRevenue: 0, bestDayRevenue: 0, slashCount: 0, walkoutCount: 0, ...over });
+    expect(uncleTitle(stats({ totalServed: 100, slashCount: 45 }), 50, 500).id).toBe('shark');
+    expect(uncleTitle(stats({ totalServed: 100, walkoutCount: 25 }), 50, 500).id).toBe('awkward');
+    expect(uncleTitle(stats({ totalServed: 100, slashCount: 2 }), 30, 500).id).toBe('kind'); // 少斩+rep≥25
+    expect(uncleTitle(stats({ totalServed: 70 }), 10, 50).id).toBe('hustler');   // 满摊狂卖 served≥55
+    expect(uncleTitle(stats({ totalServed: 20 }), 10, 50).id).toBe('zen');       // 佛系 served≤28
+    expect(uncleTitle(stats({ totalServed: 40, slashCount: 5 }), 20, 400).id).toBe('worldly'); // 中庸
   });
-  it('epitaph 墓志铭优先级（02-game-design §9.2）', () => {
+  it('epitaph 墓志铭优先级（打法风格优先，§9.2）', () => {
     const stats = (over) => ({ totalServed: 100, totalRevenue: 0, bestDayRevenue: 0, slashCount: 0, walkoutCount: 0, ...over });
+    expect(epitaph(4, stats({ slashCount: 35 })).id).toBe('shark');      // 斩客率高
+    expect(epitaph(4, stats({ walkoutCount: 25 })).id).toBe('awkward');  // 气走率高
     expect(epitaph(2, stats()).id).toBe('early');
-    expect(epitaph(4, stats({ slashCount: 35 })).id).toBe('karma');
     expect(epitaph(6, stats()).id).toBe('soClose');
     expect(epitaph(4, stats({ slashCount: 5 })).id).toBe('honest');
-    expect(epitaph(1, stats({ slashCount: 50 })).id).toBe('early'); // day≤2 优先于 karma
+    expect(epitaph(1, stats({ slashCount: 50 })).id).toBe('shark');      // 打法优先于时机
   });
   it('dailyVerdict 三档（02-game-design §9.3）', () => {
     expect(dailyVerdict({ revenue: 50, spend: 20, repDelta: 1 })).toBe('good');

@@ -63,24 +63,28 @@ export function uncleTitle(stats, rep, money) {
   const served = Math.max(1, stats.totalServed);
   const slashRate = stats.slashCount / served;
   const walkoutRate = stats.walkoutCount / served;
-  // 门槛随声望经济重平衡校准（存活者 rep 多在 15~45）：良心=少斩客且真攒到声望；苦命=勉强糊口
+  // 打法风格驱动（P0-2）：身份 = 你怎么应对这七天，而非输赢。覆盖 100% 存活者。
   let id;
-  if (slashRate >= 0.4) id = 'shark';
-  else if (walkoutRate >= 0.2) id = 'awkward';
-  else if (slashRate <= 0.05 && rep >= 30) id = 'kind';
-  else if (money < 80 && rep < 15) id = 'broke';
-  else id = 'worldly';
+  if (slashRate >= 0.4) id = 'shark';                  // 逢人就斩
+  else if (walkoutRate >= 0.2) id = 'awkward';         // 气走一堆客
+  else if (slashRate <= 0.05 && rep >= 25) id = 'kind'; // 几乎不斩且攒到口碑
+  else if (served >= 55) id = 'hustler';               // 满摊狂卖
+  else if (served <= 28) id = 'zen';                   // 佛系少卖
+  else id = 'worldly';                                  // 精明世故
   return { id, ...LINES.titles[id] };
 }
 
-// §9.2 破产墓志铭
+// §9.2 破产墓志铭：同样打法风格优先（P0-2），死法也是一种身份
 export function epitaph(day, stats) {
-  const slashRate = stats.slashCount / Math.max(1, stats.totalServed);
+  const served = Math.max(1, stats.totalServed);
+  const slashRate = stats.slashCount / served;
+  const walkoutRate = stats.walkoutCount / served;
   let id;
-  if (day <= 2) id = 'early';
-  else if (slashRate >= 0.3) id = 'karma';
-  else if (day >= 6) id = 'soClose';
-  else id = 'honest';
+  if (slashRate >= 0.3) id = 'shark';           // 斩到没朋友
+  else if (walkoutRate >= 0.2) id = 'awkward';  // 客人全跑光
+  else if (day <= 2) id = 'early';              // 出师未捷
+  else if (day >= 6) id = 'soClose';            // 一步之遥
+  else id = 'honest';                           // 老实苦撑
   return { id, ...LINES.epitaphs[id] };
 }
 
