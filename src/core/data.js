@@ -31,7 +31,32 @@ export const CONST = {
   FOODIE_MIN_VARIETY_SPAWN: 6, // 美食家出现需当日菜品种类≥6
   HELPER_AUTO_SELL: 2,         // 帮手阿明每日自动卖出份数
   KOPI_BONUS: 1,               // 咖啡机每单额外
-  WORKER_UNLOCK: 0             // 占位（worker 无门槛）
+  WORKER_UNLOCK: 0,            // 占位（worker 无门槛）
+
+  // —— C-1：以下为原先散落在逻辑代码里的魔法数字，迁入单一真源（纯搬迁，数值不变）——
+  QUOTE_KIND_MUL: 0.8,         // 良心价 = round(base × 此值)，见 economy.js quotePrices（02 §4.2）
+  QUOTE_SLASH_MUL: 1.5,        // 斩客价 = round(base × 此值)
+  KIND_MIN_MARGIN: 1,          // 良心价下限 = cost + 此值
+  SUB_ACCEPT_RATE: 0.6,        // 缺菜推荐替代的接受概率（02 §4.3）
+  TV_REP_BONUS: 10,            // tv 事件当日声望加成
+  SPEAKER_REP_BONUS: 1,        // 老歌音响每天开档声望加成
+  RIVAL_CUSTOMER_PENALTY: 2,   // rival 事件当日客数扣减
+  MIN_CUSTOMERS: 3,            // 每日客数下限（无论公式算出多低都不低于此值）
+  CUSTOMER_FLOW_REP_DIVISOR: 8,// 客流公式 rep 除数：n = BASE_CUSTOMERS + floor(rep / 此值)（C-2）
+  SCORE_REP_MUL: 5,            // 存活结局评分 = money + rep × 此值（§9）
+  GRADE_S: 220,                // 评级阈值：≥ 此值为 S
+  GRADE_A: 150,                // ≥ 此值为 A
+  GRADE_B: 100,                // ≥ 此值为 B（否则 C）
+  SHARK_SLASH_RATE: 0.4,       // uncleTitle/epitaph 共用：slashRate ≥ 此值 → 奸商/斩到没朋友
+  AWKWARD_WALKOUT_RATE: 0.2,   // uncleTitle/epitaph 共用：walkoutRate ≥ 此值 → 社死/全跑光了
+  KIND_SLASH_RATE_MAX: 0.05,   // uncleTitle 良心档：slashRate ≤ 此值 才可能命中
+  KIND_REP_MIN: 25,            // uncleTitle 良心档：且 rep ≥ 此值
+  HUSTLER_SERVED_MIN: 55,      // uncleTitle 拼命档：totalServed ≥ 此值
+  ZEN_SERVED_MAX: 28,          // uncleTitle 佛系档：totalServed ≤ 此值
+  EPITAPH_SHARK_SLASH_RATE: 0.3, // epitaph 专用（比 uncleTitle 的 0.4 更低，破产局更容易判定为斩到没朋友）
+  EPITAPH_EARLY_DAY_MAX: 2,    // epitaph：day ≤ 此值 → 出师未捷
+  EPITAPH_SOCLOSE_DAY_MIN: 6,  // epitaph：day ≥ 此值 → 一步之遥
+  VERDICT_BAD_REPDELTA: -3     // dailyVerdict：repDelta < 此值 直接判 bad（优先于收支）
 };
 
 // 成本 = 每份食材批发价（贴近真实物价：叶菜/蛋/佐料 $1；肉 $2；海鲜 $3）
@@ -253,7 +278,9 @@ export const LINES = {
     morningStart: ['天刚亮，巴刹的灯还没全开，你已经在挑今天的食材了。', '新的一天，摊子擦干净，等着开张。'],
     prepStart: ['锅气升起，你系上围裙，开始今天的备菜。'],
     openStall: ['卷帘门拉开，第一位客人已经在探头了。'],
-    emptyQueue: ['收档时间到，卷帘门缓缓拉下。']
+    emptyQueue: ['收档时间到，卷帘门缓缓拉下。'],
+    subReject: '客人摇摇头走了，声望 −1。',   // C-4：拒绝替代菜走人
+    apologize: '你婉言道歉送客，这单没做成。' // C-4：道歉送客
   },
 
   events: {

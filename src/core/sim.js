@@ -1,6 +1,6 @@
 // 平衡模拟：纯 core 调用，驱动 reduce 跑完整一局，产出终局摘要。供 sim.test.js 回归。
 import { reduce } from './day.js';
-import { newGame, prepCap, dailyCustomerCount, ingredientPrice, uncleTitle, epitaph, grade } from './state.js';
+import { newGame, prepCap, dailyCustomerCount, ingredientPrice, uncleTitle, epitaph, grade, finalScore } from './state.js';
 import { CONST, DISHES, REQUESTS } from './data.js';
 
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
@@ -110,7 +110,7 @@ export function runGame(botName, seed, trace) {
   }
   if (trace && s.phase === 'gameover') trace({ day: s.day, money: s.money, rep: s.rep, ...s.today, dead: true });
   const survived = s.phase === 'ending';
-  const score = s.money + s.rep * 5;
+  const score = finalScore(s); // C-3：改用 state.js 的单一实现，不再手抄公式
   return {
     survived,
     day: s.day,

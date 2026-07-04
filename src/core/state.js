@@ -52,9 +52,9 @@ export function unlockedIngredients(rep) { return INGREDIENTS.filter(i => rep >=
 export function unlockedDishes(rep) { return DISHES.filter(d => rep >= dishUnlockRep(d)); }
 export function unlockedCustomerTypes(rep) { return CUSTOMER_TYPES.filter(c => rep >= c.unlockRep); }
 
-// 每日客数预览（营业开档时会用同一公式实算并存入队列长度）
+// 每日客数基准（C-2：day.js openStall 复用本函数叠加事件修饰，不再重复实现 rep/除数 公式）
 export function dailyCustomerCount(state) {
-  let n = CONST.BASE_CUSTOMERS + Math.floor(state.rep / 8);
+  let n = CONST.BASE_CUSTOMERS + Math.floor(state.rep / CONST.CUSTOMER_FLOW_REP_DIVISOR);
   if (state.upgrades.includes('sign')) n += CONST.SIGN_CUSTOMER_BONUS;
   return n;
 }
@@ -66,11 +66,11 @@ export function uncleTitle(stats, rep, money) {
   const walkoutRate = stats.walkoutCount / served;
   // 打法风格驱动（P0-2）：身份 = 你怎么应对这七天，而非输赢。覆盖 100% 存活者。
   let id;
-  if (slashRate >= 0.4) id = 'shark';                  // 逢人就斩
-  else if (walkoutRate >= 0.2) id = 'awkward';         // 气走一堆客
-  else if (slashRate <= 0.05 && rep >= 25) id = 'kind'; // 几乎不斩且攒到口碑
-  else if (served >= 55) id = 'hustler';               // 满摊狂卖
-  else if (served <= 28) id = 'zen';                   // 佛系少卖
+  if (slashRate >= CONST.SHARK_SLASH_RATE) id = 'shark';                  // 逢人就斩
+  else if (walkoutRate >= CONST.AWKWARD_WALKOUT_RATE) id = 'awkward';     // 气走一堆客
+  else if (slashRate <= CONST.KIND_SLASH_RATE_MAX && rep >= CONST.KIND_REP_MIN) id = 'kind'; // 几乎不斩且攒到口碑
+  else if (served >= CONST.HUSTLER_SERVED_MIN) id = 'hustler';            // 满摊狂卖
+  else if (served <= CONST.ZEN_SERVED_MAX) id = 'zen';                    // 佛系少卖
   else id = 'worldly';                                  // 精明世故
   return { id, ...LINES.titles[id] };
 }
@@ -81,30 +81,30 @@ export function epitaph(day, stats) {
   const slashRate = stats.slashCount / served;
   const walkoutRate = stats.walkoutCount / served;
   let id;
-  if (slashRate >= 0.3) id = 'shark';           // 斩到没朋友
-  else if (walkoutRate >= 0.2) id = 'awkward';  // 客人全跑光
-  else if (day <= 2) id = 'early';              // 出师未捷
-  else if (day >= 6) id = 'soClose';            // 一步之遥
+  if (slashRate >= CONST.EPITAPH_SHARK_SLASH_RATE) id = 'shark';        // 斩到没朋友
+  else if (walkoutRate >= CONST.AWKWARD_WALKOUT_RATE) id = 'awkward';   // 客人全跑光
+  else if (day <= CONST.EPITAPH_EARLY_DAY_MAX) id = 'early';            // 出师未捷
+  else if (day >= CONST.EPITAPH_SOCLOSE_DAY_MIN) id = 'soClose';        // 一步之遥
   else id = 'honest';                           // 老实苦撑
   return { id, ...LINES.epitaphs[id] };
 }
 
 // §9 存活结局评分与评级（阈值经 sim.js 校准，见 docs/02-game-design §9/§11）
 export function finalScore(state) {
-  return state.money + state.rep * 5;
+  return state.money + state.rep * CONST.SCORE_REP_MUL;
 }
 // 阈值经声望经济重平衡后重新校准（survivor 分数分布 ~79–283、中位 ~157，见 docs/02 §9）
 export function grade(score) {
-  if (score >= 220) return 'S';
-  if (score >= 150) return 'A';
-  if (score >= 100) return 'B';
+  if (score >= CONST.GRADE_S) return 'S';
+  if (score >= CONST.GRADE_A) return 'A';
+  if (score >= CONST.GRADE_B) return 'B';
   return 'C';
 }
 
 // §9.3 当日手感评价三档
 export function dailyVerdict(today) {
   const profit = today.revenue - today.spend;
-  if (profit < 0 || today.repDelta < -3) return 'bad';
+  if (profit < 0 || today.repDelta < CONST.VERDICT_BAD_REPDELTA) return 'bad';
   if (profit > 0 && today.repDelta > 0) return 'good';
   return 'ok';
 }

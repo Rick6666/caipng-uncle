@@ -1,13 +1,12 @@
-import { CONST, DISHES, UPGRADES, REQUESTS } from './data.js';
+import { CONST, DISHES, INGREDIENTS, UPGRADES, REQUESTS, LINES } from './data.js';
 import { createRng } from './rng.js';
-import { newGame, prepCap, ingredientPrice, unlockedIngredients } from './state.js';
+import { newGame, prepCap, ingredientPrice, dailyCustomerCount } from './state.js';
 import { generateQueue, resolveQuote, resolveHaggle, findSubstitute } from './customers.js';
 import { settleDay } from './economy.js';
 import { rollOpenEvent, rollCloseEvents } from './events.js';
 
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
-const ING_BY_ID = Object.fromEntries(unlockedIngredients(9999).map(i => [i.id, i]));
-const SUB_ACCEPT = 0.6;
+const ING_BY_ID = Object.fromEntries(INGREDIENTS.map(i => [i.id, i]));
 
 // 唯一的 state 变更入口。非法动作原样返回传入的 state 引用。
 export function reduce(state, action) {
@@ -58,8 +57,8 @@ function enterMorning(state) {
   const ev = rollOpenEvent(s, rng);
   s.todayEvent = ev;
   if (ev === 'marketUp') s.priceMul = CONST.MARKETUP_PRICE_MUL;
-  if (ev === 'tv') { s.rep += 10; s.today.repDelta += 10; }
-  if (s.upgrades.includes('speaker')) { s.rep += 1; s.today.repDelta += 1; }
+  if (ev === 'tv') { s.rep += CONST.TV_REP_BONUS; s.today.repDelta += CONST.TV_REP_BONUS; }
+  if (s.upgrades.includes('speaker')) { s.rep += CONST.SPEAKER_REP_BONUS; s.today.repDelta += CONST.SPEAKER_REP_BONUS; }
   s.rng = rng.getState();
   return s;
 }
@@ -104,14 +103,13 @@ function doCook(state, { id, qty }) {
 
 function openStall(state) {
   const rng = createRng(state.rng);
-  // 客数公式（§4.4）
-  let n = CONST.BASE_CUSTOMERS + Math.floor(state.rep / 8);
-  if (state.upgrades.includes('sign')) n += CONST.SIGN_CUSTOMER_BONUS;
+  // 客数公式（§4.4）：基准 + 招牌走 state.js 的 dailyCustomerCount（C-2，不重复实现）
+  let n = dailyCustomerCount(state);
   n += rng.int(-1, 2);
   if (state.todayEvent === 'rain' && !state.upgrades.includes('awning')) n = Math.floor(n * CONST.RAIN_CUSTOMER_MUL);
-  if (state.todayEvent === 'rival') n -= 2;
+  if (state.todayEvent === 'rival') n -= CONST.RIVAL_CUSTOMER_PENALTY;
   const cap = CONST.MAX_CUSTOMERS + (state.upgrades.includes('helper') ? CONST.HELPER_CUSTOMER_BONUS : 0);
-  n = Math.max(3, Math.min(cap, n));
+  n = Math.max(CONST.MIN_CUSTOMERS, Math.min(cap, n));
   const queue = generateQueue(
     { rep: state.rep, cooked: state.cooked, todayEvent: state.todayEvent, upgrades: state.upgrades },
     n, rng
@@ -172,7 +170,7 @@ function doOfferSub(state) {
     return sub;
   });
   if (subs.some(x => x == null)) return state; // 无可替代 → UI 不该给此选项
-  if (rng.chance(SUB_ACCEPT)) {
+  if (rng.chance(CONST.SUB_ACCEPT_RATE)) {
     // 接受：替换缺菜为替代菜，出餐
     const map = Object.fromEntries(missing.map((m, i) => [m, subs[i]]));
     const newDishes = cur.dishes.map(d => map[d] || d);
@@ -186,14 +184,14 @@ function doOfferSub(state) {
   }
   // 拒绝 → 走人 rep-1
   return finishCustomer(applyRep({ ...state, rng: rng.getState() }, -1),
-    { kind: 'sub-reject', line: '客人摇摇头走了，声望 −1。' });
+    { kind: 'sub-reject', line: LINES.narration.subReject });
 }
 
 function doApologize(state) {
   // CR-08：礼貌道歉不再倒扣声望——丢掉这单生意本身已是惩罚；
   // 频繁倒扣会把服务收益反复抵消，让声望永远涨不起来（缺菜时无解）。
   return finishCustomer(state,
-    { kind: 'apologize', line: '你婉言道歉送客，这单没做成。' });
+    { kind: 'apologize', line: LINES.narration.apologize });
 }
 
 const VALID_TIERS = new Set(['kind', 'normal', 'slash']);

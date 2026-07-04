@@ -19,9 +19,9 @@ export function orderCost(dishes) {
 export function quotePrices(dishes) {
   const base = orderBase(dishes), cost = orderCost(dishes);
   return {
-    kind: Math.max(cost + 1, Math.round(base * 0.8)),
+    kind: Math.max(cost + CONST.KIND_MIN_MARGIN, Math.round(base * CONST.QUOTE_KIND_MUL)),
     normal: base,
-    slash: Math.round(base * 1.5)
+    slash: Math.round(base * CONST.QUOTE_SLASH_MUL)
   };
 }
 
