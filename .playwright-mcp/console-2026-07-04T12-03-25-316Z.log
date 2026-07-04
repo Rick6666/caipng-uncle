@@ -1,0 +1,13 @@
+[     216ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://127.0.0.1:8000/?seed=42:0
+[   65926ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/stirVeg.webp:0
+[   65927ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/cabbageStew.webp:0
+[   65927ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/braisedEgg.webp:0
+[   65930ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/bitterEgg.webp:0
+[   65931ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/mapoTofu.webp:0
+[   65931ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/friedWing.webp:0
+[   65931ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/braisedPork.webp:0
+[   65931ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/dishes/sweetSourPork.webp:0
+[   65932ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/customers/uncle2.webp:0
+[   65933ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/customers/worker.webp:0
+[   65933ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/customers/ahma.webp:0
+[   65933ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8000/assets/customers/student.webp:0
