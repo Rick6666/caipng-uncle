@@ -60,9 +60,7 @@ function renderMorning(state, dispatch) {
     const have = state.inventory[ing.id] || 0;
     // 提示：这份食材能做出哪些（已解锁的）菜
     const makes = (DISHES_BY_ING[ing.id] || []).filter(d => unlockedDishIds.has(d.id)).map(d => d.name);
-    const desc = ing.id === 'rice'
-      ? `$${price}／份 · 每单必配`
-      : makes.length ? `$${price}／份 · 做：${makes.join('、')}` : `$${price}／份`;
+    const desc = makes.length ? `$${price}／份 · 做：${makes.join('、')}` : `$${price}／份`;
     return stepperRow(
       h('span', { class: 'item-emoji' }, ing.emoji), ing.name, desc, have,
       () => dispatch({ type: 'BUY', id: ing.id, qty: -1 }),

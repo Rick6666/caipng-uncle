@@ -35,8 +35,10 @@ export const CONST = {
 };
 
 // 成本 = 每份食材批发价（贴近真实物价：叶菜/蛋/佐料 $1；肉 $2；海鲜 $3）
+// 注：米饭不是可采购食材——每单固定含 1 份米饭的成本/售价只体现在 economy.js 的
+// RICE_COST/RICE_PRICE 报价公式里（见 docs/02-game-design.md §1/§4.2），不占备菜库存、
+// 不需要玩家采购（B-5：此前 rice 曾在此表可购买但从不被任何菜谱消耗，是纯粹的钱坑，已移除）。
 export const INGREDIENTS = [
-  { id: 'rice',     name: '米',     emoji: '🍚', price: 1, unlockRep: 0 },
   { id: 'egg',      name: '鸡蛋',   emoji: '🥚', price: 1, unlockRep: 0 },
   { id: 'greens',   name: '青菜',   emoji: '🥬', price: 1, unlockRep: 0 },
   { id: 'cabbage',  name: '包菜',   emoji: '🥗', price: 1, unlockRep: 0 },
