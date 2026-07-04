@@ -80,7 +80,10 @@ function renderMorning(state, dispatch) {
 function renderPrep(state, dispatch) {
   const cap = prepCap(state);
   const used = Object.values(state.cooked).reduce((a, b) => a + b, 0);
-  const list = unlockedDishes(state.rep).map(d => {
+  const dishes = unlockedDishes(state.rep);
+  // 还有食材可以炒出任何一道菜？用于软锁保护（CR-17）
+  const canCookAny = dishes.some(d => Math.min(...d.recipe.map(ing => state.inventory[ing] || 0)) > 0);
+  const list = dishes.map(d => {
     const canMake = Math.min(...d.recipe.map(ing => state.inventory[ing] || 0));
     const cooked = state.cooked[d.id] || 0;
     const recipeTxt = d.recipe.map(ing => `${ING_BY_ID[ing].name}×1`).join('+');
@@ -96,8 +99,11 @@ function renderPrep(state, dispatch) {
     tag('清晨 · 备菜'),
     h('p', { class: 'subtitle' }, `已备 ${used}/${cap} 份。「库存还能做 N 份」= 你买的食材够炒几份；多备种类，客人更容易凑齐一单。`),
     ...list);
-  const openOff = used <= 0;
-  setActions(btn('开档营业！', 'btn-primary', () => dispatch({ type: 'OPEN_STALL' }), openOff ? '先备点菜' : `共 ${used} 份`, openOff));
+  // CR-17 防软锁：只有「还能备菜却没备」才拦；彻底没料可炒（没钱没库存）时放行开档，
+  // 让玩家进入注定亏本的一天→收档→触发破产，而不是卡死在备菜页无法前进。
+  const openOff = used <= 0 && canCookAny;
+  const hint = used > 0 ? `共 ${used} 份` : (canCookAny ? '先备点菜' : '没料可炒，硬着头皮开档');
+  setActions(btn('开档营业！', 'btn-primary', () => dispatch({ type: 'OPEN_STALL' }), hint, openOff));
 }
 
 function renderService(state, dispatch) {

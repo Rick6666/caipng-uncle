@@ -77,6 +77,23 @@ describe('day state machine', () => {
     expect(d(s, 'START_DAY')).toBe(s);
   });
 
+  it('CR-17 空备菜也能开档并走完当天（没料可炒不软锁，最终进结算/破产）', () => {
+    // 破产边缘：$0、无库存、无熟菜 → 开档 → 全部道歉 → 收档 → 结算/破产，绝不卡死
+    let s = { ...newGame(3), phase: 'prep', money: 0, inventory: {}, cooked: {} };
+    s = d(s, 'OPEN_STALL');
+    expect(s.phase).toBe('service');
+    let guard = 0;
+    while (s.phase === 'service' && guard++ < 200) {
+      const step = s.service.step;
+      if (step === 'meet') s = d(s, s.service.canServe ? 'SERVE' : 'APOLOGIZE');
+      else if (step === 'pricing') s = d(s, 'QUOTE', { tier: 'normal' });
+      else if (step === 'haggle') s = d(s, 'HAGGLE', { accept: true });
+      else if (step === 'result') s = d(s, 'NEXT_CUSTOMER');
+      else break;
+    }
+    expect(['settle', 'gameover']).toContain(s.phase); // 顺利落地，无软锁
+  });
+
   it('CR-12 rep 已在 0 时道歉，台账声望变化不显示虚假 -1', () => {
     const s = svcState({ rep: 0, cooked: { friedCabbage: 0 } });
     const out = d(s, 'APOLOGIZE');
