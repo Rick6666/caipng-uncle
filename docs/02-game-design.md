@@ -302,7 +302,7 @@ slashRate = stats.slashCount / max(1, stats.totalServed)
 
    ```
    todayProfit = today.revenue − today.spend
-   todayProfit > 0 且 today.repDelta ≥ 0  → "今天生意红火，Uncle 看了都点头"
+   todayProfit > 0 且 today.repDelta > 0  → "今天生意红火，Uncle 看了都点头"
    todayProfit < 0 或 today.repDelta < -3 → "今天有点惨淡，得想想办法了"
    其余                                    → "今天马马虎虎，混过去了"
    ```
