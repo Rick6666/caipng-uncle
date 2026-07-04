@@ -4,12 +4,12 @@ import { newGame, prepCap, dailyCustomerCount, ingredientPrice, uncleTitle, epit
 import { CONST, DISHES } from './data.js';
 
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d => [d.id, d]));
-// 合理策略的均衡菜单（荤素蛋搭配，4 种，集中需求少浪费）
+// 合理策略的均衡菜单（1 素 1 蛋 2 荤，覆盖"有荤必点一道荤"的点单规则；均为声望 0 即可做）
 const MENU = [
-  { dish: 'stirVeg', ings: ['veg'] },
-  { dish: 'braisedEgg', ings: ['egg', 'braise'] },
-  { dish: 'friedWing', ings: ['chicken'] },
-  { dish: 'sweetSourPork', ings: ['pork'] }
+  { dish: 'friedCabbage', ings: ['cabbage'] },
+  { dish: 'radishOmelette', ings: ['egg', 'radish'] },
+  { dish: 'sweetSourPork', ings: ['pork'] },
+  { dish: 'braisedBelly', ings: ['pork', 'braise'] }
 ];
 
 function dispatch(s, type, payload) { return reduce(s, { type, ...payload }); }
@@ -39,9 +39,9 @@ function reasonablePrep(s) {
 }
 
 function lazyPrep(s) {
-  s = dispatch(s, 'BUY', { id: 'veg', qty: 4 });
+  s = dispatch(s, 'BUY', { id: 'cabbage', qty: 4 });
   s = dispatch(s, 'FINISH_MORNING');
-  s = dispatch(s, 'COOK', { id: 'stirVeg', qty: 4 });
+  s = dispatch(s, 'COOK', { id: 'friedCabbage', qty: 4 });
   return dispatch(s, 'OPEN_STALL');
 }
 

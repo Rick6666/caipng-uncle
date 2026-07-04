@@ -8,7 +8,7 @@ import {
 describe('state', () => {
   it('newGame 初始值与 schema 一致', () => {
     const s = newGame(42);
-    expect(s).toMatchObject({ seed: 42, day: 1, phase: 'title', money: 55, rep: 0, upgrades: [], loan: null, usedLoan: false, priceMul: 1 });
+    expect(s).toMatchObject({ seed: 42, day: 1, phase: 'title', money: 50, rep: 0, upgrades: [], loan: null, usedLoan: false, priceMul: 1 });
     expect(s.rng).toHaveProperty('s');
     expect(JSON.parse(JSON.stringify(s))).toEqual(s); // 可序列化
   });
@@ -28,13 +28,20 @@ describe('state', () => {
     expect(ingredientPrice(s, 'chicken')).toBe(2);
     expect(ingredientPrice({ ...s, priceMul: 1.2 }, 'chicken')).toBe(3); // ceil(2.4)
   });
-  it('解锁: rep 0 无 curry, rep 15 有', () => {
-    expect(unlockedIngredients(0).some(i => i.id === 'curry')).toBe(false);
-    expect(unlockedIngredients(15).some(i => i.id === 'curry')).toBe(true);
+  it('解锁: rep 0 无海鲜食材, rep 30 有鱼片', () => {
+    expect(unlockedIngredients(0).some(i => i.id === 'fish')).toBe(false);
+    expect(unlockedIngredients(30).some(i => i.id === 'fish')).toBe(true);
+    // 4 道荤菜开局即可做
+    expect(unlockedIngredients(0).some(i => i.id === 'curry')).toBe(true);
+    expect(unlockedIngredients(0).some(i => i.id === 'ribs')).toBe(true);
   });
   it('解锁菜品/顾客随声望', () => {
-    expect(unlockedDishes(0).some(d => d.id === 'curryChicken')).toBe(false);
-    expect(unlockedDishes(15).some(d => d.id === 'curryChicken')).toBe(true);
+    // 日常菜（含 4 荤）rep 0 全解锁；海鲜按声望
+    expect(unlockedDishes(0).some(d => d.id === 'curryChicken')).toBe(true);
+    expect(unlockedDishes(0).some(d => d.id === 'cerealRibs')).toBe(true);
+    expect(unlockedDishes(0).some(d => d.id === 'curryFish')).toBe(false);
+    expect(unlockedDishes(30).some(d => d.id === 'curryFish')).toBe(true);
+    expect(unlockedDishes(55).some(d => d.id === 'friedShishamo')).toBe(true);
     expect(unlockedCustomerTypes(0).some(c => c.id === 'foodie')).toBe(false);
     expect(unlockedCustomerTypes(55).some(c => c.id === 'foodie')).toBe(true);
   });

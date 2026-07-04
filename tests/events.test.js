@@ -34,7 +34,7 @@ describe('events', () => {
   const onlyCat = { chance: (p) => p === CONST.CATSTEAL_CHANCE, pick: (a) => a[0] };
 
   it('卫生检查：有剩菜无冰箱 → 罚款 + 掉声望', () => {
-    const s = { ...newGame(1), cooked: { stirVeg: 2 }, upgrades: [] };
+    const s = { ...newGame(1), cooked: { friedCabbage: 2 }, upgrades: [] };
     const r = rollCloseEvents(s, onlyInspect);
     expect(r.moneyDelta).toBe(-CONST.INSPECTION_FINE);
     expect(r.repDelta).toBe(-2);
@@ -46,14 +46,14 @@ describe('events', () => {
     expect(r.repDelta).toBe(2);
   });
   it('卫生检查：有冰箱即使有剩菜也表扬', () => {
-    const s = { ...newGame(1), cooked: { stirVeg: 2 }, upgrades: ['fridge'] };
+    const s = { ...newGame(1), cooked: { friedCabbage: 2 }, upgrades: ['fridge'] };
     const r = rollCloseEvents(s, onlyInspect);
     expect(r.repDelta).toBe(2);
   });
   it('野猫：有剩菜时移除一份', () => {
-    const s = { ...newGame(1), cooked: { stirVeg: 2 }, upgrades: [] };
+    const s = { ...newGame(1), cooked: { friedCabbage: 2 }, upgrades: [] };
     const r = rollCloseEvents(s, onlyCat);
-    expect(r.removeDish).toBe('stirVeg');
+    expect(r.removeDish).toBe('friedCabbage');
   });
   it('野猫：无剩菜不触发', () => {
     const s = { ...newGame(1), cooked: {}, upgrades: [] };

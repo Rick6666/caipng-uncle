@@ -3,9 +3,9 @@
 
 // 数值经 sim.js 千局校准（reasonable 存活 ~37%、lazy ~0%），详见 docs/02-game-design §11
 export const CONST = {
-  START_MONEY: 55,
+  START_MONEY: 50,
   START_REP: 0,
-  RENT_PER_DAY: 10,
+  RENT_PER_DAY: 9,
   BASE_PREP_CAP: 16,
   WOK_BONUS: 8,
   BASE_CUSTOMERS: 9,
@@ -34,37 +34,39 @@ export const CONST = {
   WORKER_UNLOCK: 0             // 占位（worker 无门槛）
 };
 
-// 成本 = 每份食材的批发价（贴近真实物价：青菜/蛋角几毛，按整数记 $1；肉类 $2；海鲜 $3~4）
+// 成本 = 每份食材批发价（贴近真实物价：叶菜/蛋/佐料 $1；肉 $2；海鲜 $3）
 export const INGREDIENTS = [
-  { id: 'rice',    name: '米',     emoji: '🍚', price: 1, unlockRep: 0 },
-  { id: 'egg',     name: '鸡蛋',   emoji: '🥚', price: 1, unlockRep: 0 },
-  { id: 'veg',     name: '青菜',   emoji: '🥬', price: 1, unlockRep: 0 },
-  { id: 'cabbage', name: '高丽菜', emoji: '🥗', price: 1, unlockRep: 0 },
-  { id: 'gourd',   name: '苦瓜',   emoji: '🥒', price: 1, unlockRep: 0 },
-  { id: 'tofu',    name: '豆腐',   emoji: '🧈', price: 1, unlockRep: 0 },
-  { id: 'braise',  name: '卤汁',   emoji: '🫗', price: 1, unlockRep: 0 },
-  { id: 'chicken', name: '鸡肉',   emoji: '🍗', price: 2, unlockRep: 0 },
-  { id: 'pork',    name: '猪肉',   emoji: '🥩', price: 2, unlockRep: 0 },
-  { id: 'curry',   name: '咖喱酱', emoji: '🍛', price: 1, unlockRep: 15 },
-  { id: 'fish',    name: '鲜鱼',   emoji: '🐟', price: 3, unlockRep: 30 },
-  { id: 'prawn',   name: '大虾',   emoji: '🦐', price: 4, unlockRep: 55 }
+  { id: 'rice',     name: '米',     emoji: '🍚', price: 1, unlockRep: 0 },
+  { id: 'egg',      name: '鸡蛋',   emoji: '🥚', price: 1, unlockRep: 0 },
+  { id: 'greens',   name: '青菜',   emoji: '🥬', price: 1, unlockRep: 0 },
+  { id: 'cabbage',  name: '包菜',   emoji: '🥗', price: 1, unlockRep: 0 },
+  { id: 'longbean', name: '长豆角', emoji: '🫛', price: 1, unlockRep: 0 },
+  { id: 'radish',   name: '菜脯',   emoji: '🥕', price: 1, unlockRep: 0 },
+  { id: 'braise',   name: '卤汁',   emoji: '🫗', price: 1, unlockRep: 0 },
+  { id: 'pork',     name: '猪肉',   emoji: '🥩', price: 2, unlockRep: 0 },
+  { id: 'chicken',  name: '鸡肉',   emoji: '🍗', price: 2, unlockRep: 0 },
+  { id: 'ribs',     name: '排骨',   emoji: '🍖', price: 2, unlockRep: 0 },
+  { id: 'cereal',   name: '麦片',   emoji: '🥣', price: 1, unlockRep: 0 },
+  { id: 'curry',    name: '咖喱酱', emoji: '🍛', price: 1, unlockRep: 0 },
+  { id: 'fish',     name: '鱼片',   emoji: '🐟', price: 3, unlockRep: 30 },
+  { id: 'shishamo', name: '多春鱼', emoji: '🐠', price: 3, unlockRep: 55 }
 ];
 
 // price = 基准价；cat 决定荤素分类与替代逻辑；img 走 assets/，加载失败回退 emoji
-// price = 售价（贴近真实杂菜饭物价：素菜 $2、蛋/荤 $2~3、海鲜 $4~5；每道菜留 $1~2 毛利）
+// 新马杂菜饭招牌菜。price = 售价（成本 + $1~2 毛利，$2~6）；img 加载失败回退 emoji
 export const DISHES = [
-  { id: 'stirVeg',       name: '炒青菜',   emoji: '🥬', recipe: ['veg'],            price: 2, weight: 10, cat: 'veg',     img: 'assets/dishes/stirVeg.webp' },
-  { id: 'cabbageStew',   name: '焖高丽菜', emoji: '🥗', recipe: ['cabbage'],        price: 2, weight: 8,  cat: 'veg',     img: 'assets/dishes/cabbageStew.webp' },
-  { id: 'braisedEgg',    name: '卤蛋',     emoji: '🥚', recipe: ['egg', 'braise'],  price: 3, weight: 10, cat: 'egg',     img: 'assets/dishes/braisedEgg.webp' },
-  { id: 'bitterEgg',     name: '苦瓜炒蛋', emoji: '🍳', recipe: ['gourd', 'egg'],   price: 3, weight: 6,  cat: 'egg',     img: 'assets/dishes/bitterEgg.webp' },
-  { id: 'mapoTofu',      name: '麻婆豆腐', emoji: '🥘', recipe: ['tofu'],           price: 2, weight: 7,  cat: 'veg',     img: 'assets/dishes/mapoTofu.webp' },
-  { id: 'friedWing',     name: '炸鸡翅',   emoji: '🍗', recipe: ['chicken'],        price: 4, weight: 10, cat: 'meat',    img: 'assets/dishes/friedWing.webp' },
-  { id: 'curryChicken',  name: '咖喱鸡',   emoji: '🍛', recipe: ['chicken', 'curry'], price: 5, weight: 9, cat: 'meat',   img: 'assets/dishes/curryChicken.webp' },
-  { id: 'braisedPork',   name: '卤肉',     emoji: '🥩', recipe: ['pork', 'braise'], price: 5, weight: 8,  cat: 'meat',    img: 'assets/dishes/braisedPork.webp' },
-  { id: 'sweetSourPork', name: '咕咾肉',   emoji: '🍖', recipe: ['pork'],           price: 4, weight: 7,  cat: 'meat',    img: 'assets/dishes/sweetSourPork.webp' },
-  { id: 'steamedFish',   name: '清蒸鱼',   emoji: '🐟', recipe: ['fish'],           price: 5, weight: 6,  cat: 'premium', img: 'assets/dishes/steamedFish.webp' },
-  { id: 'curryFishHead', name: '咖喱鱼头', emoji: '🐠', recipe: ['fish', 'curry'],  price: 6, weight: 5,  cat: 'premium', img: 'assets/dishes/curryFishHead.webp' },
-  { id: 'chiliPrawn',    name: '辣椒虾',   emoji: '🦐', recipe: ['prawn'],          price: 6, weight: 5,  cat: 'premium', img: 'assets/dishes/chiliPrawn.webp' }
+  { id: 'friedCabbage',   name: '炒包菜',     emoji: '🥗', recipe: ['cabbage'],          price: 2, weight: 10, cat: 'veg',     img: 'assets/dishes/friedCabbage.webp' },
+  { id: 'longBean',       name: '长豆角',     emoji: '🫛', recipe: ['longbean'],         price: 2, weight: 8,  cat: 'veg',     img: 'assets/dishes/longBean.webp' },
+  { id: 'kangkong',       name: '青龙菜',     emoji: '🥬', recipe: ['greens'],           price: 2, weight: 9,  cat: 'veg',     img: 'assets/dishes/kangkong.webp' },
+  { id: 'radishOmelette', name: '菜脯煎蛋',   emoji: '🍳', recipe: ['egg', 'radish'],    price: 3, weight: 10, cat: 'egg',     img: 'assets/dishes/radishOmelette.webp' },
+  { id: 'furongEgg',      name: '芙蓉煎蛋',   emoji: '🍳', recipe: ['egg', 'greens'],    price: 3, weight: 8,  cat: 'egg',     img: 'assets/dishes/furongEgg.webp' },
+  { id: 'steamedEgg',     name: '肉碎蒸水蛋', emoji: '🥚', recipe: ['egg', 'pork'],      price: 4, weight: 7,  cat: 'egg',     img: 'assets/dishes/steamedEgg.webp' },
+  { id: 'sweetSourPork',  name: '咕噜肉',     emoji: '🍖', recipe: ['pork'],             price: 4, weight: 9,  cat: 'meat',    img: 'assets/dishes/sweetSourPork.webp' },
+  { id: 'braisedBelly',   name: '红烧扣肉',   emoji: '🥩', recipe: ['pork', 'braise'],   price: 5, weight: 8,  cat: 'meat',    img: 'assets/dishes/braisedBelly.webp' },
+  { id: 'curryChicken',   name: '咖喱鸡',     emoji: '🍛', recipe: ['chicken', 'curry'], price: 5, weight: 9,  cat: 'meat',    img: 'assets/dishes/curryChicken.webp' },
+  { id: 'cerealRibs',     name: '麦香排骨',   emoji: '🍖', recipe: ['ribs', 'cereal'],   price: 5, weight: 8,  cat: 'meat',    img: 'assets/dishes/cerealRibs.webp' },
+  { id: 'curryFish',      name: '咖喱鱼片',   emoji: '🐟', recipe: ['fish', 'curry'],    price: 6, weight: 5,  cat: 'premium', img: 'assets/dishes/curryFish.webp' },
+  { id: 'friedShishamo',  name: '炸多春鱼',   emoji: '🐠', recipe: ['shishamo'],         price: 5, weight: 6,  cat: 'premium', img: 'assets/dishes/friedShishamo.webp' }
 ];
 
 export const CUSTOMER_TYPES = [

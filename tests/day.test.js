@@ -10,15 +10,15 @@ describe('day state machine', () => {
     s = d(s, 'START_DAY');
     expect(s.phase).toBe('morning');
     const before = s.money;
-    s = d(s, 'BUY', { id: 'veg', qty: 4 });
-    s = d(s, 'BUY', { id: 'chicken', qty: 4 });
-    expect(s.money).toBe(before - 4 - 8); // veg $1×4, chicken $2×4
+    s = d(s, 'BUY', { id: 'cabbage', qty: 4 });
+    s = d(s, 'BUY', { id: 'pork', qty: 4 });
+    expect(s.money).toBe(before - 4 - 8); // cabbage $1×4, pork $2×4
     s = d(s, 'FINISH_MORNING');
     expect(s.phase).toBe('prep');
-    s = d(s, 'COOK', { id: 'stirVeg', qty: 4 });
-    s = d(s, 'COOK', { id: 'friedWing', qty: 4 });
-    expect(s.inventory.veg).toBe(0);
-    expect(s.cooked.friedWing).toBe(4);
+    s = d(s, 'COOK', { id: 'friedCabbage', qty: 4 });
+    s = d(s, 'COOK', { id: 'sweetSourPork', qty: 4 });
+    expect(s.inventory.cabbage).toBe(0);
+    expect(s.cooked.sweetSourPork).toBe(4);
     s = d(s, 'OPEN_STALL');
     expect(s.phase).toBe('service');
     expect(s.service.queue.length).toBeGreaterThanOrEqual(3);
@@ -37,19 +37,19 @@ describe('day state machine', () => {
   it('非法动作返回原 state 引用', () => {
     let s = d(newGame(1), 'START_DAY');
     expect(d(s, 'QUOTE', { tier: 'kind' })).toBe(s);         // 阶段不符
-    expect(d(s, 'BUY', { id: 'prawn', qty: 1 })).toBe(s);    // 未解锁
+    expect(d(s, 'BUY', { id: 'shishamo', qty: 1 })).toBe(s); // 未解锁（rep 55）
     expect(d(s, 'BUY', { id: 'chicken', qty: 999 })).toBe(s); // 钱不够
   });
 
   it('COOK 超容量拒绝；wok 提升到 24', () => {
     let s = d(newGame(1), 'START_DAY');
-    s = d(s, 'BUY', { id: 'veg', qty: 20 });
+    s = d(s, 'BUY', { id: 'cabbage', qty: 20 });
     s = d(s, 'FINISH_MORNING');
-    const over = d(s, 'COOK', { id: 'stirVeg', qty: 17 }); // >16
+    const over = d(s, 'COOK', { id: 'friedCabbage', qty: 17 }); // >16
     expect(over).toBe(s);
     let s2 = { ...s, upgrades: ['wok'] };
-    const ok = d(s2, 'COOK', { id: 'stirVeg', qty: 20 });   // ≤24
-    expect(ok.cooked.stirVeg).toBe(20);
+    const ok = d(s2, 'COOK', { id: 'friedCabbage', qty: 20 });   // ≤24
+    expect(ok.cooked.friedCabbage).toBe(20);
   });
 
   it('第 7 天结算后进 ending，不再逛商店', () => {
@@ -63,11 +63,11 @@ describe('day state machine', () => {
     expect(s.phase).toBe('shop');
   });
   it('END_SHOP 进入次日 morning', () => {
-    let s = { ...newGame(1), day: 3, phase: 'shop', carryOver: { stirVeg: 2 } };
+    let s = { ...newGame(1), day: 3, phase: 'shop', carryOver: { friedCabbage: 2 } };
     s = d(s, 'END_SHOP');
     expect(s.day).toBe(4);
     expect(s.phase).toBe('morning');
-    expect(s.cooked.stirVeg).toBe(2); // carryOver 并入
+    expect(s.cooked.friedCabbage).toBe(2); // carryOver 并入
     expect(s.carryOver).toEqual({});
   });
 

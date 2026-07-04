@@ -25,44 +25,51 @@
 
 买入即入库；**当日未用完的生食材保留到明天**（生食材不腐坏，腐坏机制只作用于熟菜）。
 
+> 单价 = 每份批发成本，贴近真实物价（叶菜/蛋/佐料 $1、肉 $2、海鲜 $3）。
+
 | id | 名称 | emoji | 单价 | 解锁声望 |
 |---|---|---|---|---|
 | rice | 米 | 🍚 | 1 | 0 |
 | egg | 鸡蛋 | 🥚 | 1 | 0 |
-| veg | 青菜 | 🥬 | 1 | 0 |
-| cabbage | 高丽菜 | 🥗 | 1 | 0 |
-| tofu | 豆腐 | 🧈 | 2 | 0 |
+| greens | 青菜 | 🥬 | 1 | 0 |
+| cabbage | 包菜 | 🥗 | 1 | 0 |
+| longbean | 长豆角 | 🫛 | 1 | 0 |
+| radish | 菜脯 | 🥕 | 1 | 0 |
 | braise | 卤汁 | 🫗 | 1 | 0 |
-| chicken | 鸡肉 | 🍗 | 3 | 0 |
-| pork | 猪肉 | 🥩 | 3 | 0 |
-| curry | 咖喱酱 | 🍛 | 1 | 15 |
-| fish | 鲜鱼 | 🐟 | 4 | 30 |
-| prawn | 大虾 | 🦐 | 5 | 55 |
+| pork | 猪肉 | 🥩 | 2 | 0 |
+| chicken | 鸡肉 | 🍗 | 2 | 0 |
+| ribs | 排骨 | 🍖 | 2 | 0 |
+| cereal | 麦片 | 🥣 | 1 | 0 |
+| curry | 咖喱酱 | 🍛 | 1 | 0 |
+| fish | 鱼片 | 🐟 | 3 | 30 |
+| shishamo | 多春鱼 | 🐠 | 3 | 55 |
 
 ## 3. 菜品表（dishes）
 
 备菜阶段将食材烹为菜品，1 份菜消耗配方内每种食材各 1 单位。
 `weight` 是顾客点单时的抽样权重（人气）。菜品解锁跟随其最稀有食材的解锁声望。
 
-> **基准价经 sim 校准上调（v1.5）**：早期每道菜 price-cost≈$1，几乎零毛利，导致再高客流也不盈利；
-> 上调后每道菜有 $2~4 真实毛利，好玩家满摊才可能盈利，这是"高失败率但好玩家撑得住"平衡的前提。
+> 菜单为新马杂菜饭常见招牌菜。基准价 = 成本 + $1~2 毛利，贴近真实售价（单菜 $2~6）。
+> **日常菜（3 蔬 + 3 蛋 + 4 荤 = 10 道）开局全部可做**；只有 2 道海鲜按声望解锁
+> （咖喱鱼片需 30、炸多春鱼需 55），作为高档进阶菜——这是唯一的菜品成长梯度。
 
 | id | 名称 | emoji | 配方 | 基准价 | weight | 类别 |
 |---|---|---|---|---|---|---|
-| stirVeg | 炒青菜 | 🥬 | veg | 3 | 10 | veg |
-| cabbageStew | 焖高丽菜 | 🥗 | cabbage | 3 | 8 | veg |
-| braisedEgg | 卤蛋 | 🥚 | egg, braise | 4 | 10 | egg |
-| bitterEgg | 苦瓜炒蛋 | 🍳 | veg, egg | 4 | 6 | egg |
-| mapoTofu | 麻婆豆腐 | 🧈 | tofu | 4 | 7 | veg |
-| friedWing | 炸鸡翅 | 🍗 | chicken | 6 | 10 | meat |
-| curryChicken | 咖喱鸡 | 🍛 | chicken, curry | 7 | 9 | meat |
-| braisedPork | 卤肉 | 🥩 | pork, braise | 7 | 8 | meat |
-| sweetSourPork | 咕咾肉 | 🍖 | pork | 6 | 7 | meat |
-| steamedFish | 清蒸鱼 | 🐟 | fish | 8 | 6 | premium |
-| curryFishHead | 咖喱鱼头 | 🐠 | fish, curry | 9 | 5 | premium |
-| chiliPrawn | 辣椒虾 | 🦐 | prawn | 9 | 5 | premium |
+| friedCabbage | 炒包菜 | 🥗 | cabbage | 2 | 10 | veg |
+| longBean | 长豆角 | 🫛 | longbean | 2 | 8 | veg |
+| kangkong | 青龙菜 | 🥬 | greens | 2 | 9 | veg |
+| radishOmelette | 菜脯煎蛋 | 🍳 | egg, radish | 3 | 10 | egg |
+| furongEgg | 芙蓉煎蛋 | 🍳 | egg, greens | 3 | 8 | egg |
+| steamedEgg | 肉碎蒸水蛋 | 🥚 | egg, pork | 4 | 7 | egg |
+| sweetSourPork | 咕噜肉 | 🍖 | pork | 4 | 9 | meat |
+| braisedBelly | 红烧扣肉 | 🥩 | pork, braise | 5 | 8 | meat |
+| curryChicken | 咖喱鸡 | 🍛 | chicken, curry | 5 | 9 | meat |
+| cerealRibs | 麦香排骨 | 🍖 | ribs, cereal | 5 | 8 | meat |
+| curryFish | 咖喱鱼片 | 🐟 | fish, curry | 6 | 5 | premium |
+| friedShishamo | 炸多春鱼 | 🐠 | shishamo | 5 | 6 | premium |
 
-**成本核算**：菜品成本 = 配方食材单价之和（如咖喱鸡 = 3+1 = $4，基准价 $7）。
+**成本核算**：菜品成本 = 配方食材单价之和（如咖喱鸡 = 鸡肉2 + 咖喱1 = $3，基准价 $5）。
+菜品解锁跟随其最稀有食材：4 荤 + 3 蛋 + 3 蔬开局即可做；咖喱鱼片需声望 30，炸多春鱼需 55。
 
 ## 4. 顾客系统
 
@@ -145,9 +152,9 @@ n = clamp(n, 3, MAX_CUSTOMERS + (帮手 ? 4 : 0))
 | 阈值 | 称号 | 解锁内容 |
 |---|---|---|
 | 0 | 路边小摊 | — |
-| 15 | 巷口熟客 | 咖喱酱、建筑工人 |
-| 30 | 街坊招牌 | 鲜鱼、网红 |
-| 55 | 排队名摊 | 大虾、美食家、电视台采访事件 |
+| 15 | 巷口熟客 | 建筑工人（顾客） |
+| 30 | 街坊招牌 | 鱼片 → 咖喱鱼片、网红（顾客） |
+| 55 | 排队名摊 | 多春鱼 → 炸多春鱼、美食家（顾客）、电视台采访事件 |
 | 85 | 本地传奇 | — |
 | 120 | 全城最强杂菜饭 | 7 天内合理打法很难摸到的挑战性高分档——不弹窗、不打断，只在第 7 天结局页作为最高档特殊评价出现（见 §9） |
 
