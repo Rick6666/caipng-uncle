@@ -180,42 +180,42 @@
 ## §5 UI 与工程卫生（E 组）
 
 ### E-1. UI 直接改写 core state 对象（`state._highscore`）
-- [ ] 状态
+- [x] 状态 — 已完成（commit 068753b）
 - **位置**：`src/ui/app.js:37, 39, 52`
 - **问题**：dispatch 后直接 `state._highscore = ...`。(a) `_highscore` 不在 03 §3 schema；(b) 非法 action 时 reducer 返回原 state 引用，UI 在「应不变」的对象上盖写——未来 core 引入 `Object.freeze` 或深度不变断言即崩；(c) 违背「UI 只读 + dispatch」协议。
 - **修复建议**：highscore 作为 render 的第二参数传入，不写进 state。
 
 ### E-2. viewport 禁用缩放（WCAG 1.4.4）
-- [ ] 状态
+- [x] 状态 — 已完成（commit 068753b）
 - **位置**：`index.html:5`（`maximum-scale=1.0, user-scalable=no`）
 - **修复建议**：只保留 `width=device-width, initial-scale=1, viewport-fit=cover`；双击误触已有 `touch-action: manipulation` 兜底。
 
 ### E-3. 步进按钮 38×38px 低于触控标准
-- [ ] 状态
+- [x] 状态 — 已完成（commit 068753b）
 - **位置**：`style.css:163-165`（38px）、`style.css:160`（间距 4px）
 - **问题**：iOS HIG 44pt / Android 48dp；采购备菜是每局几十次的核心操作，误触 +/− 造成经济损失。
 - **修复建议**：≥44px 并加大间距。改后跑 E2E 移动端视口确认无溢出。
 
 ### E-4. UI 小缺陷三则
-- [ ] **E-4a** `screens.js:255` 平分误报「刷新历史最佳」（UI 用 `>=`，`highscore.js:4` 用 `>`）——统一为 `>`。
-- [ ] **E-4b** `app.js:50` `?seed=abc` → `Number()>>>0` → 0，拼错的分享链接全玩 seed 0。NaN 时 fallback `freshSeed()`。顺带收敛 `freshSeed()` 双份实现（`app.js:44-46` 有 floor vs `screens.js:292-295` 无）为单一导出。
-- [ ] **E-4c** `app.js:53/64` 全局 error 监听注册在首次 `draw()` 之后，首屏抛错见白屏。监听挪到 draw 之前。
+- [x]（已完成，commit 068753b） **E-4a** `screens.js:255` 平分误报「刷新历史最佳」（UI 用 `>=`，`highscore.js:4` 用 `>`）——统一为 `>`。
+- [x]（已完成，commit 068753b） **E-4b** `app.js:50` `?seed=abc` → `Number()>>>0` → 0，拼错的分享链接全玩 seed 0。NaN 时 fallback `freshSeed()`。顺带收敛 `freshSeed()` 双份实现（`app.js:44-46` 有 floor vs `screens.js:292-295` 无）为单一导出。
+- [x]（已完成，commit 068753b） **E-4c** `app.js:53/64` 全局 error 监听注册在首次 `draw()` 之后，首屏抛错见白屏。监听挪到 draw 之前。
 
 ### E-5. 仓库卫生
-- [ ] **E-5a** 根目录 9 张调试截图（pm-*.png ×7、walk-1-cover.png、ending-screen.png，约 1.3MB）被 track——`git rm --cached` 移出并入 .gitignore（历史体积已产生，不强求重写历史）。
-- [ ] **E-5b** `.playwright-mcp/` 50 个会话产物（292KB）被 track——同上处理并入 .gitignore。
-- [ ] **E-5c** `.gitignore` 补齐：`.playwright-mcp/`、根目录调试截图规则；清理指向不存在目录的 `e2e/screenshots/` 行（待 A-2 建目录后按需恢复）。
-- [ ] **E-5d** `docs/analysis/` 1.1MB 可再生数据集（daily.csv.gz 568KB、games.csv 532KB）——与 PM 确认：归档意图明确（有 commit 说明），若保留则不动；若瘦身则移出 git 只留报告 MD。**默认不动，仅确认。**
+- [x]（已完成，commit 068753b） **E-5a** 根目录 9 张调试截图（pm-*.png ×7、walk-1-cover.png、ending-screen.png，约 1.3MB）被 track——`git rm --cached` 移出并入 .gitignore（历史体积已产生，不强求重写历史）。
+- [x]（已完成，commit 068753b） **E-5b** `.playwright-mcp/` 50 个会话产物（292KB）被 track——同上处理并入 .gitignore。
+- [x]（已完成，commit 068753b；e2e/screenshots/ 行留待批次4建e2e/目录时一并处理，非阻塞项） **E-5c** `.gitignore` 补齐：`.playwright-mcp/`、根目录调试截图规则；清理指向不存在目录的 `e2e/screenshots/` 行（待 A-2 建目录后按需恢复）。
+- [x]（已确认，维持不动——PM 归档意图明确，符合默认处理） **E-5d** `docs/analysis/` 1.1MB 可再生数据集（daily.csv.gz 568KB、games.csv 532KB）——与 PM 确认：归档意图明确（有 commit 说明），若保留则不动；若瘦身则移出 git 只留报告 MD。**默认不动，仅确认。**
 
 ### E-6. 缺 README.md（Task 13）
-- [ ] 状态
+- [x] 状态 — 已完成（commit 068753b）
 - **内容至少含**：游戏简介、`npm test` / `npm run e2e` / `npm run serve`、`git config core.hooksPath .githooks` 门禁配置步骤（05-plan 662 行原计划）、部署地址（A-3 完成后补）。
 
 ### E-7. 死代码/死样式清理
-- [ ] **E-7a** `data.js:34` `WORKER_UNLOCK` 占位常量无引用——删除或启用。
-- [ ] **E-7b** `data.js:91` influencer `slash.repWalk: -6` 不可达（pay 1.0 永不走人）——确认后删除或留注释说明。
+- [x] **E-7a**（已完成，commit 068753b） `data.js:34` `WORKER_UNLOCK` 占位常量无引用——删除或启用。
+- [x] **E-7b**（已完成，commit 068753b，保留并加注释） `data.js:91` influencer `slash.repWalk: -6` 不可达（pay 1.0 永不走人）——确认后删除或留注释说明。
 - [x] **E-7c**（已完成，commit 980cc31，随 C 组顺手修） `day.js:9` `unlockedIngredients(9999)` 哨兵——改为直接 import INGREDIENTS。
-- [ ] **E-7d** `style.css:114-118` `h1.title` 与 `style.css:352` `.cover .btn + .btn` 永不命中——删除。
+- [x] **E-7d**（已完成，commit 068753b） `style.css:114-118` `h1.title` 与 `style.css:352` `.cover .btn + .btn` 永不命中——删除。
 - [x] **E-7e**（已完成，commit 2c2a7ad，PM 决定维持现状） 统计口径：sub-reject（`day.js:181`）与 apologize 走人不计 `walkoutCount`——已在 02-game-design.md §9.1 补充口径说明，两种走人是不同失败模式，故意不合并统计，不改代码。
 
 ---
