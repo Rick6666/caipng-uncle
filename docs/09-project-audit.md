@@ -30,7 +30,7 @@
 ## §1 高危（A 组）
 
 ### A-1. BUY 退货套利漏洞 + 无当日购买量台账
-- [ ] 状态
+- [x] 状态 — 已完成（commit 14604d7）
 - **位置**：`src/core/day.js:66-81`（doBuy）
 - **问题**：`docs/03-architecture.md` §4 规定「qty 可为负 = 退回当日刚买的，不可退到低于当日购买量」。实现只检查 `nextQty < 0`，没有当日购买量记录。
 - **失败场景**：① 库存跨天保留，玩家可退掉前几天买的生食材；② 退款按当日 `ingredientPrice`（含 priceMul）计算——普通日 $1 买入包菜，marketUp 日（priceMul 1.2 经 `Math.ceil` 后 $2）负 qty 退回，每单位净赚 $1，肉类同理。7 天内 marketUp 期望出现 ≥1 次，等于印钞机，冲击 §11 千局校准的存活率基线。附带：负 cost 会把 `today.spend` 减成负数，污染 dailyVerdict。
@@ -66,21 +66,21 @@
 - **验收**：文档与代码口径一致；`npm test` 全绿。
 
 ### B-2. OFFER_SUB 未校验「确实缺菜」，货全在时 40% 白白气走顾客
-- [ ] 状态
+- [x] 状态 — 已完成（commit 14604d7）
 - **位置**：`src/core/day.js:156-183`（doOfferSub）
 - **问题**：`canServe === true` 时 `missing=[]` → 不拦截 → 直接掷 `rng.chance(SUB_ACCEPT)`：60% 分支等价 SERVE 但多消耗一次 rng（确定性流偏移）；40% 分支顾客被拒、rep −1，尽管他点的菜全有货。对比 `doServe:149` 有 `!canServe` 自守，此处兜底缺失。
 - **修复建议**：doOfferSub 开头加 `if (svc.canServe) return state;`（对齐铁律：非法 action 返回原 state 引用）。
 - **验收**：新增测试 `toBe(state)` 断言；`npm test` 全绿。
 
 ### B-3. QUOTE 携带非法 tier 抛 TypeError 而非返回原 state
-- [ ] 状态
+- [x] 状态 — 已完成（commit 14604d7）
 - **位置**：`src/core/customers.js:57-59`（经 `day.js:192` doQuote 触达）
 - **问题**:`REACTION[customer.type][tier]` 对未知 tier 得 undefined，下一行 `r.haggle` 直接 TypeError，违反「非法 action 返回原 state 引用」铁律（其他非法路径均正确兜底）。
 - **修复建议**：doQuote 入口校验 `tier ∈ {kind, normal, slash}`，非法返回原 state。
 - **验收**：新增 `toBe(state)` 测试；全绿。
 
 ### B-4. qty 为 NaN 时污染整个 state 且永不破产
-- [ ] 状态
+- [x] 状态 — 已完成（commit 14604d7）
 - **位置**：`src/core/day.js:66-81`（doBuy）、`83-97`（doCook）
 - **问题**：`NaN < 0`、`NaN > cap`、`money < NaN` 全为 false，守卫全失效 → money/inventory 变 NaN → `economy.js:90` 破产判定 `NaN < 0` 为 false，游戏带 NaN 跑满 7 天。
 - **修复建议**：doBuy/doCook 入口加 `Number.isInteger(qty)`（或 `Number.isFinite`）校验，非法返回原 state。可与 A-1 同一批改（同函数）。
@@ -94,9 +94,9 @@
 - **验收**：口径落进 02 文档 + data.js + 测试三者一致；sim 断言不漂（方案 a）或重新校准（方案 b）。
 
 ### B-6~B-8. 低危核心边角（可与 B 组顺手修）
-- [ ] **B-6** `src/core/events.js:13-35`：`hasLeftover` 在 catSteal 判定前快照——剩 1 份菜 + 无冰箱 + 猫偷走 + 抽中卫生检查 → 对已不存在的剩菜罚 $30、rep −2。修复：检查时用猫偷之后的剩菜数。注意 rng 消耗顺序不能变。
-- [ ] **B-7** `src/core/customers.js:61-72`：台词在付款掷骰之前抽取，student/ahma normal 档 10% 走人时展示的却是付款台词。修复：按掷骰结果选台词。注意 rng 顺序。
-- [ ] **B-8** `src/core/day.js:43-63`：`closeLines` 不在 enterMorning 清除，昨日收档文案残留到次日 state。修复：enterMorning 重置。
+- [x] **B-6**（已完成，commit 14604d7） `src/core/events.js:13-35`：`hasLeftover` 在 catSteal 判定前快照——剩 1 份菜 + 无冰箱 + 猫偷走 + 抽中卫生检查 → 对已不存在的剩菜罚 $30、rep −2。修复：检查时用猫偷之后的剩菜数。注意 rng 消耗顺序不能变。
+- [x] **B-7**（已完成，commit 14604d7） `src/core/customers.js:61-72`：台词在付款掷骰之前抽取，student/ahma normal 档 10% 走人时展示的却是付款台词。修复：按掷骰结果选台词。注意 rng 顺序。
+- [x] **B-8**（已完成，commit 14604d7） `src/core/day.js:43-63`：`closeLines` 不在 enterMorning 清除，昨日收档文案残留到次日 state。修复：enterMorning 重置。
 
 ---
 
