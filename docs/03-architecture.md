@@ -2,6 +2,11 @@
 
 > 本文档定义模块边界、状态 schema、函数签名与持久化格式（本项目只持久化历史最高分，不做中局存档）。
 > 执行 Agent 实现时**签名与字段名必须与本文档逐字一致**（05-implementation-plan 中的测试代码依赖这些名字）。
+>
+> **像素风美术资产相关内容已过期**：本文档 §2/§8/§10 中提到的 `assets/` 目录、WebP 图片、`img` 字段、
+> 像素画接入点、图片体积预算等描述，均已被 `docs/08-change-requests.md` CR-02 推翻——最终视觉方案是
+> **全 emoji，不引入任何外部美术资产**。这些段落保留仅供历史参照，**不代表当前实现**，实现以 CR-02
+> 与 `src/ui/dom.js`/`src/core/data.js` 现状为准。
 
 ## 1. 顶层设计决策（ADR 摘要）
 
@@ -65,18 +70,23 @@ caifan/
   rng: { s: 305419896 },   // RNG 当前内部状态
   day: 1,                  // 当前天数（1~GAME_DAYS=7）
   phase: 'title',          // 'title'|'morning'|'prep'|'service'|'settle'|'shop'|'ending'|'gameover'
-  money: 120,
+  money: 50,
   rep: 0,
   inventory: {},           // { [ingredientId]: 数量 } 生食材库存
   cooked: {},              // { [dishId]: 份数 } 当日熟菜
+  carryOver: {},           // { [dishId]: 份数 } 冰箱保留的隔夜熟菜；次日 enterMorning 并入 cooked 后清空
   upgrades: [],            // 已购升级 id 数组
   loan: null,              // null | { repaid: 0 }  repaid 累计还款，>= LOAN_REPAY 后置回 null
   usedLoan: false,         // 是否用过贷款（用过再破产 = 本局结束）
+  loanTaken: false,        // 当日是否触发过贷款续命（由 enterMorning 每天复位；newGame 初始 state 尚未含此字段，
+                           // 直到第一次 START_DAY/END_SHOP 调用 enterMorning 后才出现——已知的 shape 微差异，
+                           // UI 层读取前须用 `state.loanTaken` 而非解构假设一定存在）
   priceMul: 1,             // 当日食材价格倍率（marketUp 事件写 1.2，次日结算后复位 1）
   todayEvent: null,        // 当日开档事件 id 或 null
   service: null,           // 营业阶段运行时（见下），非营业阶段为 null
+  closeLines: null,        // 收档事件文案（inspection/catSteal），settle 页展示；由 enterMorning 清除
   today: {                 // 当日流水（结算展示用，每天 morning 重置）
-    revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0, log: []
+    revenue: 0, spend: 0, served: 0, lost: 0, repDelta: 0
   },
   stats: {                 // 本局唯一统计（结局评分 + uncleTitle 用，从 newGame 起累计到第 7 天）
     totalServed: 0, totalRevenue: 0, bestDayRevenue: 0, slashCount: 0, walkoutCount: 0
@@ -88,41 +98,45 @@ caifan/
   queue: [Customer, ...],   // 今日顾客队列（开档时一次性生成）
   index: 0,                 // 当前第几位
   current: Customer|null,   // 正在服务的顾客
-  step: 'meet'|'substitute'|'pricing'|'haggle'|'result',  // 子状态
-  offer: null,              // 缺菜时推荐的替代菜 id
-  lastOutcome: null         // 上一次报价结果（result 步展示）
+  step: 'request'|'meet'|'pricing'|'haggle'|'result',  // 子状态（'request' 仅当 current.request 非空时经过，CR-19）
+  canServe: false,          // 当前顾客点单是否全部有货（meet 步预计算，UI 据此决定 SERVE/APOLOGIZE 按钮）
+  offer: null,              // 保留字段，当前实现恒为 null（替代菜逻辑走 OFFER_SUB 内部即时计算，不预存 offer）
+  lastOutcome: null,        // 上一次报价/替代/道歉结果（result 步展示），形如 { kind, price?, line }
+  requestNotice: null       // 上一次 RESOLVE_REQUEST 的反馈文案（转回 meet 步后展示一次）
 }
 
 // Customer 对象（customers.js 生成）
 {
   type: 'student',          // customerTypes id
   name: '阿伟',             // 从 data.lines 姓名池抽取
-  dishes: ['stirVeg', 'friedWing'],  // 点单（生成时快照）
+  dishes: ['friedCabbage', 'sweetSourPork'],  // 点单（生成时快照）
   greeting: '...',          // 进场台词
+  request: 'labourer'       // 可选：命中 REQUESTS 表时为对应顾客类型 id（CR-19），处理后置 null；否则不出现该字段
 }
 ```
 
 ## 4. Action 协议（day.js reducer 全量动作表）
 
 `reduce(state, action) → newState`（纯函数，内部使用 state.rng 且把新 rng 状态写回）。
-非法动作（如钱不够、阶段不符）**返回原 state 并在 `state.today.log` 不留痕**——UI 层负责禁用非法按钮，reducer 只做兜底防御。
+非法动作（如钱不够、阶段不符）**必须原样返回传入的 state 引用**（`toBe` 可断言）——UI 层负责禁用非法按钮，reducer 只做兜底防御。
 
 | action.type | payload | 阶段约束 | 语义 |
 |---|---|---|---|
-| START_DAY | — | title/shop→morning | 进入清晨；重置 today、cooked（含冰箱保留）、判定开档事件与今日客数 |
-| BUY | { id, qty } | morning | 购买食材（qty 可为负 = 退回当日刚买的，退款；不可退到低于当日购买量） |
+| START_DAY | — | title→morning | 仅第 1 天从封面进入清晨的入口；重置 today/stats 引用、并入 carryOver、判定开档事件与今日客数（内部即 `enterMorning`）。**day ≥ 2 的次日晨间转换由 END_SHOP 直接触发，不会再次派发 START_DAY** |
+| BUY | { id, qty } | morning | 购买食材（qty 可为负 = 退回当日刚买的，退款；不可退到低于当日购买量——**当前实现未做当日购买量台账，见 09-project-audit.md A-1**） |
 | FINISH_MORNING | — | morning→prep | 进入备菜 |
 | COOK | { id, qty } | prep | 烹饪 qty 份（负数=退回食材）；受 prepCap 限制 |
-| OPEN_STALL | — | prep→service | 开档：生成顾客队列（含 helper 自动单），进入第一位顾客 meet |
+| OPEN_STALL | — | prep→service | 开档：按客流公式生成顾客队列，进入第一位顾客（`current.request` 非空则 step='request'，否则 'meet'）。**helper 升级不在此处生效**——其"收档再卖 2 份剩菜"效果发生在 `NEXT_CUSTOMER` 触发的收档结算里（见 economy.js `settleDay`），不是开档时的自动单 |
+| RESOLVE_REQUEST | { accept } | service.request | CR-19：应对/拒绝特殊需求，施加 `REQUESTS` 表对应的 rep/money 效果，`requestNotice` 写入反馈文案，转回 step='meet' |
 | SERVE | — | service.meet | 有菜出餐 → step='pricing' |
-| OFFER_SUB | — | service.meet | 缺菜推荐替代 → 判定接受与否 |
-| APOLOGIZE | — | service.meet/substitute | 道歉送客 → 下一位 |
+| OFFER_SUB | — | service.meet | 缺菜且能找到替代菜时推荐替代 → 60%（`SUB_ACCEPT`）接受出餐进 pricing，40% 拒绝走人 rep−1；**若替代菜也凑不齐则原样返回 state**（UI 不应展示此选项） |
+| APOLOGIZE | — | service.meet | 道歉送客 → result 步 |
 | QUOTE | { tier } | service.pricing | tier ∈ 'kind'/'normal'/'slash'；阿嬷+slash → step='haggle'，否则出结果 |
 | HAGGLE | { accept } | service.haggle | 阿嬷砍价：accept=true 收正常价 / false 赌一把 |
-| NEXT_CUSTOMER | — | service.result | 下一位；队列空 → 执行 §8 结算（含 today/stats 累计），二次破产直接 `phase='gameover'`（展示 02-game-design §9.2 墓志铭），否则 `phase='settle'` |
+| NEXT_CUSTOMER | — | service.result | 下一位（`current.request` 非空则 step='request'，否则 'meet'）；队列空 → 执行 §8 结算（含收档事件、helper 自动卖剩菜、today/stats 累计），二次破产直接 `phase='gameover'`（展示 02-game-design §9.2 墓志铭），否则 `phase='settle'` |
 | ACK_SETTLE | — | settle | `day === GAME_DAYS ? phase='ending' : phase='shop'`——第 7 天结算完直接进结局，不再逛商店 |
 | BUY_UPGRADE | { id } | shop | 购买升级 |
-| END_SHOP | — | shop | → START_DAY 前置（day+1）。只会在 day < GAME_DAYS 时被调用，无需再判断天数 |
+| END_SHOP | — | shop | day+1 后直接复用 `enterMorning` 进入 `phase='morning'`（**不经过 START_DAY**，二者共享同一段晨间重置逻辑，只是入口阶段约束不同） |
 | NEW_GAME | { seed? } | 任意 | 全新开局（唯一能"回到游戏"的方式，不存在"继续游戏"） |
 
 派生查询（`state.js` 导出，供 UI 与测试使用，均为纯函数）：

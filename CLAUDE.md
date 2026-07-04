@@ -35,6 +35,7 @@ npm run serve     # 本地 http://localhost:8000
 
 ## 现状
 
-- `index.html` / `style.css`：已有的视觉骨架（kopitiam 风格），在其上开发、不要推倒重来；类名契约见 `docs/03-architecture.md` §8。
-- `game.js` 尚不存在：index.html 中的 `<script src="game.js">` 将在 Task 10 改为 `<script type="module" src="src/ui/app.js">`。
-- `assets/` 尚不存在：21 张像素风美术资产（菜品/顾客/食阁场景）由 Task 9b 产出，风格规范见 `docs/02-game-design.md` §12；生成依赖 fal.ai MCP（需配置 `FAL_KEY`），执行前确认可用。
+- Task 0~10（工具链、rng/data/state/economy/customers/events/day/highscore/sim、UI 层）均已完成；`index.html` 入口已是 `<script type="module" src="src/ui/app.js">`，`game.js` 从未存在过。
+- 视觉方案：**全 emoji，不使用外部美术资产**（`docs/08-change-requests.md` CR-02 定案，像素画方案已废弃）。`docs/05-implementation-plan.md` Task 9b（原像素风美术资产生成计划）已标记废弃，不得执行；不存在 `assets/` 目录，`FAL_KEY`/fal.ai MCP 与本项目视觉方案无关。
+- 尚未完成：Task 11（E2E，`e2e/` 目录不存在）、Task 12（CI/CD 与上线）、Task 13（验收与 README）——详见 `docs/09-project-audit.md`。
+- 已知问题清单与修复优先级见 `docs/09-project-audit.md`（三路审查报告，含高/中/低危分级与验收标准），修复任务应从该文档领取。

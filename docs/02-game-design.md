@@ -124,7 +124,7 @@ kind 档仍高于 normal（+2~+6），保持"良心价换口碑"的分层；slas
 worker/labourer 的 slash 期望金钱 > normal（好斩），student/ahma/foodie < normal（别斩）。
 
 **阿嬷砍价子选择**（选斩客价时弹出）：
-- 「好啦好啦算你正常价」→ 收 normal 价，rep 0；
+- 「好啦好啦算你正常价」→ 收 normal 价，**rep +1**（与 normal 档一致，见上方 121 行 CR-08 重平衡）；
 - 「阿嬷这个真的不能少」→ 0.5 概率照付（rep −1）/ 0.5 概率走人（rep −3）。
 
 此子选择两个分支期望值均略低于直接接受 normal 价——刻意保留为"贪心赌一把"的负 EV 选项，

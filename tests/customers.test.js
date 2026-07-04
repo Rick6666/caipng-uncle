@@ -48,7 +48,7 @@ describe('customers', () => {
     expect(resolveQuote(cust, 'slash', paidRng)).toMatchObject({ paid: true, repDelta: -3 });
     expect(resolveQuote(cust, 'slash', walkRng)).toMatchObject({ paid: false, walkout: true, repDelta: -2 });
   });
-  it('ahma 砍价：接受收正常价 rep0；赌一把两分支', () => {
+  it('ahma 砍价：接受收正常价 rep+1；赌一把两分支', () => {
     const cust = { type: 'ahma', name: 'x', dishes: ['friedCabbage'] };
     const accept = resolveHaggle(cust, true, createRng(1));
     expect(accept).toMatchObject({ paid: true, repDelta: 1 }); // 给阿嬷公道价 +1（与 normal 档一致）

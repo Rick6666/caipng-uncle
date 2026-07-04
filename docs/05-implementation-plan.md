@@ -23,7 +23,7 @@
 - Create: `package.json`, `vitest.config.js`, `playwright.config.js`, `.gitignore`, `.github/workflows/ci.yml`（占位，Task 12 完善）
 - 已存在无需动: `index.html`, `style.css`, `docs/*`
 
-- [ ] **Step 1: git init 与首次提交**
+- [x] **Step 1: git init 与首次提交**
 
 ```bash
 cd /Users/wangjiapeng/Projects/caifan
@@ -32,7 +32,7 @@ printf 'node_modules/\ncoverage/\ntest-results/\ne2e/screenshots/\nplaywright-re
 git add . && git commit -m "chore: project scaffold and planning docs"
 ```
 
-- [ ] **Step 2: package.json**
+- [x] **Step 2: package.json**
 
 ```json
 {
@@ -50,14 +50,14 @@ git add . && git commit -m "chore: project scaffold and planning docs"
 }
 ```
 
-- [ ] **Step 3: 安装开发依赖**
+- [x] **Step 3: 安装开发依赖**
 
 ```bash
 npm i -D vitest @vitest/coverage-v8 @playwright/test
 npx playwright install chromium
 ```
 
-- [ ] **Step 4: vitest.config.js**
+- [x] **Step 4: vitest.config.js**
 
 ```js
 import { defineConfig } from 'vitest/config';
@@ -70,7 +70,7 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 5: playwright.config.js**
+- [x] **Step 5: playwright.config.js**
 
 ```js
 import { defineConfig, devices } from '@playwright/test';
@@ -82,7 +82,7 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 6: 配置 pre-commit 测试门禁**（见 `docs/07-workflow-rules.md` §6，不引入 Husky，保持零额外依赖；
+- [x] **Step 6: 配置 pre-commit 测试门禁**（见 `docs/07-workflow-rules.md` §6，不引入 Husky，保持零额外依赖；
   **不要直接写 `.git/hooks/`**——那个目录不受版本控制，`git clone` 之后 hook 就消失了，等于没配。
   用 `core.hooksPath` 指向仓库内一个受版本控制的目录，这样 hook 随仓库一起分发）
 
@@ -100,7 +100,7 @@ git config core.hooksPath .githooks
 "克隆后执行 `git config core.hooksPath .githooks`"，这是唯一的手动步骤，仍然比引入 Husky 简单。
 CI 的 `npm test` 门禁不依赖这个本地 hook，属于双保险而非唯一防线。）
 
-- [ ] **Step 7: 冒烟验证 + 提交**
+- [x] **Step 7: 冒烟验证 + 提交**
 
 ```bash
 npx vitest run   # 期望: "No test files found" 正常退出（还没有测试）
@@ -115,7 +115,7 @@ git add -A && git commit -m "chore: tooling setup (vitest + playwright + pre-com
 - Create: `src/core/rng.js`
 - Test: `tests/rng.test.js`
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -150,9 +150,9 @@ describe('rng', () => {
 });
 ```
 
-- [ ] **Step 2: 跑测试确认失败**：`npx vitest run tests/rng.test.js` → FAIL（模块不存在）
+- [x] **Step 2: 跑测试确认失败**：`npx vitest run tests/rng.test.js` → FAIL（模块不存在）
 
-- [ ] **Step 3: 实现（mulberry32）**
+- [x] **Step 3: 实现（mulberry32）**
 
 ```js
 export function createRng(seedOrState) {
@@ -180,8 +180,8 @@ export function createRng(seedOrState) {
 }
 ```
 
-- [ ] **Step 4: 跑测试确认通过**：`npx vitest run tests/rng.test.js` → PASS
-- [ ] **Step 5: 提交** `git add -A && git commit -m "feat: seedable serializable rng"`
+- [x] **Step 4: 跑测试确认通过**：`npx vitest run tests/rng.test.js` → PASS
+- [x] **Step 5: 提交** `git add -A && git commit -m "feat: seedable serializable rng"`
 
 ---
 
@@ -191,7 +191,7 @@ export function createRng(seedOrState) {
 - Create: `src/core/data.js`
 - Test: `tests/data.test.js`
 
-- [ ] **Step 1: 写失败测试（数据一致性校验，防手滑）**
+- [x] **Step 1: 写失败测试（数据一致性校验，防手滑）**
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -225,7 +225,7 @@ describe('data integrity', () => {
 });
 ```
 
-- [ ] **Step 2: 确认失败** → **Step 3: 实现**
+- [x] **Step 2: 确认失败** → **Step 3: 实现**
 
 将 `docs/02-game-design.md` §1~§7 的每一张表逐行翻译为导出常量：
 `CONST`（§1 全部常量）、`INGREDIENTS`（§2）、`DISHES`（§3，字段 `id/name/emoji/recipe/price/weight/cat`）、
@@ -235,7 +235,7 @@ describe('data integrity', () => {
 `LINES`（§10 文案：`names` 姓名池 ≥12 个、`greetings`、`reactions`、`narration` 旁白、事件文案）。
 文案要求见 02-game-design §10——**这一步是文案创作步，写足写活，不许占位**。
 
-- [ ] **Step 4: 确认通过** → **Step 5: 提交** `feat: game data tables and flavour text`
+- [x] **Step 4: 确认通过** → **Step 5: 提交** `feat: game data tables and flavour text`
 
 ---
 
@@ -245,7 +245,7 @@ describe('data integrity', () => {
 - Create: `src/core/state.js`
 - Test: `tests/state.test.js`
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -303,7 +303,7 @@ describe('state', () => {
 });
 ```
 
-- [ ] **Step 2: 确认失败** → **Step 3: 按 03-architecture §3/§4 实现** → **Step 4: 通过** → **Step 5: 提交** `feat: game state and derived queries`
+- [x] **Step 2: 确认失败** → **Step 3: 按 03-architecture §3/§4 实现** → **Step 4: 通过** → **Step 5: 提交** `feat: game state and derived queries`
 
 ---
 
@@ -313,7 +313,7 @@ describe('state', () => {
 - Create: `src/core/economy.js`
 - Test: `tests/economy.test.js`
 
-- [ ] **Step 1: 写失败测试（关键用例，其余见 04-test-plan §3/economy）**
+- [x] **Step 1: 写失败测试（关键用例，其余见 04-test-plan §3/economy）**
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -357,7 +357,7 @@ describe('economy', () => {
 注意：`settleDay(state)` 是纯函数，收档事件的随机判定用 state.rng；`carryOver` 字段存
 入 state，次日 START_DAY 时并入 cooked。**测试中的注释算式必须逐条核对 02-game-design §8 顺序。**
 
-- [ ] **Step 2: 确认失败** → **Step 3: 实现** → **Step 4: 通过** → **Step 5: 提交** `feat: pricing and daily settlement`
+- [x] **Step 2: 确认失败** → **Step 3: 实现** → **Step 4: 通过** → **Step 5: 提交** `feat: pricing and daily settlement`
 
 ---
 
@@ -367,7 +367,7 @@ describe('economy', () => {
 - Create: `src/core/customers.js`
 - Test: `tests/customers.test.js`
 
-- [ ] **Step 1: 写失败测试（关键用例）**
+- [x] **Step 1: 写失败测试（关键用例）**
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -412,7 +412,7 @@ describe('customers', () => {
 
 `resolveQuote(customer, tier, rng)` 返回 `{ paid, price, repDelta, haggle?, line }`（line 从 LINES.reactions 抽取）。
 
-- [ ] **Step 2: 确认失败** → **Step 3: 按 02-game-design §4 反应矩阵实现** → **Step 4: 通过** → **Step 5: 提交** `feat: customer generation and quote reactions`
+- [x] **Step 2: 确认失败** → **Step 3: 按 02-game-design §4 反应矩阵实现** → **Step 4: 通过** → **Step 5: 提交** `feat: customer generation and quote reactions`
 
 ---
 
@@ -422,8 +422,8 @@ describe('customers', () => {
 - Create: `src/core/events.js`
 - Test: `tests/events.test.js`
 
-- [ ] **Step 1: RED**：按 04-test-plan §3/day 中事件相关用例先写 `rollOpenEvent(state, rng)`（0.35 概率 + 条件过滤 + weighted）与 `rollCloseEvents(state, rng)`（inspection/catSteal）的测试：概率打桩用固定 seed 扫描（对 1000 个 seed 统计触发率在 [0.30, 0.40]）；rep<55 永不出 tv。
-- [ ] **Step 2: 确认失败** → **Step 3: 实现** → **Step 4: 通过** → **Step 5: 提交** `feat: open/close random events`
+- [x] **Step 1: RED**：按 04-test-plan §3/day 中事件相关用例先写 `rollOpenEvent(state, rng)`（0.35 概率 + 条件过滤 + weighted）与 `rollCloseEvents(state, rng)`（inspection/catSteal）的测试：概率打桩用固定 seed 扫描（对 1000 个 seed 统计触发率在 [0.30, 0.40]）；rep<55 永不出 tv。
+- [x] **Step 2: 确认失败** → **Step 3: 实现** → **Step 4: 通过** → **Step 5: 提交** `feat: open/close random events`
 
 ---
 
@@ -433,7 +433,7 @@ describe('customers', () => {
 - Create: `src/core/day.js`
 - Test: `tests/day.test.js`
 
-- [ ] **Step 1: RED — 快乐路径 + 防御路径**
+- [x] **Step 1: RED — 快乐路径 + 防御路径**
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -502,13 +502,13 @@ describe('day state machine', () => {
 
 （`state.service.canServe` 为 reducer 在进入 meet 步时预计算的布尔字段，UI 与测试共用。）
 
-- [ ] **Step 2: 确认失败**
-- [ ] **Step 3: GREEN — 分三个子提交实现**
+- [x] **Step 2: 确认失败**
+- [x] **Step 3: GREEN — 分三个子提交实现**
   1. `morning/prep`（START_DAY 含 carryOver 并入与 priceMul 复位、BUY/FINISH_MORNING/COOK）→ commit `feat: day machine - morning and prep`；
   2. `service`（OPEN_STALL 生成队列含 helper 自动单、SERVE/OFFER_SUB/APOLOGIZE/QUOTE/HAGGLE/NEXT_CUSTOMER，出餐即扣 cooked/stats 累计）→ commit `feat: day machine - service loop`；
   3. `settle/shop/ending`（调 economy.settleDay、`ACK_SETTLE` 的 day===GAME_DAYS 判断、BUY_UPGRADE、END_SHOP 的 day+1）→ commit `feat: day machine - settle shop ending`。
-- [ ] **Step 4: 补齐 04-test-plan §3/day 全部 8 组用例并通过** `npx vitest run tests/day.test.js`
-- [ ] **Step 5: 全量回归** `npm test` → PASS → 最终 commit `test: complete day machine coverage`
+- [x] **Step 4: 补齐 04-test-plan §3/day 全部 8 组用例并通过** `npx vitest run tests/day.test.js`
+- [x] **Step 5: 全量回归** `npm test` → PASS → 最终 commit `test: complete day machine coverage`
 
 ---
 
@@ -518,7 +518,7 @@ describe('day state machine', () => {
 - Create: `src/core/highscore.js`
 - Test: `tests/highscore.test.js`
 
-- [ ] **Step 1: RED**（04-test-plan §3/highscore 全部 3 组）
+- [x] **Step 1: RED**（04-test-plan §3/highscore 全部 3 组）
 
 ```js
 import { describe, it, expect } from 'vitest';
@@ -542,7 +542,7 @@ describe('highscore', () => {
 });
 ```
 
-- [ ] **Step 2: 确认失败** → **Step 3: 按 03-architecture §6 实现**（`recordResult` 是唯一导出，无需
+- [x] **Step 2: 确认失败** → **Step 3: 按 03-architecture §6 实现**（`recordResult` 是唯一导出，无需
   version/migrate/RNG 这些概念）→ **Step 4: 通过** → **Step 5: 提交** `feat: highscore recording (no mid-game save)`
 
 ---
@@ -553,17 +553,19 @@ describe('highscore', () => {
 - Create: `src/core/sim.js`（bot 策略 + runSeason(bot, seed) → 终局摘要）
 - Test: `tests/sim.test.js`
 
-- [ ] **Step 1: 实现三个 bot**（reasonableBot / lazyBot / slasherBot，行为定义见 04-test-plan §3/sim），bot = 纯函数 `(state) → action`，与 reducer 对跑一局 7 天（GAME_DAYS，与游戏内实际长度一致）。
-- [ ] **Step 2: 写基线断言**（02-game-design §11，**目标是 30%~40% 存活率，不是高存活率**），各 500 seed。
-- [ ] **Step 3: 跑模拟。若 `reasonableBot` 存活率明显偏离 [0.3, 0.4]** → 按 02-game-design §11
+- [x] **Step 1: 实现三个 bot**（reasonableBot / lazyBot / slasherBot，行为定义见 04-test-plan §3/sim），bot = 纯函数 `(state) → action`，与 reducer 对跑一局 7 天（GAME_DAYS，与游戏内实际长度一致）。
+- [x] **Step 2: 写基线断言**（02-game-design §11，**目标是 30%~40% 存活率，不是高存活率**），各 500 seed。
+- [x] **Step 3: 跑模拟。若 `reasonableBot` 存活率明显偏离 [0.3, 0.4]** → 按 02-game-design §11
   的"调参方向提示"调 `data.js` 数值（优先调 `RENT_PER_DAY`、事件惩罚力度，而非 `START_MONEY`），
   禁止改公式结构；每轮调整记录到 `docs/02-game-design.md` §11 并同步表格数值。
   **这是本项目质量的核心闸门，不许跳过——"失败是常态"这个设计目标就靠这一步校准出来。**
-- [ ] **Step 4: `npm test` 全绿** → **Step 5: 提交** `feat: balance simulation bots and tuning (30~40% survival target)`
+- [x] **Step 4: `npm test` 全绿** → **Step 5: 提交** `feat: balance simulation bots and tuning (30~40% survival target)`
 
 ---
 
-### Task 9b: 美术资产生成与接入（像素风，见 02-game-design §12）
+### Task 9b: 美术资产生成与接入（像素风，见 02-game-design §12）—— **已废弃**
+
+> **状态：已废弃。** 根据 `docs/08-change-requests.md` CR-02 定案，视觉方案改为全 emoji、不生成/接入外部美术资产（像素画方案废弃）。以下步骤保留仅供历史参照，**不得执行**；`data.test.js` 已固化"emoji 视觉、不依赖外部美术资产"的断言，`src/ui/dom.js` 注释同步说明。
 
 不是 TDD 任务（没有可断言的"正确画面"），按流程步骤执行，产出是 `assets/` 目录与 `data.js` 的
 `img` 字段。这个任务在 Task 10（UI）之前完成，因为 UI 渲染需要读到这些路径。
@@ -603,8 +605,8 @@ cwebp -q 80 dishes/curryChicken.png -o assets/dishes/curryChicken.webp
 
 UI 不写单测（04-test-plan §1 的刻意取舍），验收靠 Task 11 E2E。类名契约见 03-architecture §8。
 
-- [ ] **Step 1: dom.js** — `h(tag, attrs, ...children)` 建元素、`toast(msg)`、`renderHud(state)`（天数「第N/7天」/💰/⭐/声望条与称号）、`setScreen(nodes)`、`setActions(buttons)`。
-- [ ] **Step 2: screens.js** — 每 phase 一个函数：
+- [x] **Step 1: dom.js** — `h(tag, attrs, ...children)` 建元素、`toast(msg)`、`renderHud(state)`（天数「第N/7天」/💰/⭐/声望条与称号）、`setScreen(nodes)`、`setActions(buttons)`。
+- [x] **Step 2: screens.js** — 每 phase 一个函数：
   - `renderTitle`（封面：只有「开始经营」一个按钮，**没有"继续游戏"**，文案提示"本局约 15~20 分钟，不支持中途保存，大概率会破产，这是设计如此"，叠加 `scenes/cover.webp` 背景）；
   - `renderMorning`（食材 stepper 列表，未解锁项隐藏，emoji 图标；顶部展示 `dailyCustomerCount(state)` 算出的"预计客流：约 N±2 位"预热文案，见 02-game-design §9.3）；
   - `renderPrep`（菜品 stepper，`.item-emoji` 位置用 `<img src="dish.img" onerror="回退成 emoji 文本">`，容量进度显示，同样展示预计客流）；
@@ -615,12 +617,12 @@ UI 不写单测（04-test-plan §1 的刻意取舍），验收靠 Task 11 E2E。
   - `renderGameover`（破产：`epitaph(state.day, state.stats)` 的称号 + 墓志铭 + 撑到第几天 + 「再来一局」，**不显示评分/人设标签/历史最佳**，见 02-game-design §9.2）。
 
   全部只读 state + dispatch，价格金额一律调 `economy.quotePrices`。
-- [ ] **Step 3: app.js** — 唯一 state、`dispatch(action) = state = reduce(state, action); render(state)`（**不做每次 dispatch 持久化**）；**只在 `phase==='ending'`**（不含 gameover）渲染前读一次 `caipng.highscore`、渲染后用 `highscore.recordResult` 写回一次；`?seed=` URL 参数支持；`window.onerror` toast 兜底；`window.addEventListener('beforeunload', ...)`，当 `state.phase` 不属于 `'title'/'ending'/'gameover'` 时 `preventDefault()` 弹确认框（见 03-architecture §7）。
-- [ ] **Step 4: 手动冒烟** `npm run serve` → 手机模拟器跑完整 7 天流程直到 ending，六阶段截图自查
+- [x] **Step 3: app.js** — 唯一 state、`dispatch(action) = state = reduce(state, action); render(state)`（**不做每次 dispatch 持久化**）；**只在 `phase==='ending'`**（不含 gameover）渲染前读一次 `caipng.highscore`、渲染后用 `highscore.recordResult` 写回一次；`?seed=` URL 参数支持；`window.onerror` toast 兜底；`window.addEventListener('beforeunload', ...)`，当 `state.phase` 不属于 `'title'/'ending'/'gameover'` 时 `preventDefault()` 弹确认框（见 03-architecture §7）。
+- [x] **Step 4: 手动冒烟** `npm run serve` → 手机模拟器跑完整 7 天流程直到 ending，六阶段截图自查
   （含结局页），确认 21 张像素画正常显示；顺手把某张图路径改错测一下 onerror 回退 emoji 是否生效；
   再手动构造一局中途破产，确认走到 gameover 显示墓志铭而不是评分页；中途尝试刷新页面确认弹出
   beforeunload 确认框。
-- [ ] **Step 5: 提交** `feat: mobile ui layer`
+- [x] **Step 5: 提交** `feat: mobile ui layer`
 
 ---
 
