@@ -137,12 +137,12 @@
 ## §4 文档真源修复（D 组，代码为准回写）
 
 ### D-1. `docs/05-implementation-plan.md` checkbox 全部失真
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - **问题**：57 个 checkbox 全为 `- [ ]`，而 Task 0–10 实际全部完成（src/core 9 模块 + src/ui 3 文件 + 73 用例 + 28 commit）；真正未做的 Task 11/12/13 与已做的无法区分。CLAUDE.md 把此文件定义为「任务清单，从上到下执行」——新 agent 会从 Task 0 重做。
 - **修复建议**：勾选 Task 0–10 全部已完成项；Task 9b（美术资产）按 CR-02 定案标记为「已废弃（emoji 方案）」并注明出处；Task 11/12/13 保持未勾（对应 A-2 / A-3 / E-6）。
 
 ### D-2. `docs/04-test-plan.md` 大面积过期，不能作为用例真源
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - **已核实漂移点**：
   - economy 用例 6：贷款「+100 / 还 150」→ 实际 `LOAN_AMOUNT: 30 / LOAN_REPAY: 40`
   - economy 用例 1-2：「咖喱鸡 = 4（chicken 3 + curry 1）」→ 实际 chicken 单价 2、成本 3；`orderBase(['stirVeg','friedWing'])` 的菜品 ID 在 data.js 中不存在
@@ -152,27 +152,27 @@
 - **修复建议**：以 data.js / 实际测试为准逐节回写；E2E 一节（§4）保留但更新数值预期，供 A-2 实施。
 
 ### D-3. CLAUDE.md「现状」节过期且与 CR-02 定案矛盾
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - **问题**：① 「index.html 的 game.js 将在 Task 10 改为 module」——已完成，game.js 从未存在；② 「assets/ 由 Task 9b 产出 21 张像素风资产（fal.ai）」——CR-02 与 02-doc §12 已定案全 emoji、废弃美术资产，`data.test.js` 也已固化该断言。
 - **修复建议**：重写「现状」节：入口已是 `src/ui/app.js`；视觉方案为全 emoji（引 CR-02）；删除 fal.ai 依赖说明。
 
 ### D-4. `docs/03-architecture.md` §3 state schema 双向漂移
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - **问题**：schema 有而代码永不产生：step `'substitute'`、`today.log`、`service.offer`（恒 null，`day.js:117`）；代码有而 schema 无：step `'request'`（`day.js:115/263`）、`service.canServe/requestNotice`、`carryOver`（`state.js:16`）、`loanTaken`（`day.js:53`，且 newGame 中缺失导致首日 state shape 不一致）、`closeLines`（`day.js:290`）、`Customer.request`。潜在坑：若有人按文档实现 substitute 步，`screens.js:174-176` 兜底分支读 `svc.lastOutcome.line` 空指针崩溃。
 - **修复建议**：按代码现状回写 schema；`loanTaken` 在 newGame 初始化补齐（shape 一致）；删除死字段 `service.offer` 或入 schema 注明用途。另两处文档互斥口径一并裁决：03 §4 的 START_DAY 约束（`title/shop→morning` vs 实现仅 title）与 OPEN_STALL「含 helper 自动单」（实现为 settle 时自动卖剩菜，与 02 §6 一致）——以实现回写 03。
 
 ### D-5. `docs/08-change-requests.md` 状态标注与口径
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - **问题**：第一轮表格 CR-02~17 行无 ✅（闭环只写在底部 prose）；CR-10 won't-fix 无标记；「72 项全绿」vs「73 测试绿」vs 当前实际口径混乱。
 - **修复建议**：表格逐行补状态列（✅ / won't-fix），统一测试数口径为当前 `npm test` 实际值。
 
 ### D-6. 02-game-design 内部矛盾：阿嬷砍价接受档 rep
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - **位置**：`docs/02-game-design.md:128`（「收 normal 价，rep 0」）vs 同文件 121 行 CR-08 注（+1）vs `data.js:88`（`haggle.accept: {rep: 1}`）；`tests/customers.test.js:51` 测试名写 "rep0" 但断言 `repDelta: 1`。
 - **修复建议**：以实现（+1）为准改 128 行，测试改名。
 
 ### D-7. 04/05 文档中其余引用同步
-- [ ] 状态
+- [x] 状态 — 已完成（commit e36b0f4）
 - 05-plan 425 行事件率 0.35（同 D-2）；05-plan 662 行 README 计划（对应 E-6）。修 D-1/D-2 时顺带。
 
 ---
