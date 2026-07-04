@@ -59,7 +59,7 @@
 ## §2 中危 — 核心逻辑缺陷（B 组）
 
 ### B-1. payday 事件「斩客付款概率 +0.1」未实现
-- [ ] 状态
+- [x] 状态 — 已完成（commit 2c2a7ad，PM 决定删除文档承诺而非补实现）
 - **位置**：`src/core/customers.js:56-73`（resolveQuote，签名拿不到 todayEvent）；`customers.js:10-15` 只实现了权重部分
 - **问题**：`docs/02-game-design.md` §7.1 承诺 payday「上班族/工人权重 ×2，斩客付款概率 +0.1」，后半静默缺失，且 sim 校准是在无此效果下跑的。
 - **修复建议**：**先与 PM 确认真源方向**——是补实现（需重跑 sim 校准、可能调基线）还是改 02 文档删掉该承诺（sim 数据即现状）。倾向后者成本更低；若补实现，resolveQuote 需增加 todayEvent 入参并同步 03 契约。
@@ -87,7 +87,7 @@
 - **验收**：NaN/undefined/字符串 qty 的 `toBe(state)` 测试；全绿。
 
 ### B-5. rice 是可购买的死食材（玩家纯亏钱）
-- [ ] 状态
+- [x] 状态 — 已完成（commit 2c2a7ad，PM 决定方案 a：移出 INGREDIENTS）
 - **位置**：`src/core/data.js:39`（INGREDIENTS 含 rice，unlockRep 0）
 - **问题**：12 道菜无任何 recipe 引用 rice，出餐不扣 rice 库存；`RICE_COST` 只参与 quotePrices 的 kind 下限计算。02 §4.1「每单固定含 1 份米饭」没有消耗侧实现。玩家买米 = 纯损失。
 - **修复建议**：**与 PM 确认方向**：(a) 把 rice 移出 INGREDIENTS（不可购买，米饭成本仅体现在定价公式），或 (b) 实现每单扣 1 份米、无米不能出餐。方案 (a) 改动小不动平衡；方案 (b) 动经济模型需重校准。
@@ -216,7 +216,7 @@
 - [ ] **E-7b** `data.js:91` influencer `slash.repWalk: -6` 不可达（pay 1.0 永不走人）——确认后删除或留注释说明。
 - [ ] **E-7c** `day.js:9` `unlockedIngredients(9999)` 哨兵——改为直接 import INGREDIENTS。
 - [ ] **E-7d** `style.css:114-118` `h1.title` 与 `style.css:352` `.cover .btn + .btn` 永不命中——删除。
-- [ ] **E-7e** 统计口径：sub-reject（`day.js:181`）与 apologize 走人不计 `walkoutCount`（仅报价后走人计，`day.js:234`）——02 §9.1「被气走的客人」口径未定义是否包含缺菜气走，与 PM 确认后统一（影响 'awkward' 人设判定）。
+- [x] **E-7e**（已完成，commit 2c2a7ad，PM 决定维持现状） 统计口径：sub-reject（`day.js:181`）与 apologize 走人不计 `walkoutCount`——已在 02-game-design.md §9.1 补充口径说明，两种走人是不同失败模式，故意不合并统计，不改代码。
 
 ---
 
