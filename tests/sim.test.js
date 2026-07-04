@@ -17,4 +17,10 @@ describe('balance simulation (7 天口径)', () => {
   it('全斩客策略存活率明显低于合理策略（斩客得不偿失）', () => {
     expect(slasher.survivalRate).toBeLessThan(reasonable.survivalRate - 0.05);
   });
+  it('CR-08 声望进阶可达：合理策略平均声望不再趴在 0（进度系统未死）', () => {
+    expect(reasonable.avgRep).toBeGreaterThan(8);   // 重平衡前恒为 ~0.3
+  });
+  it('CR-08 斩客几乎攒不到声望（良心经营才涨口碑）', () => {
+    expect(slasher.avgRep).toBeLessThan(reasonable.avgRep - 5);
+  });
 });

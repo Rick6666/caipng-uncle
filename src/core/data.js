@@ -82,13 +82,13 @@ export const CUSTOMER_TYPES = [
 // 反应矩阵：kind/normal = { pay, rep }；slash = { pay, repPaid, repWalk }；
 // ahma.slash 特殊：{ haggle: true }，砍价子选择在 haggle 字段
 export const REACTION = {
-  student:    { kind: { pay: 1.0, rep: 2 }, normal: { pay: 0.9, rep: 0 }, slash: { pay: 0.3, repPaid: -3, repWalk: -2 } },
-  worker:     { kind: { pay: 1.0, rep: 1 }, normal: { pay: 1.0, rep: 0 }, slash: { pay: 0.85, repPaid: -1, repWalk: -2 } },
-  ahma:       { kind: { pay: 1.0, rep: 3 }, normal: { pay: 0.9, rep: 0 }, slash: { haggle: true },
-                haggle: { accept: { rep: 0 }, gamble: { payChance: 0.5, repPaid: -1, repWalk: -3 } } },
-  uncle2:     { kind: { pay: 1.0, rep: 2 }, normal: { pay: 1.0, rep: 0 }, slash: { pay: 0.5, repPaid: -2, repWalk: -2 } },
-  labourer:   { kind: { pay: 1.0, rep: 2 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 0.75, repPaid: -1, repWalk: -2 } },
-  influencer: { kind: { pay: 1.0, rep: 6 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 1.0, repPaid: -6, repWalk: -6 } },
+  student:    { kind: { pay: 1.0, rep: 2 }, normal: { pay: 0.9, rep: 1 }, slash: { pay: 0.3, repPaid: -3, repWalk: -2 } },
+  worker:     { kind: { pay: 1.0, rep: 2 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 0.85, repPaid: -1, repWalk: -2 } },
+  ahma:       { kind: { pay: 1.0, rep: 3 }, normal: { pay: 0.9, rep: 1 }, slash: { haggle: true },
+                haggle: { accept: { rep: 1 }, gamble: { payChance: 0.5, repPaid: -1, repWalk: -3 } } },
+  uncle2:     { kind: { pay: 1.0, rep: 2 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 0.5, repPaid: -2, repWalk: -2 } },
+  labourer:   { kind: { pay: 1.0, rep: 3 }, normal: { pay: 1.0, rep: 1 }, slash: { pay: 0.75, repPaid: -1, repWalk: -2 } },
+  influencer: { kind: { pay: 1.0, rep: 6 }, normal: { pay: 1.0, rep: 2 }, slash: { pay: 1.0, repPaid: -6, repWalk: -6 } },
   foodie:     { kind: { pay: 1.0, rep: 4 }, normal: { pay: 1.0, rep: 2 }, slash: { pay: 0.6, repPaid: -5, repWalk: -4 } }
 };
 

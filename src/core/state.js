@@ -63,11 +63,12 @@ export function uncleTitle(stats, rep, money) {
   const served = Math.max(1, stats.totalServed);
   const slashRate = stats.slashCount / served;
   const walkoutRate = stats.walkoutCount / served;
+  // 门槛随声望经济重平衡校准（存活者 rep 多在 15~45）：良心=少斩客且真攒到声望；苦命=勉强糊口
   let id;
   if (slashRate >= 0.4) id = 'shark';
   else if (walkoutRate >= 0.2) id = 'awkward';
-  else if (slashRate <= 0.05 && rep >= 60) id = 'kind';
-  else if (money < 200 && rep < 30) id = 'broke';
+  else if (slashRate <= 0.05 && rep >= 30) id = 'kind';
+  else if (money < 80 && rep < 15) id = 'broke';
   else id = 'worldly';
   return { id, ...LINES.titles[id] };
 }
@@ -87,10 +88,11 @@ export function epitaph(day, stats) {
 export function finalScore(state) {
   return state.money + state.rep * 5;
 }
+// 阈值经声望经济重平衡后重新校准（survivor 分数分布 ~79–283、中位 ~157，见 docs/02 §9）
 export function grade(score) {
-  if (score >= 100) return 'S';
-  if (score >= 50) return 'A';
-  if (score >= 20) return 'B';
+  if (score >= 220) return 'S';
+  if (score >= 150) return 'A';
+  if (score >= 100) return 'B';
   return 'C';
 }
 

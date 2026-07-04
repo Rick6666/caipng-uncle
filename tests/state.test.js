@@ -49,8 +49,8 @@ describe('state', () => {
     const stats = (over) => ({ totalServed: 100, totalRevenue: 0, bestDayRevenue: 0, slashCount: 0, walkoutCount: 0, ...over });
     expect(uncleTitle(stats({ slashCount: 45 }), 50, 500).id).toBe('shark');
     expect(uncleTitle(stats({ walkoutCount: 25 }), 50, 500).id).toBe('awkward');
-    expect(uncleTitle(stats({ slashCount: 2 }), 60, 500).id).toBe('kind');
-    expect(uncleTitle(stats(), 20, 150).id).toBe('broke');
+    expect(uncleTitle(stats({ slashCount: 2 }), 30, 500).id).toBe('kind');   // 少斩客 + rep≥30
+    expect(uncleTitle(stats(), 10, 50).id).toBe('broke');                    // 勉强糊口：money<80 且 rep<15
     expect(uncleTitle(stats({ slashCount: 10 }), 40, 400).id).toBe('worldly');
   });
   it('epitaph 墓志铭优先级（02-game-design §9.2）', () => {

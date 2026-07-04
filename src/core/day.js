@@ -161,8 +161,10 @@ function doOfferSub(state) {
 }
 
 function doApologize(state) {
-  return finishCustomer(applyRep(state, -1),
-    { kind: 'apologize', line: '你道歉送客，声望 −1。' });
+  // CR-08：礼貌道歉不再倒扣声望——丢掉这单生意本身已是惩罚；
+  // 频繁倒扣会把服务收益反复抵消，让声望永远涨不起来（缺菜时无解）。
+  return finishCustomer(state,
+    { kind: 'apologize', line: '你婉言道歉送客，这单没做成。' });
 }
 
 function doQuote(state, { tier }) {
